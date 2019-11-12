@@ -24,7 +24,7 @@ public class Profile {
     private String address;
 
     @Column(name = "user_id", nullable = false)
-    private String userId;
+    private Long userId;
 
     public Long getProfileId() {
         return profileId;

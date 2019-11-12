@@ -13,6 +13,11 @@ public class ProfileController {
     @Autowired
     ProfileService profileService;
 
+    @GetMapping("/test")
+    public String test(){
+        return "This is Profile API";
+    }
+
     @GetMapping("")
     public ResponseEntity<?> getProfile(){
         return null;
@@ -20,6 +25,7 @@ public class ProfileController {
 
     @PostMapping("")
     public ResponseEntity<?> createProfile(@RequestBody Profile profile, @RequestHeader("Authorization") String token){
+        System.out.println(token);
         return null;
     }
 

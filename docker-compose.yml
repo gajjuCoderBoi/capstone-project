@@ -23,14 +23,21 @@ services:
     command: 'mvn spring-boot:run'
     environment:
       - SPRING_PROFILES_ACTIVE=dev
-  postgresdev:
+  userdbdev:
     image: postgres
     ports:
-     - "5432:5432"
+     - "5401:5432"
     environment:
      - POSTGRES_PASSWORD=password
      - POSTGRES_USER=postgres
      - POSTGRES_DB=userdev
+  profiledbdev:
+    image: postgres
+    ports:
+     - "5402:5432"
+    environment:
+     - POSTGRES_PASSWORD=password
+     - POSTGRES_USER=postgres
      - POSTGRES_DB=profiledev
   users-api:
     image: maven:3.6.1-jdk-8
