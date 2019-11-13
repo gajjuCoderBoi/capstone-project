@@ -34,11 +34,19 @@ services:
   profiledbdev:
     image: postgres
     ports:
-     - "5402:5432"
+     - "5404:5432"
     environment:
      - POSTGRES_PASSWORD=password
      - POSTGRES_USER=postgres
      - POSTGRES_DB=profiledev
+  commentdbdev:
+    image: postgres
+    ports:
+     - "5402:5432"
+    environment:
+     - POSTGRES_PASSWORD=password
+     - POSTGRES_USER=postgres
+     - POSTGRES_DB=commentdev
   users-api:
     image: maven:3.6.1-jdk-8
     ports:
@@ -58,6 +66,18 @@ services:
     working_dir: /app
     volumes:
       - ./profile-api:/app
+    depends_on:
+      - eureka
+    command: 'mvn spring-boot:run'
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+  posts-api:
+    image: maven:3.6.1-jdk-8
+    ports:
+      - '5002:5002'
+    working_dir: /app
+    volumes:
+      - ./posts-api:/app
     depends_on:
       - eureka
     command: 'mvn spring-boot:run'
