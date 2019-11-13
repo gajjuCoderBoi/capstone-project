@@ -1,4 +1,4 @@
-package com.ga.postsapi.model;
+package com.example.postsapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

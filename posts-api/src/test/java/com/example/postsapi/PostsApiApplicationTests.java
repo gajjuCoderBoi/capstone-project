@@ -1,4 +1,4 @@
-package com.ga.postsapi;
+package com.example.postsapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
