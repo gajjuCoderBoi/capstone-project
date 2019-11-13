@@ -10,8 +10,16 @@ import javax.persistence.*;
 public class Profile {
 
     /*************************************************************************
-     *       todo
-     *      Comment for Profile Entity
+     *
+     *      Profile Entity which behave like a table in the database.
+     *
+     *      Profile Entity has five properties as follows:
+     *
+     *      profileId -> Store the id of Profile (Primary Key)
+     *      additionalEmail -> String type
+     *      phone -> String type
+     *      address -> String type
+     *      userId -> Long type
      *
      *************************************************************************/
 

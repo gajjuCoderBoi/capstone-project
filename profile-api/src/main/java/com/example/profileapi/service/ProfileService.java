@@ -5,15 +5,16 @@ import com.example.profileapi.model.Profile;
 public interface ProfileService {
 
     /*************************************************************************
-     *       todo
-     *      Comment for ProfileService
+     *
+     *      Profile Service has three methods that are implemented into
+     *      ProfileSercviceImpl.
      *
      *************************************************************************/
 
     public Profile createProfile(Profile profile, String token);
 
-    public Profile getProfile(Long userId);
+    Profile getProfile(String token);
 
-    public Profile updateProfile(Profile profile);
+    public Profile updateProfile(Profile profile, String token);
 
 }
