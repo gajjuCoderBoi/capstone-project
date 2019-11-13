@@ -1,6 +1,6 @@
-package com.example.postsapi.controller;
+package com.ga.postsapi.controller;
 
-import com.example.postsapi.model.Post;
+import com.ga.postsapi.model.Post;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

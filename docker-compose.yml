@@ -39,14 +39,14 @@ services:
      - POSTGRES_PASSWORD=password
      - POSTGRES_USER=postgres
      - POSTGRES_DB=profiledev
-  commentdbdev:
+  postsdbdev:
     image: postgres
     ports:
      - "5402:5432"
     environment:
      - POSTGRES_PASSWORD=password
      - POSTGRES_USER=postgres
-     - POSTGRES_DB=commentdev
+     - POSTGRES_DB=postsdev
   users-api:
     image: maven:3.6.1-jdk-8
     ports:

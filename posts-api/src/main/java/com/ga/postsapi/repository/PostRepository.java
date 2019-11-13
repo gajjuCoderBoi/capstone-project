@@ -1,6 +1,6 @@
-package com.example.postsapi.repository;
+package com.ga.postsapi.repository;
 
-import com.example.postsapi.model.Post;
+import com.ga.postsapi.model.Post;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
