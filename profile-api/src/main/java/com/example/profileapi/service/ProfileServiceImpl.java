@@ -57,8 +57,10 @@ public class ProfileServiceImpl implements ProfileService{
             return null;
         }
         profile.setUserId(user.getUserId());
-
-        return profileRepository.save(profile);
+        profile.setUsername(user.getEmail());
+        Profile savedProfile = profileRepository.save(profile);
+        savedProfile.setUsername(user.getEmail());
+        return savedProfile;
     }
 
     /*************************************************************************
@@ -75,7 +77,10 @@ public class ProfileServiceImpl implements ProfileService{
         if (user==null){
             return null;
         }
-        return profileRepository.getProfileByUserId(user.getUserId());
+
+        Profile savedProfile = profileRepository.getProfileByUserId(user.getUserId());
+        savedProfile.setUsername(user.getEmail());
+        return savedProfile;
     }
 
     /*************************************************************************
@@ -112,8 +117,8 @@ public class ProfileServiceImpl implements ProfileService{
         savedProfile.setPhone(profile.getPhone());
 
         profileRepository.save(savedProfile);
-
-        return profileRepository.save(profile);
+        savedProfile.setUsername(user.getEmail());
+        return profileRepository.save(savedProfile);
     }
     /*************************************************************************
      *
