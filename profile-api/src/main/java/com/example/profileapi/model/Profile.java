@@ -8,6 +8,14 @@ import javax.persistence.*;
 @Entity
 @Table(name="profile")
 public class Profile {
+
+    /*************************************************************************
+     *       todo
+     *      Comment for Profile Entity
+     *
+     *************************************************************************/
+
+
     @JsonIgnore
     @Id
     @Column(name = "profile_id")
@@ -32,6 +40,14 @@ public class Profile {
 
     public void setProfileId(Long profileId) {
         this.profileId = profileId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getAdditionalEmail() {
