@@ -9,8 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping
+@RequestMapping("/")
 public class ProfileController {
+
+    @GetMapping("/test")
+    public String test(){
+        return "Test Profile";
+    }
 
 
     /*************************************************************************
@@ -37,9 +42,10 @@ public class ProfileController {
     @GetMapping
     public ResponseEntity<?> getProfile(@RequestHeader("Authorization") String token){
         Profile savedProfile = profileService.getProfile(token);
+        System.out.println(savedProfile);
         return savedProfile!=null ?
                 ResponseEntity.ok(savedProfile) :
-                (ResponseEntity<?>) ResponseEntity.status(HttpStatus.UNAUTHORIZED);
+                new ResponseEntity<String>("Unauthorized", HttpStatus.UNAUTHORIZED);
 
     }
 
@@ -59,7 +65,7 @@ public class ProfileController {
         Profile savedProfile = profileService.createProfile(profile, token);
         return savedProfile!=null ?
                 ResponseEntity.ok(savedProfile) :
-                (ResponseEntity<?>) ResponseEntity.status(HttpStatus.UNAUTHORIZED);
+                new ResponseEntity<String>("Unauthorized", HttpStatus.UNAUTHORIZED);
     }
 
     /*************************************************************************
@@ -76,6 +82,6 @@ public class ProfileController {
         Profile savedProfile = profileService.updateProfile(profile, token);
         return savedProfile!=null ?
                 ResponseEntity.ok(savedProfile) :
-                (ResponseEntity<?>) ResponseEntity.status(HttpStatus.UNAUTHORIZED);
+                new ResponseEntity<String>("Unauthorized", HttpStatus.UNAUTHORIZED);
     }
 }

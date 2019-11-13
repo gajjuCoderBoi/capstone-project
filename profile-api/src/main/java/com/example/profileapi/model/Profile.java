@@ -42,6 +42,17 @@ public class Profile {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
+    @Transient
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public Long getProfileId() {
         return profileId;
     }
