@@ -1,6 +1,9 @@
-package com.example.postsapi.service;
+package com.ga.postsapi.service;
 
-import com.example.postsapi.model.Post;
+
+import com.ga.postsapi.model.Post;
+
+import java.util.List;
 
 public interface PostService {
 
