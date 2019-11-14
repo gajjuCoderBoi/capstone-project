@@ -63,7 +63,7 @@ public class PostController {
      *************************************************************************/
 
     @DeleteMapping("/{postId}")
-    public Long deletePost(@PathVariable Long postId, String token){
+    public Long deletePost(@PathVariable Long postId,@RequestHeader("Authorization") String token){
         return postService.deletePost(postId, token);
     }
 
