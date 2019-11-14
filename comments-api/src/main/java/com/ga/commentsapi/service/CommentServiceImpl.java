@@ -62,11 +62,13 @@ public class CommentServiceImpl implements CommentService {
      *  commentRepository.findCommentsbyPostId to get all the comments
      *  for the post whose id is being passed to the function
      *
-     *************************************************************************/
+     ************************************************************************
+     * @return*/
 
     @Override
-    public void getCommentsbyPostId(Long postId){
-        commentRepository.findCommentsbyPostId(postId);
+    public Iterable<Comment> getCommentsbyPostId(Long postId){
+
+        return commentRepository.findCommentsbyPostId(postId);
     };
 
     /*************************************************************************

@@ -25,4 +25,8 @@ public class CommentController {
         return commentService.createComment(comment, postId, token);
     }
 
+    @GetMapping("/{postId}")
+    public Iterable<Comment> getCommentsByPostId(@PathVariable Long postId){
+        return commentService.getCommentsbyPostId(postId);
+    }
 }

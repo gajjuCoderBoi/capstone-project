@@ -17,7 +17,7 @@ public interface CommentService {
 
     public Comment createComment(Comment comment, Long postId, String token);
 
-    public void getCommentsbyPostId(Long postId);
+    public Iterable<Comment> getCommentsbyPostId(Long postId);
 
     public void deleteCommentByCommentId(Long commentId, String token);
 
