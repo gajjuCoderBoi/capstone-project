@@ -12,8 +12,8 @@ public interface CommentRepository extends CrudRepository<Comment, Long > {
     /*************************************************************************
      * The CommentRepository handles all DB calls related to comments
      * it implements the CrudRepository class
-     * A Query was set up to find comments by userId
-     *
+     * Two Queries were set up. One to find comments by userId, the other
+     * to find comments by postId
      *************************************************************************/
 
     @Query("FROM Comment c where c.userId=?1")

@@ -19,7 +19,7 @@ public interface CommentService {
 
     public Iterable<Comment> getCommentsbyPostId(Long postId);
 
-    public void deleteCommentByCommentId(Long commentId, String token);
+    public Long deleteCommentByCommentId(Long commentId, String token);
 
     public void getCommentsByUser(User user);
 

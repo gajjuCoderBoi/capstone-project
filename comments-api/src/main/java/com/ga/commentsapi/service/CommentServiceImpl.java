@@ -61,7 +61,8 @@ public class CommentServiceImpl implements CommentService {
      * The getCommentsbyPostId takes a single parameter postId and calls
      *  commentRepository.findCommentsbyPostId to get all the comments
      *  for the post whose id is being passed to the function
-     *
+     *  It gets the list of all comments and extracts the list of userid's
+     *  The it puts userid's in the list of all saved comments
      ************************************************************************
      * @return*/
 
@@ -70,7 +71,7 @@ public class CommentServiceImpl implements CommentService {
 
         //return commentRepository.findCommentsbyPostId(postId);
 
-        List<Comment> savedComments = (List<Comment>) commentRepository.findAll();
+        List<Comment> savedComments = (List<Comment>) commentRepository.findCommentsbyPostId(postId);
         Set<Long> userIdList = savedComments.stream().map(Comment::getUserId).collect(Collectors.toSet());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -91,12 +92,18 @@ public class CommentServiceImpl implements CommentService {
      * The deleteCommentByCommentId gets two arguments: a commentId (commentId
      * belongs to the comment that will be deleted and a token to validate
      * the authority of the user who is trying to delete
-     *************************************************************************/
+     ************************************************************************
+     * @return*/
 
     @Override
-    public void deleteCommentByCommentId(Long commentId, String token){
-        commentRepository.deleteById(commentId);
-
+    public Long deleteCommentByCommentId(Long commentId, String token){
+        Comment savedComment = commentRepository.findById(commentId).orElse(null);
+        User user = getUserFromUserAPI(token);
+        if(user.getUserId().equals(savedComment.getUserId())) {
+            commentRepository.deleteById(commentId);
+            return savedComment.getId();
+        }
+        return -1L;
     };
 
     /*************************************************************************
@@ -113,13 +120,21 @@ public class CommentServiceImpl implements CommentService {
     };
 
     /*************************************************************************
-     *
-     *
-     *
-     */
+     * the listComments will bring all comments from the repository
+     * It does not need a parameter. It calls the commentRepository.findAll()
+     * method
+     *************************************************************************/
 
     @Override
     public List<Comment> listComments() {
         return (List<Comment>) commentRepository.findAll();
+    }
+
+    private User getUserFromUserAPI(String token){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setBearerAuth(token.substring(7));
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        return restTemplate.exchange("http://users-api:5001/", HttpMethod.GET, entity, User.class).getBody();
     }
 }
