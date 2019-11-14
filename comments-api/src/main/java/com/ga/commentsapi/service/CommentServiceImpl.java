@@ -130,12 +130,24 @@ public class CommentServiceImpl implements CommentService {
         return (List<Comment>) commentRepository.findAll();
     }
 
+    /*************************************************************************
+     * the deleteCommentsByPostId takes postId as a single argument.
+     * It first gets a list of the comments attached to the particular PostId
+     * and then it calls the deleteAll method of the commentRepository passing
+     * the list of comments
+     *************************************************************************/
+
     @Override
     public Long deleteCommentsByPostId(Long postId) {
         List<Comment> savedComments = (List<Comment>) commentRepository.findCommentsbyPostId(postId);
         commentRepository.deleteAll(savedComments);
         return 1L;
     }
+
+    /*************************************************************************
+     * the getUserFromUserAPI takes a token as argument. It is an auxiliary
+     * method that returns the user that owns the token
+     *************************************************************************/
 
     private User getUserFromUserAPI(String token){
         HttpHeaders headers = new HttpHeaders();
