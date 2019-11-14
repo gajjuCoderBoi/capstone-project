@@ -1,7 +1,9 @@
-package com.example.commentsapi.service;
+package com.ga.commentsapi.service;
 
-import com.example.commentsapi.model.Comment;
-import com.example.commentsapi.model.User;
+
+import com.ga.commentsapi.model.Comment;
+import com.ga.commentsapi.model.User;
+
 
 public interface CommentService {
 

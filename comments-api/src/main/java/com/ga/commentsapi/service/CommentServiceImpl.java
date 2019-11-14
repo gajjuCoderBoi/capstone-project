@@ -1,9 +1,9 @@
-package com.example.commentsapi.service;
+package com.ga.commentsapi.service;
 
-import com.example.commentsapi.model.Comment;
-import com.example.commentsapi.model.User;
+import com.ga.commentsapi.model.Comment;
+import com.ga.commentsapi.model.User;
 
-import com.example.commentsapi.repository.CommentRepository;
+import com.ga.commentsapi.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpEntity;

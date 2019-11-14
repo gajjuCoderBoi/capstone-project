@@ -1,4 +1,4 @@
-package com.example.commentsapi.model;
+package com.ga.commentsapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CollectionId;
@@ -21,18 +21,20 @@ public class Comment {
      *      userId -> Long type
      *
      *************************************************************************/
-@Column(name = "comment_id")
-@GeneratedValue(strategy = GenerationType.AUTO)
-private Long commentId;
 
-@Column(name = "commentBody")
-private String commentBody;
+    @Column(name = "comment_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    private Long commentId;
 
-@Column(name = "postId")
-private Long postId;
+    @Column(name = "commentBody")
+    private String commentBody;
 
-@Column(name = "userId")
-private Long userId;
+    @Column(name = "postId")
+    private Long postId;
+
+    @Column(name = "userId")
+    private Long userId;
 
     public Long getCommentId() {
         return commentId;
