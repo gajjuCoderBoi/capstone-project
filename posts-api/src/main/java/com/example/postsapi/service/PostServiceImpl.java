@@ -12,17 +12,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class PostServiceImpl implements PostService {
 
 
     /*************************************************************************
-     *       todo
-     *      Comment for Autowired
+     *
+     *      Autowiring the RestTemplate, PostRepository
+     *      These are the dependencies for the Post services and used in
+     *      this service
      *
      *************************************************************************/
-
     @Autowired
     RestTemplate restTemplate;
 
@@ -31,6 +33,14 @@ public class PostServiceImpl implements PostService {
     @Autowired
     PostRepository postRepository;
 
+    /*************************************************************************
+     * The createPost method will create a post. It takes two parameters:
+     * a post,  and a token
+     * from which the comment will get the userid of the user who is posting the
+     * comment. It uses the HttpHeaders to verify the token
+     *
+     *************************************************************************/
+    @Override
     public Post createPost(Post post, String token){
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -49,6 +59,12 @@ public class PostServiceImpl implements PostService {
 
     };
 
+    /*************************************************************************
+     * The deletePost gets two arguments: a postId (postId
+     * belongs to the post that will be deleted and a token to validate
+     * the authority of the user who is trying to delete
+     *************************************************************************/
+    @Override
     public Long deletePost(Long postId, String token){
         Post deletePost = new Post();
         HttpHeaders headers = new HttpHeaders();
@@ -62,10 +78,11 @@ public class PostServiceImpl implements PostService {
         }
 
         postRepository.deleteById(postId);
-
         return postId;
+    };
 
-
-
+    @Override
+    public List<Post> listPosts(){
+        return (List<Post>) postRepository.findAll();
     };
 }

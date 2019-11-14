@@ -6,6 +6,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/*************************************************************************
+ * The PostRepository handles all DB calls related to comments
+ * it implements the CrudRepository class
+ * A Query was set up to find comments by userId
+ *
+ *************************************************************************/
+
 
 @Repository
 public class PostRepository implements CrudRepository<Post, Long> {
