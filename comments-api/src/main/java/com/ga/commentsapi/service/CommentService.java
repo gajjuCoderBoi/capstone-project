@@ -25,4 +25,5 @@ public interface CommentService {
 
     public List<Comment> listComments();
 
+    public Long deleteCommentsByPostId(Long postId);
 }

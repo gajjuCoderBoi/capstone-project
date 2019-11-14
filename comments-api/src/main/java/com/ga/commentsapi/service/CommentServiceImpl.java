@@ -130,6 +130,13 @@ public class CommentServiceImpl implements CommentService {
         return (List<Comment>) commentRepository.findAll();
     }
 
+    @Override
+    public Long deleteCommentsByPostId(Long postId) {
+        List<Comment> savedComments = (List<Comment>) commentRepository.findCommentsbyPostId(postId);
+        commentRepository.deleteAll(savedComments);
+        return 1L;
+    }
+
     private User getUserFromUserAPI(String token){
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
