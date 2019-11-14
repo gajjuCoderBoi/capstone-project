@@ -4,6 +4,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
+/*************************************************************************
+ *
+ *      Post Entity which behave like a table in the database.
+ *
+ *      Post Entity has four properties as follows:
+ *
+ *      postId -> Store the id of Profile (Primary Key)
+ *      title -> String type
+ *      text -> String type
+ *      userId -> Long type
+ *
+ *************************************************************************/
+
 
 @Entity
 @Table(name="posts")

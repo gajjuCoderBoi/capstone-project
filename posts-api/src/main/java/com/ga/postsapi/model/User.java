@@ -4,8 +4,9 @@ package com.ga.postsapi.model;
 public class User {
 
     /*************************************************************************
-     *       todo
-     *      Comment for User
+     *
+     *      User model just to use as an Object.
+     *      Here it's not and Entity.
      *
      *************************************************************************/
 
