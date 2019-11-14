@@ -1,4 +1,4 @@
-package com.example.postsapi.model;
+package com.ga.postsapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,6 +24,17 @@ public class Post {
 
     @Column(name = "user_id", nullable = false)
     private Long userId;
+
+    @Transient
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Long getPostId() {
         return postId;

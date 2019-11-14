@@ -1,4 +1,4 @@
-package com.example.postsapi.model;
+package com.ga.postsapi.model;
 
 
 public class User {
@@ -13,7 +13,7 @@ public class User {
 
     private String email;
 
-    private String password;
+//    private String password;
 
     public Long getUserId() {
         return userId;
@@ -31,11 +31,11 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 }
