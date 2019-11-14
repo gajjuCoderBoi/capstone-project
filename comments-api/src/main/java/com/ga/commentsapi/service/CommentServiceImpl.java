@@ -12,8 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -68,7 +68,23 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Iterable<Comment> getCommentsbyPostId(Long postId){
 
-        return commentRepository.findCommentsbyPostId(postId);
+        //return commentRepository.findCommentsbyPostId(postId);
+
+        List<Comment> savedComments = (List<Comment>) commentRepository.findAll();
+        Set<Long> userIdList = savedComments.stream().map(Comment::getUserId).collect(Collectors.toSet());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Set<Long>> requestEntity = new HttpEntity<Set<Long>>(userIdList,headers);
+        User[] rateResponse = restTemplate.exchange("http://users-api:5001/userlist", HttpMethod.POST, requestEntity,User[].class).getBody();
+        HashMap<Long, User> userHashMap = new LinkedHashMap<>();
+        for (User user:rateResponse){
+            userHashMap.put(user.getUserId(), user);
+        }
+        for (Comment savedComment : savedComments) {
+            savedComment.setUser(userHashMap.get(savedComment.getUserId()));
+        }
+        System.out.println(rateResponse);
+        return savedComments;
     };
 
     /*************************************************************************
