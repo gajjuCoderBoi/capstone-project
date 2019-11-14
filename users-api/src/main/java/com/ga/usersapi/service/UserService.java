@@ -13,4 +13,12 @@ public interface UserService extends UserDetailsService {
 
     public List<String> login(User user);
 
+    public User getUserByToken(String token);
+
+    public User getUserbyUsername(String username);
+
+    public User getUserbyId(Long id);
+
+    public List<User> userListFromUserIds(List<Long> userIds);
+
 }

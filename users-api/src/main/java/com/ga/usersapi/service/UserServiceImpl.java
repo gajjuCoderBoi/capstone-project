@@ -60,6 +60,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByToken(String token) {
+        String username = jwtUtil.getUsernameFromToken(token);
+        return getUserbyUsername(username);
+    }
+
+    @Override
+    public User getUserbyUsername(String username) {
+        return userRepository.getUserByUsername(username);
+    }
+
+    @Override
+    public User getUserbyId(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<User> userListFromUserIds(List<Long> userIds) {
+        System.out.println(userIds);
+        List<User> userlist = (List<User>) userRepository.findAllById(userIds);
+        System.out.println(userlist);
+        return userlist;
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         User user = userRepository.getUserByUsername(username);

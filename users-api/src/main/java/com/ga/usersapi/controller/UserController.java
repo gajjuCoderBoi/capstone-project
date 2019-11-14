@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/")
 public class UserController {
@@ -19,6 +21,11 @@ public class UserController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @GetMapping("/test")
+    public String test(){
+        return "Test Post";
+    }
+
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody User user){
         return ResponseEntity.ok(new JwtResponse(userService.signup(user)));
@@ -28,6 +35,17 @@ public class UserController {
     public ResponseEntity<?> login(@RequestBody User user){
         return ResponseEntity.ok(new JwtResponse(userService.login(user)));
     }
+
+    @GetMapping
+    public ResponseEntity<?> getUser(@RequestHeader("Authorization") String token){
+        return ResponseEntity.ok(userService.getUserByToken(token));
+    }
+
+    @PostMapping("/userlist")
+    public ResponseEntity<?> userListFromUserIds(@RequestBody List<Long> list){
+        return ResponseEntity.ok(userService.userListFromUserIds(list));
+    }
+
 
 
     /*@PutMapping("/reset")

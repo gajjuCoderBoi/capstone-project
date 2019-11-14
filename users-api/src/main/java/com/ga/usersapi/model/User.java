@@ -8,7 +8,6 @@ import javax.persistence.*;
 @Table(name = "users")
 public class User {
 
-    @JsonIgnore
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
