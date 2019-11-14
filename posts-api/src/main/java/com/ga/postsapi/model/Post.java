@@ -3,6 +3,7 @@ package com.ga.postsapi.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 /*************************************************************************
  *
@@ -22,7 +23,6 @@ import javax.persistence.*;
 @Table(name="posts")
 public class Post {
 
-    @JsonIgnore
     @Id
     @Column(name = "post_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,6 +40,17 @@ public class Post {
 
     @Transient
     private User user;
+
+    @Transient
+    private List<Comment> comments;
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public User getUser() {
         return user;

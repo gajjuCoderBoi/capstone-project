@@ -1,5 +1,6 @@
 package com.ga.postsapi.service;
 
+import com.ga.postsapi.model.Comment;
 import com.ga.postsapi.model.Post;
 import com.ga.postsapi.repository.PostRepository;
 import com.ga.postsapi.model.User;
@@ -69,7 +70,13 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post getPostById(Long postId) {
-        return postRepository.findById(postId).orElse(null);
+        Post savedPost = postRepository.findById(postId).orElse(null);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        Comment[] comments =  restTemplate.exchange("http://comments-api:5003/"+savedPost.getPostId(), HttpMethod.GET, entity, Comment[].class).getBody();
+        savedPost.setComments(Arrays.asList(comments));
+        return savedPost;
     }
 
     /*************************************************************************
