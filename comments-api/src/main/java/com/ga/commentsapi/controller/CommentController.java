@@ -3,11 +3,7 @@ package com.ga.commentsapi.controller;
 import com.ga.commentsapi.model.Comment;
 import com.ga.commentsapi.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-
-
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -24,5 +20,9 @@ public class CommentController {
     @Autowired
     CommentService commentService;
 
+    @PostMapping("/{postId}")
+    public Comment createComment(@RequestBody Comment comment, @PathVariable Long postId, @RequestHeader("Authorization") String token){
+        return commentService.createComment(comment, postId, token);
+    }
 
 }

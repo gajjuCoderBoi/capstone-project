@@ -13,7 +13,7 @@ public class User {
 
     private String email;
 
-    private String password;
+    /*private String password;*/
 
     public Long getUserId() {
         return userId;
@@ -23,7 +23,7 @@ public class User {
         this.userId = userId;
     }
 
-    public String getEmail() {
+    public String getusername() {
         return email;
     }
 
@@ -31,11 +31,11 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
+    /*public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
+    }*/
 }

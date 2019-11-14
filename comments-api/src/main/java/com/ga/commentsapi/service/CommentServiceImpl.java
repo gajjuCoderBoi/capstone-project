@@ -5,7 +5,6 @@ import com.ga.commentsapi.model.User;
 
 import com.ga.commentsapi.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -51,8 +50,10 @@ public class CommentServiceImpl implements CommentService {
         if (user==null){
             return null;
         }
+
         comment.setUserId(user.getUserId());
-        comment.setCommentId(postId);
+        comment.setPostId(postId);
+        comment.setUser(user);
         return commentRepository.save(comment);
     };
 

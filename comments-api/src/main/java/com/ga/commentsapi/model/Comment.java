@@ -1,8 +1,5 @@
 package com.ga.commentsapi.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.CollectionId;
-
 import javax.persistence.*;
 
 @Entity
@@ -25,10 +22,10 @@ public class Comment {
     @Column(name = "comment_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private Long commentId;
+    private Long id;
 
-    @Column(name = "commentBody")
-    private String commentBody;
+    @Column(name = "text")
+    private String text;
 
     @Column(name = "postId")
     private Long postId;
@@ -36,20 +33,31 @@ public class Comment {
     @Column(name = "userId")
     private Long userId;
 
-    public Long getCommentId() {
-        return commentId;
+    @Transient
+    private User user;
+
+    public User getUser() {
+        return user;
     }
 
-    public void setCommentId(Long commentId) {
-        this.commentId = commentId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String getCommentBody() {
-        return commentBody;
+    public Long getId() {
+        return id;
     }
 
-    public void setCommentBody(String commentBody) {
-        this.commentBody = commentBody;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public Long getPostId() {
