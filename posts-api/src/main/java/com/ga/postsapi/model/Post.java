@@ -1,6 +1,7 @@
 package com.ga.postsapi.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ga.postsapi.bean.Comment;
+import com.ga.postsapi.bean.User;
 
 import javax.persistence.*;
 import java.util.List;

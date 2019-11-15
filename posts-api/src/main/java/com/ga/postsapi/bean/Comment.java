@@ -1,4 +1,4 @@
-package com.ga.postsapi.model;
+package com.ga.postsapi.bean;
 
 import javax.persistence.*;
 
@@ -8,9 +8,9 @@ public class Comment {
 
     /*************************************************************************
      *
-     *      Comment Entity which behave like a table in the database.
+     *      Comment Bean which behave like a table in the database.
      *
-     *      Comment Entity has four properties as follows:
+     *      Comment Bean has four properties as follows:
      *
      *      commentId -> Store the id of Profile (Primary Key)
      *      commentBody -> String type

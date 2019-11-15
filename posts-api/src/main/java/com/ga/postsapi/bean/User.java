@@ -1,12 +1,11 @@
-package com.ga.postsapi.model;
+package com.ga.postsapi.bean;
 
 
 public class User {
 
     /*************************************************************************
      *
-     *      User model just to use as an Object.
-     *      Here it's not and Entity.
+     *      User bean just to use as an Object.
      *
      *************************************************************************/
 

@@ -8,8 +8,13 @@ import java.util.List;
 public interface PostService {
 
     /*************************************************************************
-     *       todo
-     *      Comment for ProfileService
+     *
+     *       All methods are implemented into PostServiceImpl class
+     *
+     *      createPost method to Create the Post.
+     *      deletePost method to delete the Post.
+     *      postList method is to get All the Post exist into the database.
+     *      getPostById method to fetch the specfic Post with it's Comments.
      *
      *************************************************************************/
 
