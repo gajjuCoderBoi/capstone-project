@@ -1,4 +1,4 @@
-package com.ga.commentsapi.model;
+package com.ga.commentsapi.bean;
 
 public class User {
 

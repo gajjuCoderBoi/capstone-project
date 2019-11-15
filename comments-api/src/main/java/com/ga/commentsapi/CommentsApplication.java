@@ -12,6 +12,12 @@ public class CommentsApplication {
 		SpringApplication.run(CommentsApplication.class, args);
 	}
 
+	/*************************************************************************
+	 *
+	 *	Creating Bean of RestTemplate.
+	 *
+	 *************************************************************************/
+
 	@Bean
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();

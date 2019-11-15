@@ -58,7 +58,14 @@ public class CommentController {
         return commentService.deleteCommentByCommentId(commentId, token);
     }
 
-    @DeleteMapping("/{posttId}/comments")
+    /*************************************************************************
+     *
+     *      Delete Comments of the Post. That takes the postId as input and
+     *      Call the deleteCommentsByPostId from commentService.
+     *
+     *************************************************************************/
+
+    @DeleteMapping("/{postId}/comments")
     public Long deleteCommentsByPostId(@PathVariable Long postId){
         return commentService.deleteCommentsByPostId(postId);
     }

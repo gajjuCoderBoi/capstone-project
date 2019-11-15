@@ -1,5 +1,7 @@
 package com.ga.commentsapi.model;
 
+import com.ga.commentsapi.bean.User;
+
 import javax.persistence.*;
 
 @Entity

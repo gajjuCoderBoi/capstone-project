@@ -1,7 +1,7 @@
 package com.ga.commentsapi.service;
 
+import com.ga.commentsapi.bean.User;
 import com.ga.commentsapi.model.Comment;
-import com.ga.commentsapi.model.User;
 
 import com.ga.commentsapi.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
