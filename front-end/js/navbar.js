@@ -39,7 +39,7 @@ function logout() {
 
 let navbarHtml = `
 <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light navbar-custom">
-  <a class="navbar-brand" href="/"><img class="logo" src="/logo2.png"><span class="navbar-logo-text">scandit<span></a>
+  <a class="navbar-brand" href="/"><img class="logo" src="/img/logo2.png"><span class="navbar-logo-text">scandit<span></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
