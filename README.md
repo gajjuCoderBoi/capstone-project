@@ -26,8 +26,6 @@
 - [API](#api)
 - [API Responses](#responses)
 - [Objects](#objects)
-- [Testing](#testing)
-- [Test Results](#results)
 - [What's Included](#whats-included)
 - [Creators](#developers)
 
