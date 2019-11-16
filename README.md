@@ -912,212 +912,92 @@ Within the download you'll find the following directories and files, logically g
 
 ```text
 cognizant-p2/
-├── README.md
-├── api-gateway
+├── API-Gateway
 │   ├── Dockerfile
-│   ├── HELP.md
-│   ├── api-gateway.iml
 │   ├── manifest.yml
 │   ├── mvnw
 │   ├── mvnw.cmd
 │   ├── pom.xml
-│   ├── src
-│   │   ├── main
-│   │   │   ├── java
-│   │   │   │   └── com
-│   │   │   │       └── example
-│   │   │   │           └── apigateway
-│   │   │   │               ├── TestController.java
-│   │   │   │               └── ZuulGatewayApplication.java
-│   │   │   └── resources
-│   │   │       ├── application-dev.properties
-│   │   │       ├── application-pcf.properties
-│   │   │       └── application.properties
-│   │   └── test
-│   │       └── java
-│   │           └── com
-│   │               └── example
-│   │                   └── apigateway
-│   │                       └── ZuulGatewayApplicationTests.java
-│   └── target
-│       ├── api-gateway-0.0.1-SNAPSHOT.jar
-│       ├── api-gateway-0.0.1-SNAPSHOT.jar.original
-│       ├── classes
-│       │   ├── application-dev.properties
-│       │   ├── application-pcf.properties
-│       │   ├── application.properties
-│       │   └── com
-│       │       └── example
-│       │           └── apigateway
-│       │               ├── TestController.class
-│       │               └── ZuulGatewayApplication.class
-│       ├── generated-sources
-│       │   └── annotations
-│       ├── generated-test-sources
-│       │   └── test-annotations
-│       ├── maven-archiver
-│       │   └── pom.properties
-│       ├── maven-status
-│       │   └── maven-compiler-plugin
-│       │       ├── compile
-│       │       │   └── default-compile
-│       │       │       ├── createdFiles.lst
-│       │       │       └── inputFiles.lst
-│       │       └── testCompile
-│       │           └── default-testCompile
-│       │               ├── createdFiles.lst
-│       │               └── inputFiles.lst
-│       └── test-classes
-│           └── com
-│               └── example
-│                   └── apigateway
-│                       └── ZuulGatewayApplicationTests.class
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── example
+│       │   │           └── APIGateway
+│       │   │               ├── TestController.java
+│       │   │               └── ZuulGatewayApplication.java
+│       │   └── resources
+│       │       ├── application-dev.properties
+│       │       ├── application-pcf.properties
+│       │       └── application.properties
+│       └── test
+│           └── java
+│               └── com
+│                   └── example
+│                       └── APIGateway
+│                           └── ZuulGatewayApplicationTests.java
+├── README.md
 ├── comments-api
 │   ├── Dockerfile
-│   ├── HELP.md
-│   ├── comments-api.iml
 │   ├── mvnw
 │   ├── mvnw.cmd
 │   ├── pom.xml
-│   ├── src
-│   │   ├── main
-│   │   │   ├── java
-│   │   │   │   └── com
-│   │   │   │       └── ga
-│   │   │   │           └── commentsapi
-│   │   │   │               ├── CommentsApplication.java
-│   │   │   │               ├── bean
-│   │   │   │               │   ├── Post.java
-│   │   │   │               │   └── User.java
-│   │   │   │               ├── config
-│   │   │   │               │   └── WebSecurityConfig.java
-│   │   │   │               ├── controller
-│   │   │   │               │   └── CommentController.java
-│   │   │   │               ├── model
-│   │   │   │               │   └── Comment.java
-│   │   │   │               ├── repository
-│   │   │   │               │   └── CommentRepository.java
-│   │   │   │               └── service
-│   │   │   │                   ├── CommentService.java
-│   │   │   │                   └── CommentServiceImpl.java
-│   │   │   └── resources
-│   │   │       ├── application-dev.properties
-│   │   │       ├── application-local.properties
-│   │   │       └── application.properties
-│   │   └── test
-│   │       └── java
-│   │           └── com
-│   │               ├── example
-│   │               └── ga
-│   │                   └── commentsapi
-│   │                       └── CommentsApplicationTests.java
-│   └── target
-│       ├── classes
-│       │   ├── application-dev.properties
-│       │   ├── application-local.properties
-│       │   ├── application.properties
-│       │   └── com
-│       │       └── ga
-│       │           └── commentsapi
-│       │               ├── CommentsApplication.class
-│       │               ├── bean
-│       │               │   ├── Post.class
-│       │               │   └── User.class
-│       │               ├── config
-│       │               │   └── WebSecurityConfig.class
-│       │               ├── controller
-│       │               │   └── CommentController.class
-│       │               ├── model
-│       │               │   └── Comment.class
-│       │               ├── repository
-│       │               │   └── CommentRepository.class
-│       │               └── service
-│       │                   ├── CommentService.class
-│       │                   └── CommentServiceImpl.class
-│       ├── comments-api-0.0.1-SNAPSHOT.jar
-│       ├── comments-api-0.0.1-SNAPSHOT.jar.original
-│       ├── generated-sources
-│       │   └── annotations
-│       ├── generated-test-sources
-│       │   └── test-annotations
-│       ├── maven-archiver
-│       │   └── pom.properties
-│       ├── maven-status
-│       │   └── maven-compiler-plugin
-│       │       ├── compile
-│       │       │   └── default-compile
-│       │       │       ├── createdFiles.lst
-│       │       │       └── inputFiles.lst
-│       │       └── testCompile
-│       │           └── default-testCompile
-│       │               ├── createdFiles.lst
-│       │               └── inputFiles.lst
-│       └── test-classes
-│           └── com
-│               └── ga
-│                   └── commentsapi
-│                       └── CommentsApplicationTests.class
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── ga
+│       │   │           └── commentsapi
+│       │   │               ├── CommentsApplication.java
+│       │   │               ├── bean
+│       │   │               │   ├── Post.java
+│       │   │               │   └── User.java
+│       │   │               ├── config
+│       │   │               │   └── WebSecurityConfig.java
+│       │   │               ├── controller
+│       │   │               │   └── CommentController.java
+│       │   │               ├── model
+│       │   │               │   └── Comment.java
+│       │   │               ├── repository
+│       │   │               │   └── CommentRepository.java
+│       │   │               └── service
+│       │   │                   ├── CommentService.java
+│       │   │                   └── CommentServiceImpl.java
+│       │   └── resources
+│       │       ├── application-dev.properties
+│       │       ├── application-local.properties
+│       │       └── application.properties
+│       └── test
+│           └── java
+│               └── com
+│                   └── ga
+│                       └── commentsapi
+│                           └── CommentsApplicationTests.java
 ├── deployment.sh
 ├── docker-compose.yml
 ├── eureka-server
 │   ├── Dockerfile
-│   ├── eureka-server.iml
 │   ├── manifest.yml
 │   ├── mvnw
 │   ├── mvnw.cmd
 │   ├── pom.xml
-│   ├── src
-│   │   ├── main
-│   │   │   ├── java
-│   │   │   │   └── com
-│   │   │   │       └── example
-│   │   │   │           └── eurekaserver
-│   │   │   │               └── EurekaServerApplication.java
-│   │   │   └── resources
-│   │   │       ├── application-dev.properties
-│   │   │       ├── application-pcf.properties
-│   │   │       └── application.properties
-│   │   └── test
-│   │       └── java
-│   │           └── com
-│   │               └── example
-│   │                   └── eurekaserver
-│   │                       └── EurekaServerApplicationTests.java
-│   └── target
-│       ├── classes
-│       │   ├── application-dev.properties
-│       │   ├── application-pcf.properties
-│       │   ├── application.properties
-│       │   └── com
-│       │       └── example
-│       │           └── eurekaserver
-│       │               └── EurekaServerApplication.class
-│       ├── eureka-server-0.0.1-SNAPSHOT.jar
-│       ├── eureka-server-0.0.1-SNAPSHOT.jar.original
-│       ├── generated-sources
-│       │   └── annotations
-│       ├── generated-test-sources
-│       │   └── test-annotations
-│       ├── maven-archiver
-│       │   └── pom.properties
-│       ├── maven-status
-│       │   └── maven-compiler-plugin
-│       │       ├── compile
-│       │       │   └── default-compile
-│       │       │       ├── createdFiles.lst
-│       │       │       └── inputFiles.lst
-│       │       └── testCompile
-│       │           └── default-testCompile
-│       │               ├── createdFiles.lst
-│       │               └── inputFiles.lst
-│       ├── surefire-reports
-│       │   ├── TEST-com.example.eurekaserver.EurekaServerApplicationTests.xml
-│       │   └── com.example.eurekaserver.EurekaServerApplicationTests.txt
-│       └── test-classes
-│           └── com
-│               └── example
-│                   └── eurekaserver
-│                       └── EurekaServerApplicationTests.class
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── example
+│       │   │           └── eurekaserver
+│       │   │               └── EurekaServerApplication.java
+│       │   └── resources
+│       │       ├── application-dev.properties
+│       │       ├── application-pcf.properties
+│       │       └── application.properties
+│       └── test
+│           └── java
+│               └── com
+│                   └── example
+│                       └── eurekaserver
+│                           └── EurekaServerApplicationTests.java
 ├── front-end
 │   ├── css
 │   │   ├── bootstrap-grid.css
@@ -1168,279 +1048,116 @@ cognizant-p2/
 │           └── postwidget.js
 ├── img
 │   ├── ERD_2.png
-│   ├── config_package.png
-│   ├── controller_package.png
-│   ├── full_class_diagram.png
 │   ├── logo.png
-│   ├── package_dao.png
-│   ├── package_diagram.png
-│   ├── package_entity.png
-│   └── package_service.png
+│   └── rough_architecture.jpg
 ├── posts-api
 │   ├── Dockerfile
 │   ├── mvnw
 │   ├── mvnw.cmd
 │   ├── pom.xml
-│   ├── posts-api.iml
-│   ├── src
-│   │   ├── main
-│   │   │   ├── java
-│   │   │   │   └── com
-│   │   │   │       └── ga
-│   │   │   │           └── postsapi
-│   │   │   │               ├── PostsApiApplication.java
-│   │   │   │               ├── bean
-│   │   │   │               │   ├── Comment.java
-│   │   │   │               │   └── User.java
-│   │   │   │               ├── cofig
-│   │   │   │               │   └── WebSecurityConfig.java
-│   │   │   │               ├── controller
-│   │   │   │               │   └── PostController.java
-│   │   │   │               ├── model
-│   │   │   │               │   └── Post.java
-│   │   │   │               ├── repository
-│   │   │   │               │   └── PostRepository.java
-│   │   │   │               └── service
-│   │   │   │                   ├── PostService.java
-│   │   │   │                   └── PostServiceImpl.java
-│   │   │   └── resources
-│   │   │       ├── application-dev.properties
-│   │   │       ├── application-local.properties
-│   │   │       └── application.properties
-│   │   └── test
-│   │       └── java
-│   │           └── com
-│   │               ├── example
-│   │               └── ga
-│   │                   └── postsapi
-│   │                       └── PostsApiApplicationTests.java
-│   └── target
-│       ├── classes
-│       │   ├── application-dev.properties
-│       │   ├── application-local.properties
-│       │   ├── application.properties
-│       │   └── com
-│       │       └── ga
-│       │           └── postsapi
-│       │               ├── PostsApiApplication.class
-│       │               ├── bean
-│       │               │   ├── Comment.class
-│       │               │   └── User.class
-│       │               ├── cofig
-│       │               │   └── WebSecurityConfig.class
-│       │               ├── controller
-│       │               │   └── PostController.class
-│       │               ├── model
-│       │               │   └── Post.class
-│       │               ├── repository
-│       │               │   └── PostRepository.class
-│       │               └── service
-│       │                   ├── PostService.class
-│       │                   └── PostServiceImpl.class
-│       ├── generated-sources
-│       │   └── annotations
-│       ├── generated-test-sources
-│       │   └── test-annotations
-│       ├── maven-archiver
-│       │   └── pom.properties
-│       ├── maven-status
-│       │   └── maven-compiler-plugin
-│       │       ├── compile
-│       │       │   └── default-compile
-│       │       │       ├── createdFiles.lst
-│       │       │       └── inputFiles.lst
-│       │       └── testCompile
-│       │           └── default-testCompile
-│       │               ├── createdFiles.lst
-│       │               └── inputFiles.lst
-│       ├── posts-api-0.0.1-SNAPSHOT.jar
-│       ├── posts-api-0.0.1-SNAPSHOT.jar.original
-│       ├── surefire-reports
-│       │   ├── TEST-com.ga.postsapi.PostsApiApplicationTests.xml
-│       │   └── com.ga.postsapi.PostsApiApplicationTests.txt
-│       └── test-classes
-│           └── com
-│               └── ga
-│                   └── postsapi
-│                       └── PostsApiApplicationTests.class
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── ga
+│       │   │           └── postsapi
+│       │   │               ├── PostsApiApplication.java
+│       │   │               ├── bean
+│       │   │               │   ├── Comment.java
+│       │   │               │   └── User.java
+│       │   │               ├── cofig
+│       │   │               │   └── WebSecurityConfig.java
+│       │   │               ├── controller
+│       │   │               │   └── PostController.java
+│       │   │               ├── model
+│       │   │               │   └── Post.java
+│       │   │               ├── repository
+│       │   │               │   └── PostRepository.java
+│       │   │               └── service
+│       │   │                   ├── PostService.java
+│       │   │                   └── PostServiceImpl.java
+│       │   └── resources
+│       │       ├── application-dev.properties
+│       │       ├── application-local.properties
+│       │       └── application.properties
+│       └── test
+│           └── java
+│               └── com
+│                   └── ga
+│                       └── postsapi
+│                           └── PostsApiApplicationTests.java
 ├── profile-api
-│   ├── Dockerfile
 │   ├── mvnw
 │   ├── mvnw.cmd
 │   ├── pom.xml
-│   ├── profile-api.iml
-│   ├── src
-│   │   ├── main
-│   │   │   ├── java
-│   │   │   │   └── com
-│   │   │   │       └── ga
-│   │   │   │           └── profileapi
-│   │   │   │               ├── ProfileAPIApplication.java
-│   │   │   │               ├── config
-│   │   │   │               │   └── WebSecurityConfig.java
-│   │   │   │               ├── controller
-│   │   │   │               │   └── ProfileController.java
-│   │   │   │               ├── model
-│   │   │   │               │   ├── Profile.java
-│   │   │   │               │   └── User.java
-│   │   │   │               ├── repository
-│   │   │   │               │   └── ProfileRepository.java
-│   │   │   │               └── service
-│   │   │   │                   ├── ProfileService.java
-│   │   │   │                   └── ProfileServiceImpl.java
-│   │   │   └── resources
-│   │   │       ├── application-dev.properties
-│   │   │       ├── application-local.properties
-│   │   │       └── application.properties
-│   │   └── test
-│   │       └── java
-│   │           └── com
-│   │               ├── example
-│   │               └── ga
-│   │                   └── profileapi
-│   │                       └── ProfileAPIApplicationTests.java
-│   └── target
-│       ├── classes
-│       │   ├── application-dev.properties
-│       │   ├── application-local.properties
-│       │   ├── application.properties
-│       │   └── com
-│       │       ├── example
-│       │       │   └── profileapi
-│       │       │       ├── controller
-│       │       │       ├── model
-│       │       │       ├── repository
-│       │       │       └── service
-│       │       └── ga
-│       │           └── profileapi
-│       │               ├── ProfileAPIApplication.class
-│       │               ├── config
-│       │               │   └── WebSecurityConfig.class
-│       │               ├── controller
-│       │               │   └── ProfileController.class
-│       │               ├── model
-│       │               │   ├── Profile.class
-│       │               │   └── User.class
-│       │               ├── repository
-│       │               │   └── ProfileRepository.class
-│       │               └── service
-│       │                   ├── ProfileService.class
-│       │                   └── ProfileServiceImpl.class
-│       ├── generated-sources
-│       │   └── annotations
-│       ├── generated-test-sources
-│       │   └── test-annotations
-│       ├── maven-archiver
-│       │   └── pom.properties
-│       ├── maven-status
-│       │   └── maven-compiler-plugin
-│       │       ├── compile
-│       │       │   └── default-compile
-│       │       │       ├── createdFiles.lst
-│       │       │       └── inputFiles.lst
-│       │       └── testCompile
-│       │           └── default-testCompile
-│       │               ├── createdFiles.lst
-│       │               └── inputFiles.lst
-│       ├── profile-api-0.0.1-SNAPSHOT.jar
-│       ├── profile-api-0.0.1-SNAPSHOT.jar.original
-│       └── test-classes
-│           └── com
-│               ├── example
-│               │   └── profileapi
-│               └── ga
-│                   └── profileapi
-│                       └── ProfileAPIApplicationTests.class
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── ga
+│       │   │           └── profileapi
+│       │   │               ├── ProfileAPIApplication.java
+│       │   │               ├── config
+│       │   │               │   └── WebSecurityConfig.java
+│       │   │               ├── controller
+│       │   │               │   └── ProfileController.java
+│       │   │               ├── model
+│       │   │               │   ├── Profile.java
+│       │   │               │   └── User.java
+│       │   │               ├── repository
+│       │   │               │   └── ProfileRepository.java
+│       │   │               └── service
+│       │   │                   ├── ProfileService.java
+│       │   │                   └── ProfileServiceImpl.java
+│       │   └── resources
+│       │       ├── application-dev.properties
+│       │       ├── application-local.properties
+│       │       └── application.properties
+│       └── test
+│           └── java
+│               └── com
+│                   └── ga
+│                       └── profileapi
+│                           └── ProfileAPIApplicationTests.java
 └── users-api
     ├── Dockerfile
-    ├── HELP.md
     ├── manifest.yml
     ├── mvnw
     ├── mvnw.cmd
     ├── pom.xml
-    ├── src
-    │   ├── main
-    │   │   ├── java
-    │   │   │   └── com
-    │   │   │       └── ga
-    │   │   │           └── usersapi
-    │   │   │               ├── UsersApiApplication.java
-    │   │   │               ├── config
-    │   │   │               │   ├── JwtRequestFilter.java
-    │   │   │               │   ├── JwtUtil.java
-    │   │   │               │   ├── SecurityConfig.java
-    │   │   │               │   └── SecurityConfigInitializer.java
-    │   │   │               ├── controller
-    │   │   │               │   └── UserController.java
-    │   │   │               ├── model
-    │   │   │               │   ├── JwtResponse.java
-    │   │   │               │   └── User.java
-    │   │   │               ├── repository
-    │   │   │               │   └── UserRepository.java
-    │   │   │               └── service
-    │   │   │                   ├── UserService.java
-    │   │   │                   └── UserServiceImpl.java
-    │   │   └── resources
-    │   │       ├── application-dev.properties
-    │   │       ├── application-local.properties
-    │   │       ├── application-pcf.properties
-    │   │       └── application.properties
-    │   └── test
-    │       └── java
-    │           └── com
-    │               ├── example
-    │               └── ga
-    │                   └── usersapi
-    │                       └── UsersApiApplicationTests.java
-    ├── target
-    │   ├── classes
-    │   │   ├── application-dev.properties
-    │   │   ├── application-local.properties
-    │   │   ├── application-pcf.properties
-    │   │   ├── application.properties
-    │   │   └── com
-    │   │       └── ga
-    │   │           └── usersapi
-    │   │               ├── UsersApiApplication.class
-    │   │               ├── config
-    │   │               │   ├── JwtRequestFilter.class
-    │   │               │   ├── JwtUtil.class
-    │   │               │   ├── SecurityConfig.class
-    │   │               │   └── SecurityConfigInitializer.class
-    │   │               ├── controller
-    │   │               │   └── UserController.class
-    │   │               ├── model
-    │   │               │   ├── JwtResponse.class
-    │   │               │   └── User.class
-    │   │               ├── repository
-    │   │               │   └── UserRepository.class
-    │   │               └── service
-    │   │                   ├── UserService.class
-    │   │                   └── UserServiceImpl.class
-    │   ├── generated-sources
-    │   │   └── annotations
-    │   ├── generated-test-sources
-    │   │   └── test-annotations
-    │   ├── maven-archiver
-    │   │   └── pom.properties
-    │   ├── maven-status
-    │   │   └── maven-compiler-plugin
-    │   │       ├── compile
-    │   │       │   └── default-compile
-    │   │       │       ├── createdFiles.lst
-    │   │       │       └── inputFiles.lst
-    │   │       └── testCompile
-    │   │           └── default-testCompile
-    │   │               ├── createdFiles.lst
-    │   │               └── inputFiles.lst
-    │   ├── test-classes
-    │   │   └── com
-    │   │       └── ga
-    │   │           └── usersapi
-    │   │               └── UsersApiApplicationTests.class
-    │   ├── users-api-0.0.1-SNAPSHOT.jar
-    │   └── users-api-0.0.1-SNAPSHOT.jar.original
-    └── users-api.iml
+    └── src
+        ├── main
+        │   ├── java
+        │   │   └── com
+        │   │       └── ga
+        │   │           └── usersapi
+        │   │               ├── UsersApiApplication.java
+        │   │               ├── config
+        │   │               │   ├── JwtRequestFilter.java
+        │   │               │   ├── JwtUtil.java
+        │   │               │   ├── SecurityConfig.java
+        │   │               │   └── SecurityConfigInitializer.java
+        │   │               ├── controller
+        │   │               │   └── UserController.java
+        │   │               ├── model
+        │   │               │   ├── JwtResponse.java
+        │   │               │   └── User.java
+        │   │               ├── repository
+        │   │               │   └── UserRepository.java
+        │   │               └── service
+        │   │                   ├── UserService.java
+        │   │                   └── UserServiceImpl.java
+        │   └── resources
+        │       ├── application-dev.properties
+        │       ├── application-local.properties
+        │       ├── application-pcf.properties
+        │       └── application.properties
+        └── test
+            └── java
+                └── com
+                    └── ga
+                        └── usersapi
+                            └── UsersApiApplicationTests.java
 
 
 
