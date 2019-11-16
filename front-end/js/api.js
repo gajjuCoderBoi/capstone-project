@@ -86,7 +86,7 @@ async function getAllPosts()
 
 // loading all comments based on comment id
 async function getAllComments(postId){
-  let response = await callApiAndReturnResponseOrThrowError(`post/${postId}/comment`, 'GET');
+  let response = await callApiAndReturnResponseOrThrowError(`posts/${postId}`, 'GET');
   return response;
 }
 
@@ -121,13 +121,13 @@ async function createNewPost(userTitle, userDescr, auth){
 // post a comment
 async function postComment(comment, auth, postId){
   let userAuth = cookieParser(auth);
-  let response = await callApiAndReturnResponseOrThrowError(`comment/${postId}`, 'POST', userAuth.access_token, JSON.stringify(comment));
+  let response = await callApiAndReturnResponseOrThrowError(`comments/${postId}`, 'POST', userAuth.access_token, JSON.stringify(comment));
   return response;
 }
 
 // delete comment
 async function deleteComment(auth, commentId){
   let userAuth = cookieParser(auth);
-  let response = await callApiAndReturnResponseOrThrowError(`comment/${commentId}`, 'DELETE', userAuth.access_token);
+  let response = await callApiAndReturnResponseOrThrowError(`comments/${commentId}`, 'DELETE', userAuth.access_token);
   return response;
 }
