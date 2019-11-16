@@ -1,12 +1,12 @@
-# Project 2
+# Project 3
 
 <p align="center">
   <a href="#">
-    <img src="./img/logo.png" alt="Scandit logo" width="72" height="82">
+    <img src="./img/logo.png" alt="Scandit logo" width="85" height="85">
   </a>
 </p>
 
-<h3 align="center">Scandit (Back-End Microservices REST API)</h3>
+<h3 align="center">Scandit (Back-End Micro-services REST API)</h3>
 
 <p align="center">
   Foodie is an a discussion forum where people post and comment on a food recipe. 
@@ -57,8 +57,27 @@ Application Goals from User Stories are:
 
 ## Major Hurdles
 
+   - Communication between services.
+   - Integrity of Data. 
+
 
 ## Installation Instruction
+
+Follow these easy step:
+    
+
+   1. Clone the repository:
+        ```
+        git clone https://github.com/gajjuCoderBoi/cognizant-p3
+        ```
+   2. Execute this on command line:
+    
+        ```
+        $cd cognizant-p3
+        $docker-compose up
+        ```
+   3. Enjoy
+   
 
 ## Timeline
 
