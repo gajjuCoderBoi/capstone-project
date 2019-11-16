@@ -11,10 +11,10 @@ function postSetUp(post){
   closeBtn.innerText = "X";
   
   
-  link.setAttribute("href", `/post/#${post.id}`);
+  link.setAttribute("href", `/post/#${post.postId}`);
   postDisplay.className = 'user-post';
   postDisplay.innerText = `${post.user.username}: ${post.title}`;
-  postDisplay.setAttribute('data-post-id', post.id);
+  postDisplay.setAttribute('data-post-id', post.postId);
   if(post.user.username === user){
     console.log("AGREED")
     closeBtn.addEventListener('click',(event)=>{
@@ -24,7 +24,7 @@ function postSetUp(post){
     postDisplay.appendChild(closeBtn);
   }
   link.appendChild(postDisplay);
-  localStorage.setItem(post.id, JSON.stringify(post));
+  localStorage.setItem(post.postId, JSON.stringify(post));
   // sessionStorage.setItem('current-user', post.user.username)
   return link;
 }

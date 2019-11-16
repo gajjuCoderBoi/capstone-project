@@ -61,7 +61,8 @@ async function getPostsByUser(access_token) {
 
 // get profile
 async function getProfile(access_token) {
-  let response = await callApiAndReturnResponseOrThrowError('profile', 'GET', access_token);
+  let response = await callApiAndReturnResponseOrThrowError('profiles', 'GET', access_token);
+  console.log(response);
   return response;
 }
 
@@ -72,7 +73,7 @@ async function createOrUpdateProfile(access_token, altEmail, mobileNumber, addre
     mobile: mobileNumber,
     address: address
   };
-  let response = await callApiAndReturnResponseOrThrowError('profile', 'POST', access_token, JSON.stringify(profileInfo));
+  let response = await callApiAndReturnResponseOrThrowError('profiles', 'POST', access_token, JSON.stringify(profileInfo));
 
   return response;
 }
@@ -86,6 +87,7 @@ async function getAllPosts()
 
 // loading all comments based on comment id
 async function getAllComments(postId){
+    console.log(postId);
   let response = await callApiAndReturnResponseOrThrowError(`posts/${postId}`, 'GET');
   return response;
 }

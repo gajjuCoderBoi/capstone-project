@@ -118,7 +118,7 @@ function displayButtons(buttonType) {
 async function handleProfileResponse(profileResponse) {
   if (profileResponse.name == "Error") {
     displayButtons('create');
-  } else if (typeof profileResponse.id == 'number') {
+  } else if (typeof profileResponse.userId == 'number') {
     // populate fields and show edit profile button
     populateProfile(profileResponse.additionalEmail, profileResponse.mobile, profileResponse.address);
     let profileUserInfo = document.querySelector('.profile-user-info');
