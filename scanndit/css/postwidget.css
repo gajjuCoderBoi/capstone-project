@@ -1,0 +1,106 @@
+body.logged-in .post-widget.collapsed {
+  background: white;
+  color: #007bff;
+  max-height: 50px;
+}
+
+body.logged-in .post-widget.expanded {
+  background: lightgrey;
+  color: black;
+  max-height: 700px;
+  transition: max-height 1s, background 0.2s;
+}
+
+.post-widget-collapsed-logged-out-buttons span {
+  font-size: 0.8em;
+}
+
+#post-widget-collaped-logged-in-button {
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+}
+
+.post-widget-collapsed {
+  display: flex;
+  justify-content: center;
+}
+
+body.logged-in .post-widget.collapsed {
+  border: 1px solid #007bff;
+  padding: 0;
+}
+
+body.logged-in .post-widget.collapsed:hover{
+  background: #007bff;
+  border: 1px solid #007bff;
+  color: white;
+  padding: 0;
+  cursor: pointer;
+}
+
+.post-widget.collapsed .post-widget-submission-box {
+  display: none;
+}
+.post-widget.expanded .post-widget-submission-box {
+  visibility: hidden;
+}
+
+.post-widget.expanded .post-widget-collapsed {
+  display: none;
+}
+
+body.logged-out #post-widget-collaped-logged-in-button {
+  display: none;
+}
+
+body.logged-out .post-widget-logged-in-buttons {
+  display: none;
+}
+
+body.logged-in .post-widget-collapsed-logged-out-buttons {
+  display: none;
+}
+
+body.logged-in .post-widget-logged-out-buttons {
+  display: none;
+}
+
+.post-widget {
+  font-size: 16px;
+  width: 100%;
+  padding: 10px;
+  background: lightgrey;
+  border-radius: 4px;
+}
+
+.post-widget-bottom-bar {
+  display: flex;
+}
+
+.post-widget-buttons {
+  margin-top: 10px;
+  flex-direction: row-reverse;
+  margin-left: auto;
+}
+
+.post-submission-title {
+  width: 100%;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.post-submission-body {
+  width: 100%;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.post-widget-label {
+}
+
+#submit-post-button {
+  align-self: flex-end;
+}

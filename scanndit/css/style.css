@@ -1,0 +1,160 @@
+body.logged-out .navbar-toggler {
+  display: none
+}
+
+body.logged-in .post-widget-logged-out-buttons {
+  display: none;
+}
+
+body.logged-out .post-widget-logged-in-buttons {
+  display: none
+}
+
+body.logged-in .login-signup-buttons {
+  display: none;
+}
+
+body.logged-out .create-new-comment {
+  display: none
+}
+body.logged-out .create-new-post {
+  display: none
+}
+
+.comment-and-post {
+  background: lightgreen;
+  margin-bottom: 20px;
+}
+
+#navbar-login button {
+  margin-left: 10px;
+  width: 6em;
+}
+
+.main-container {
+  padding: 20px;
+  margin: auto;
+  margin-top: 57px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 992px;
+}
+
+h1{
+    color: #ff5555;
+}
+
+p {
+    color: #006db3;
+}
+
+.post-list {
+    width: 100%;
+    margin: 10px auto;
+}
+
+.all-comments {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  top: -1px;
+}
+
+.navbar-logo-text {
+  margin-left: 10px;
+  font-size: 20px;
+}
+.u-custom{
+  font-size: 20px;
+}
+
+.navbar-custom {
+  padding: 5px 15px;
+  /* height: 49px; */
+  border-bottom: 1px solid lightgrey;
+}
+
+.close-button {
+    width: 25px;
+    height: 25px;
+    float: right;
+    margin: 0px;
+    opacity: 0.3;
+    color: red;
+    border-radius: 25px;
+}
+
+.close-button:hover {
+    opacity: 1;
+}
+
+.post-title {
+    width: 90%;
+    height: auto;
+    border: 2px solid lightgrey;
+    border-radius: 25px;
+    margin: 10px;
+    display: inline-block;
+    padding-left: 20px
+}
+
+.user-post-title{
+
+    color: #006db3
+}
+.user-post{
+    width: 100%;
+    height: auto;
+    border: 2px solid lightgrey;
+    border-radius: 25px;
+    margin: 10px 0;
+    display: inline-block;
+    padding-left: 20px;
+    color:#0288d1;
+}
+
+.user-post:hover{
+    background: lightgrey;
+}
+
+
+.login-setting{
+    border-radius: 25px;
+    margin: 10px;
+    padding: 2px;
+}
+
+.create-post-wrapper{
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* button {
+    width: 200px;
+    margin: 15px;
+} */
+
+.close{
+    text-align: right;
+}
+
+#load-more-button{
+    text-align: center;
+    width: 91%;
+    border-radius: 25px;
+    margin: 0 auto;
+}
+
+.error-message{
+    color: red;
+}
+
+.custom-size{
+    height: 600px;
+}

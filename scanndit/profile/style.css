@@ -1,0 +1,152 @@
+.toggle-content {
+	/* display: none; */
+	height: 0;
+	opacity: 0;
+	overflow: hidden;
+	transition: height 350ms ease-in-out, opacity 750ms ease-in-out;
+}
+
+.toggle-content.is-visible {
+	display: block;
+	height: auto;
+	opacity: 1;
+  transition: height 350ms ease-in-out, opacity 750ms ease-in-out;
+}
+
+.user-posts-and-comments {
+  margin: 20px 0;
+}
+
+.user-posts-and-comments-buttons {
+  text-align: center;
+  margin: 10px auto;
+  max-width: 300px;
+}
+
+.user-posts-and-comments-buttons button {
+  padding: 0;
+}
+
+.user-posts-and-comments-buttons button {
+  background: none;
+  border: none;
+  color: #999999;
+  margin-bottom: 2px;
+  border-bottom: 0px;
+  transition: margin-bottom 0.25s, border-bottom 0.25s;
+}
+
+.user-posts-and-comments-buttons button:disabled {
+  background: none;
+  border: none;
+  color: #000000;
+  margin-bottom: 0px;
+  border-bottom: 2px solid black;
+  transition: margin-bottom 0.25s, border-bottom 0.25s;
+}
+
+
+.profile {
+  margin: 0 auto;
+  max-width: 512px;
+  min-width: 260px;
+}
+
+.profile .profile-username {
+  margin: 0 auto;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.profile .profile-photo {
+  margin: 20px auto;
+  margin: 0;
+  text-align: center;
+}
+.profile .profile-photo img {
+  width: 150px;
+  height: 150px;
+  clip-path: circle(75px at center);
+}
+
+.profile-field-label {
+  text-align: right;
+  display: block;
+  font-size: 0.75em;
+}
+
+.profile-field {
+  width: 100%;
+  display: block;
+}
+
+.profile-user-info-field {
+  margin-top: 10px;
+  padding: 7px 10px;
+  background: #eeeeee;
+  border-radius: 4px;
+  transition: background 0.25s;
+}
+
+.profile-user-info-field.editable {
+  background: #ffcccc;
+  transition: background 0.25s;
+}
+
+.profile-user-info-field input[type="text"]{
+  background: none;
+  border: none;
+  border-bottom: 1px solid black;
+  margin-bottom: 4px;
+  box-sizing: border-box;
+  transition: border-bottom 0.25s, margin-bottom 0.25s, background 0.25s;
+}
+.profile-user-info-field input[type="text"]:disabled{
+  background: none;
+  border: none;
+  border-bottom: 1px solid black;
+  margin-bottom: 4px;
+  transition: background 0.25s;
+}
+.profile-user-info-field input[type="text"]:focus{
+  background: none;
+  border: none;
+  border-bottom: 4px solid black;
+  margin-bottom: 1px;
+  transition: border-bottom 0.25s, margin-bottom 0.25s;
+  outline: none;
+}
+
+.profile-buttons-wrapper {
+  margin-top: 10px;
+}
+
+.profile-create-button {
+  width: 100%;
+}
+
+.profile-edit-button {
+  width: 100%;
+}
+
+.profile-cancel-button {
+  width: 47%;
+}
+
+.profile-save-button {
+  float: right;
+  width: 47%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* a {} */

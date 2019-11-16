@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Scanndit</title>
+  </head>
+  <body>
+    <div id="main-container" class="main-container">
+      <div class="profile-wrapper">
+
+        <div class="profile">
+          <div class="profile-photo">
+            <img src="/profile-placeholder.png" alt="">
+          </div>
+          <h1 class="profile-username"></h1>
+
+          <div class="profile-user-info" hidden="true">
+            <div class="profile-user-info-field">
+              <span class="profile-field-label">Alternate Email</span>
+              <input class="profile-field profile-alt-email" type="text" name="" value="" disabled="disabled">
+            </div>
+            <div class="profile-user-info-field">
+              <span class="profile-field-label">Mobile Number</span>
+              <input class="profile-field profile-mobile-number" type="text" name="" value="" disabled="disabled">
+            </div>
+            <div class="profile-user-info-field">
+              <span class="profile-field-label">Address</span>
+              <input class="profile-field profile-address" type="text" name="" value="" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="profile-buttons-wrapper profile-create-button-wrapper" hidden="true">
+            <button class="profile-create-button btn btn-outline-primary" type="button" name="button">Create Profile</button>
+          </div>
+          <div class="profile-buttons-wrapper profile-edit-button-wrapper" hidden="true">
+            <button class="profile-edit-button btn btn-outline-primary" type="button" name="button">Edit Profile</button>
+          </div>
+          <div class="profile-buttons-wrapper profile-save-cancel-button-wrapper" hidden="true">
+            <button class="profile-cancel-button btn btn-outline-primary" type="button" name="button">Cancel</button>
+            <button class="profile-save-button btn btn-outline-primary" type="button" name="button">Save</button>
+          </div>
+
+        </div>
+
+        <div class="user-posts-and-comments">
+          <div class="user-posts-and-comments-buttons">
+            <button id="view-user-posts-button" type="button" name="button" disabled>Posts</button>
+            <button id="view-user-comments-button" type="button" name="button">Comments</button>
+          </div>
+          <div class="post-list toggle-content is-visible"></div>
+          <div class="comments-list toggle-content"></div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <script src="/js/navbar.js" charset="utf-8"></script>
+    <script src="/js/api.js" charset="utf-8"></script>
+    <script src="/js/commentfeed.js" charset="utf-8"></script>
+    <script src="/js/postfeed.js" charset="utf-8"></script>
+    <script src="/js/profile.js" charset="utf-8"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
