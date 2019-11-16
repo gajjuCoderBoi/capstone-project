@@ -1,4 +1,4 @@
-package com.example.profileapi.model;
+package com.ga.profileapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CollectionId;

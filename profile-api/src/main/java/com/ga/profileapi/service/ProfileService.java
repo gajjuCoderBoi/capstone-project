@@ -1,6 +1,6 @@
-package com.example.profileapi.service;
+package com.ga.profileapi.service;
 
-import com.example.profileapi.model.Profile;
+import com.ga.profileapi.model.Profile;
 
 public interface ProfileService {
 
