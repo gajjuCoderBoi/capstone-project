@@ -3,6 +3,10 @@ package com.ga.postsapi.bean;
 
 public class User {
 
+    public String getEmail() {
+        return email;
+    }
+
     /*************************************************************************
      *
      *      User bean just to use as an Object.

@@ -1,7 +1,6 @@
 package com.ga.profileapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.CollectionId;
 
 import javax.persistence.*;
 
@@ -33,8 +32,8 @@ public class Profile {
     @Column(name = "additional_email")
     private String additionalEmail;
 
-    @Column(name = "phone")
-    private String phone;
+    @Column(name = "mobile")
+    private String mobile;
 
     @Column(name = "address")
     private String address;
@@ -77,12 +76,12 @@ public class Profile {
         this.additionalEmail = additionalEmail;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getAddress() {
