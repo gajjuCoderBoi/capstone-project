@@ -1,5 +1,5 @@
 // const API_ENDPOINT_BASE = 'http://thesi.generalassemb.ly:8080/';
-const API_ENDPOINT_BASE = 'http://localhost:8080/scandit/';
+const API_ENDPOINT_BASE = 'http://localhost:8080/';
 
 // document.cookie parser
 // obtained from https://gist.github.com/rendro/525bbbf85e84fa9042c2
@@ -29,6 +29,7 @@ function buildHeader(access_token = null) {
 async function callApiAndReturnResponseOrThrowError(path, method, access_token = null, body = null) {
   let fetchOptions = {
     method: method,
+    //mode: 'no-cors',
     headers: buildHeader(access_token),
   };
   if (body) { fetchOptions.body = body };
@@ -78,7 +79,7 @@ async function createOrUpdateProfile(access_token, altEmail, mobileNumber, addre
 // Loading all posts
 async function getAllPosts()
 {
-  let response = await callApiAndReturnResponseOrThrowError('post/list', 'GET');
+  let response = await callApiAndReturnResponseOrThrowError('posts/list', 'GET');
   return response;
 }
 
@@ -95,13 +96,13 @@ async function signUp(email, password, username){
     password: password,
     username: username,
   };
-  let response = await callApiAndReturnResponseOrThrowError('signup', 'POST', null, JSON.stringify(user));
+  let response = await callApiAndReturnResponseOrThrowError('users/signup', 'POST', null, JSON.stringify(user));
   return response;
 }
 
 // Existing User Login
 async function loginUser(user){
-  let response = await callApiAndReturnResponseOrThrowError('login', 'POST', null, JSON.stringify(user));
+  let response = await callApiAndReturnResponseOrThrowError('users/login', 'POST', null, JSON.stringify(user));
   return response;
 }
 
