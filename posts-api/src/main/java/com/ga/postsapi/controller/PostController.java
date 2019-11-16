@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping
 public class PostController {
     /*************************************************************************
-     *       todo
-     *      Comment for Autowired
+     *  postService is autowired. This is a necessary dependence so that we
+     *  can call the services provided by PostService
      *
      *************************************************************************/
 
@@ -26,19 +26,20 @@ public class PostController {
 
 
     /*************************************************************************
-     *       todo
-     *      Comment for Autowired
-     *
+     *  getPosts() is a method that takes no arguments. It will return a list of
+     *  posts. It will accomplish this through a call to postServices function
+     *  postList()
      *************************************************************************/
     @GetMapping("/list")
     public ResponseEntity<?> getPosts(){
         return ResponseEntity.ok(postService.postList());
     }
 
+
     /*************************************************************************
-     *       todo
-     *      Comment for Autowired
-     *
+     *  getPostsById(Long postId) takes the PathVariable postId as an argument.
+     *  It calls the postService.getPostById passing the postId. It will
+     *  return the corresponding Posgt
      *************************************************************************/
     @GetMapping("/{postId}")
     public ResponseEntity<?> getPostById(@PathVariable Long postId){
@@ -48,18 +49,21 @@ public class PostController {
 
 
     /*************************************************************************
-     *       todo
-     *      Comment for Autowired
-     *
+     *  The createPost method takes two arguments: a post and a token.
+     *   The function will in turn call the postService method createPost passing
+     *  these two values which will in turn create the post
      *************************************************************************/
     @PostMapping
     public Post createPost(@RequestBody Post post,@RequestHeader("Authorization") String token){
         return postService.createPost(post, token);
     }
+
+
+
     /*************************************************************************
-     *       todo
-     *      Comment for Autowired
-     *
+     *  The deletePost method takes two parameters postId and token. The
+     *  postService deletePost gets called receiving these two values and
+     *  will further handle the deletePost request
      *************************************************************************/
 
     @DeleteMapping("/{postId}")
