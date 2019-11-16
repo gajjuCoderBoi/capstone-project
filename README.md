@@ -54,6 +54,10 @@ Application Goals from User Stories are:
    
 ## General Approach
 
+We discussed the architecture of the project and decided to use a database for each component. We figured out
+how to proceed with the development and created the corresponding user stories that will lead us to completion.
+
+We used pair programming and collaborated with each other and tried to stick to our schedule.
 
 ## Major Hurdles
 
