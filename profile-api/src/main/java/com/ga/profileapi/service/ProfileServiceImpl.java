@@ -1,9 +1,9 @@
-package com.example.profileapi.service;
+package com.ga.profileapi.service;
 
 
-import com.example.profileapi.model.Profile;
-import com.example.profileapi.model.User;
-import com.example.profileapi.repository.ProfileRepository;
+import com.ga.profileapi.model.Profile;
+import com.ga.profileapi.model.User;
+import com.ga.profileapi.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

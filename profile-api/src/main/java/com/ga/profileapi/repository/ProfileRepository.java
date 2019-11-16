@@ -1,6 +1,6 @@
-package com.example.profileapi.repository;
+package com.ga.profileapi.repository;
 
-import com.example.profileapi.model.Profile;
+import com.ga.profileapi.model.Profile;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

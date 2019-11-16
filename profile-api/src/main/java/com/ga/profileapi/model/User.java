@@ -1,4 +1,4 @@
-package com.example.profileapi.model;
+package com.ga.profileapi.model;
 
 
 public class User {
