@@ -24,7 +24,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
   postDescr.className = "post-desc";
   console.log(post)
   postTitle.innerText = `${post.user.username}: ${post.title}`;
-  postDescr.innerText = post.description;
+  postDescr.innerText = post.text;
   postHeader.appendChild(postTitle);
   postHeader.appendChild(postDescr);
 

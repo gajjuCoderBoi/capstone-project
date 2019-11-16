@@ -1,5 +1,6 @@
 // const API_ENDPOINT_BASE = 'http://thesi.generalassemb.ly:8080/';
-const API_ENDPOINT_BASE = 'http://localhost:8080/';
+const API_ENDPOINT_BASE = 'http://172.16.4.206:8080/';
+// const API_ENDPOINT_BASE = 'http://localhost:8080/';
 
 // document.cookie parser
 // obtained from https://gist.github.com/rendro/525bbbf85e84fa9042c2
@@ -111,9 +112,9 @@ async function createNewPost(userTitle, userDescr, auth){
   let userAuth = cookieParser(auth);
   let post = {
     title: userTitle,
-    description: userDescr
+    text: userDescr
   }
-  let response = await callApiAndReturnResponseOrThrowError('post', 'POST', userAuth.access_token, JSON.stringify(post));
+  let response = await callApiAndReturnResponseOrThrowError('posts', 'POST', userAuth.access_token, JSON.stringify(post));
   return response;
 }
 
