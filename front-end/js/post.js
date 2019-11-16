@@ -82,8 +82,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
   })
 
   getAllComments(postId).then(res =>{
+    console.log(res);
     console.log(cookieParser(document.cookie).username)
-    res.forEach(element => {
+    res.comments.forEach(element => {
       populateExistingComment(element)
     });
   });

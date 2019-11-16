@@ -86,6 +86,7 @@ async function getAllPosts()
 
 // loading all comments based on comment id
 async function getAllComments(postId){
+    console.log(postId);
   let response = await callApiAndReturnResponseOrThrowError(`posts/${postId}`, 'GET');
   return response;
 }
