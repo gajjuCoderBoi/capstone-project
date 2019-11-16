@@ -43,7 +43,22 @@ Application Goals from User Stories are:
 * Signed-in user able to post a Post and comment
 * Signed-in user able to delete it's own Posts and Comments
 
+## Technology Used
 
+   - Spring boot is used for the backend Services.
+   - Zuul Eureka client is used for load-balancing between Services.
+   - Zuul Gateway for Api-Gateway to forward api requests to Services. 
+   - Postgres is Used for the database. 
+   - Docker to run the services. 
+   - Pivotal Cloud Foundry is used to deploy the application.
+   
+## General Approach
+
+
+## Major Hurdles
+
+
+## Installation Instruction
 
 ## Timeline
 
