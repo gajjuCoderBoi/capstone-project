@@ -1,0 +1,15 @@
+applications:
+- name: ghazanfar9131-eureka-server
+  # memory: 700M
+  # instances: 1
+  # path: target/eureka-server-0.0.1-SNAPSHOT.jar
+  # buildpacks:
+  # - java_buildpack
+  # env:
+  #   SPRING_PROFILES_ACTIVE: pcf
+  memory: 341.33M
+  instances: 1
+  env:
+    SPRING_PROFILES_ACTIVE: pcf,global
+  docker:
+    image: ghazanfar9131/eureka-server:0.0.1-SNAPSHOT
