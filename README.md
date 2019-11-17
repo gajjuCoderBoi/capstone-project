@@ -119,10 +119,10 @@ Follow these easy step:
   
 
 ## Architecture
-##### Rough Sketch of ERD.
+##### Rough Sketch of Architecture Diagram.
 ![Architecture](./img/rough_architecture.jpg)
 
-##### Soft Representation of ERD.
+##### Soft Representation of Architecture Diagram.
 ![Architecture](./img/archi2.png)
     
     
