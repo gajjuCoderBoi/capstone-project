@@ -2,7 +2,10 @@ package com.ga.usersapi.service;
 
 import com.ga.usersapi.config.JwtUtil;
 import com.ga.usersapi.model.User;
+import com.ga.usersapi.model.UserRole;
 import com.ga.usersapi.repository.UserRepository;
+import com.ga.usersapi.repository.UserRoleRepository;
+import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,6 +32,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserRoleRepository userRoleRepository;
+
     @Override
     public List<User> listUsers() {
         return (List<User>) userRepository.findAll();
@@ -37,6 +43,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<String> signup(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        UserRole userRole = userRoleRepository.getRoleByName("USER");
+        if(userRole==null){
+            userRole = new UserRole();
+            userRole.setName("USER");
+            userRoleRepository.save(userRole);
+        }
+        user.getRoles().add(userRole);
 
         if (userRepository.save(user).getUserId() != null) {
             UserDetails userDetails = loadUserByUsername(user.getEmail());
@@ -97,7 +110,9 @@ public class UserServiceImpl implements UserService {
 
     private List<GrantedAuthority> getGrantedAuthorities(User user) {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority("ADMIN"));
+        for (UserRole role: user.getRoles()){
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
         return authorities;
     }
 }
