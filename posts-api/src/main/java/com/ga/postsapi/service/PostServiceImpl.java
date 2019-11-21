@@ -4,13 +4,17 @@ import com.ga.postsapi.bean.Comment;
 import com.ga.postsapi.model.Post;
 import com.ga.postsapi.repository.PostRepository;
 import com.ga.postsapi.bean.User;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -30,6 +34,13 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     PostRepository postRepository;
+
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    @Qualifier("PostToComment")
+    private Queue queue;
 
     /*************************************************************************
      *
@@ -95,7 +106,6 @@ public class PostServiceImpl implements PostService {
         for (Post savedPost : savedPosts) {
             savedPost.setUser(userHashMap.get(savedPost.getUserId()));
         }
-        System.out.println(rateResponse);
         return savedPosts;
     }
 
@@ -111,6 +121,13 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post getPostById(Long postId) {
         Post savedPost = postRepository.findById(postId).orElse(null);
+
+
+        System.out.println("Sending message...");
+        rabbitTemplate.convertAndSend(this.queue.getName(), String.valueOf(postId));
+        System.out.println("Message sent: " + String.valueOf(postId) + " on q: " + queue.getName());
+
+
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<String>(headers);

@@ -36,7 +36,7 @@ public class DatabaseLoader {
         User batman = new User(1L, "batman","bat");
         batman.getRoles().add(USER);
 
-        User superman = new User(1L, "superman","super");
+        User superman = new User(2L, "superman","super");
         superman.getRoles().add(USER);
         log.info("Saved {}", userRepository.save(batman));
         log.info("Saved {}", userRepository.save(superman));
