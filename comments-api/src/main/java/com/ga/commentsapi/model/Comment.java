@@ -5,7 +5,7 @@ import com.ga.commentsapi.bean.User;
 import javax.persistence.*;
 
 @Entity
-@Table(name="comments")
+@Table(name = "comments")
 public class Comment {
 
     /*************************************************************************
@@ -78,4 +78,22 @@ public class Comment {
         this.userId = userId;
     }
 
+    public Comment() {
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", text='" + text + '\'' +
+                ", postId=" + postId +
+                ", userId=" + userId +
+                '}';
+    }
+
+    public Comment(String text, Long postId, Long userId) {
+        this.text = text;
+        this.postId = postId;
+        this.userId = userId;
+    }
 }

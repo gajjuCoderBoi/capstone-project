@@ -45,6 +45,8 @@ public class Post {
     @Transient
     private List<Comment> comments;
 
+
+
     public List<Comment> getComments() {
         return comments;
     }
@@ -93,7 +95,25 @@ public class Post {
         this.userId = userId;
     }
 
+    public Post() {
+    }
 
+    @Override
+    public String toString() {
+        return "Post{" +
+                "postId=" + postId +
+                ", title='" + title + '\'' +
+                ", text='" + text + '\'' +
+                ", userId=" + userId +
+                '}';
+    }
+
+    public Post(Long postId,String title, String text, Long userId) {
+        this.postId=postId;
+        this.title = title;
+        this.text = text;
+        this.userId = userId;
+    }
 
 
 }

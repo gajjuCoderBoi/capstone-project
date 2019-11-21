@@ -27,10 +27,6 @@ public class UserRole {
         this.name = name;
     }
 
-    public UserRole(String name, List<User> users) {
-        this.name = name;
-        this.users = users;
-    }
 
     public Long getRoleId() {
         return roleId;
@@ -54,5 +50,13 @@ public class UserRole {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public String toString() {
+        return "UserRole{" +
+                "roleId=" + roleId +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

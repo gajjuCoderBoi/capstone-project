@@ -1,8 +1,13 @@
 package com.ga.usersapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ga.usersapi.config.JwtRequestFilter;
+import com.ga.usersapi.config.JwtUtil;
+import com.ga.usersapi.service.UserServiceImpl;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -68,5 +73,23 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public User(Long userId, String email, String password) {
+        setUserId(userId);
+        setEmail(email);
+        setPassword(new BCryptPasswordEncoder().encode(password));
+    }
+
+    public User() {
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
