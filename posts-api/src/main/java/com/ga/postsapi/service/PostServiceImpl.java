@@ -124,8 +124,9 @@ public class PostServiceImpl implements PostService {
 
 
         System.out.println("Sending message...");
-        rabbitTemplate.convertAndSend(this.queue.getName(), String.valueOf(postId));
+        String res = (String) rabbitTemplate.convertSendAndReceive(this.queue.getName(), String.valueOf(postId));
         System.out.println("Message sent: " + String.valueOf(postId) + " on q: " + queue.getName());
+        System.out.println("Message Recieved:"+res);
 
 
         HttpHeaders headers = new HttpHeaders();
