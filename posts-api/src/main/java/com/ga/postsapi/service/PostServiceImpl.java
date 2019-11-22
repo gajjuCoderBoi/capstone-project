@@ -1,17 +1,22 @@
 package com.ga.postsapi.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ga.postsapi.bean.Comment;
+import com.ga.postsapi.bean.User;
 import com.ga.postsapi.model.Post;
 import com.ga.postsapi.repository.PostRepository;
-import com.ga.postsapi.bean.User;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,6 +42,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Autowired
     @Qualifier("PostToComment")
@@ -119,20 +127,18 @@ public class PostServiceImpl implements PostService {
      *************************************************************************/
 
     @Override
-    public Post getPostById(Long postId) {
+    public Post getPostById(Long postId){
         Post savedPost = postRepository.findById(postId).orElse(null);
 
+        String res = (String) rabbitTemplate.convertSendAndReceive(this.queue.getName(),"findCommentsByPostId:"+postId);
 
-        System.out.println("Sending message...");
-        String res = (String) rabbitTemplate.convertSendAndReceive(this.queue.getName(), String.valueOf(postId));
-        System.out.println("Message sent: " + String.valueOf(postId) + " on q: " + queue.getName());
-        System.out.println("Message Recieved:"+res);
+        Comment[] comments = new Comment[0];
+        try {
+            comments = objectMapper.readValue(res, Comment[].class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity<String> entity = new HttpEntity<String>(headers);
-        Comment[] comments =  restTemplate.exchange("http://comments-api:5003/"+savedPost.getPostId(), HttpMethod.GET, entity, Comment[].class).getBody();
         savedPost.setComments(Arrays.asList(comments));
         return savedPost;
     }
@@ -161,10 +167,7 @@ public class PostServiceImpl implements PostService {
      *
      *************************************************************************/
     private Long deleteCommentsOfPost(Long postId){
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity<String> entity = new HttpEntity<String>(headers);
-        Long res =  restTemplate.exchange("http://comments-api:5003/"+postId+"/comments", HttpMethod.DELETE, entity, Long.class).getBody();
-        return res;
+        String res = (String) rabbitTemplate.convertSendAndReceive(this.queue.getName(),"deleteCommentsByPostId:"+postId);
+        return Long.valueOf(res);
     }
 }

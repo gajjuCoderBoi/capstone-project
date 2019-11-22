@@ -3,6 +3,7 @@ package com.ga.postsapi.service;
 
 import com.ga.postsapi.model.Post;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface PostService {
