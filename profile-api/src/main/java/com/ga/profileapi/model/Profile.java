@@ -3,6 +3,8 @@ package com.ga.profileapi.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="profile")
@@ -29,13 +31,18 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long profileId;
 
+
     @Column(name = "additional_email")
+    @NotBlank(message = "Additional Email field can not be blank")
+    @Email(message = "Email should be valid")
     private String additionalEmail;
 
     @Column(name = "mobile")
+    @NotBlank(message = "mobile field can not be blank")
     private String mobile;
 
     @Column(name = "address")
+    @NotBlank(message = "address field can not be blank")
     private String address;
 
     @Column(name = "user_id", nullable = false)

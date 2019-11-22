@@ -1,5 +1,7 @@
 package com.ga.profileapi.controller;
 
+import com.ga.profileapi.exception.ProfileNotFoundException;
+import com.ga.profileapi.exception.TokenException;
 import com.ga.profileapi.model.Profile;
 import com.ga.profileapi.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +9,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/")
 public class ProfileController {
 
     @GetMapping("/test")
-    public String test(){
+    public String test() {
         return "Test Profile";
     }
 
@@ -39,12 +43,10 @@ public class ProfileController {
      *************************************************************************/
 
     @GetMapping
-    public ResponseEntity<?> getProfile(@RequestHeader("Authorization") String token){
+    public ResponseEntity<?> getProfile(@RequestHeader("Authorization") String token) throws ProfileNotFoundException, TokenException {
         Profile savedProfile = profileService.getProfile(token);
         System.out.println(savedProfile);
-        return savedProfile!=null ?
-                ResponseEntity.ok(savedProfile) :
-                new ResponseEntity<String>("Unauthorized", HttpStatus.UNAUTHORIZED);
+        return ResponseEntity.ok(savedProfile) ;
 
     }
 
@@ -60,11 +62,9 @@ public class ProfileController {
      *************************************************************************/
 
     @PostMapping
-    public ResponseEntity<?> createProfile(@RequestBody Profile profile, @RequestHeader("Authorization") String token){
+    public ResponseEntity<?> createProfile(@Valid @RequestBody Profile profile, @RequestHeader("Authorization") String token) throws ProfileNotFoundException, TokenException {
         Profile savedProfile = profileService.createProfile(profile, token);
-        return savedProfile!=null ?
-                ResponseEntity.ok(savedProfile) :
-                new ResponseEntity<String>("Unauthorized", HttpStatus.UNAUTHORIZED);
+        return ResponseEntity.ok(savedProfile);
     }
 
     /*************************************************************************
@@ -77,10 +77,8 @@ public class ProfileController {
      *
      *************************************************************************/
     @PutMapping
-    public ResponseEntity<?> updateProfile(@RequestBody Profile profile, @RequestHeader("Authorization") String token){
+    public ResponseEntity<?> updateProfile(@Valid @RequestBody Profile profile, @RequestHeader("Authorization") String token) throws ProfileNotFoundException, TokenException {
         Profile savedProfile = profileService.updateProfile(profile, token);
-        return savedProfile!=null ?
-                ResponseEntity.ok(savedProfile) :
-                new ResponseEntity<String>("Unauthorized", HttpStatus.UNAUTHORIZED);
+        return ResponseEntity.ok(savedProfile);
     }
 }

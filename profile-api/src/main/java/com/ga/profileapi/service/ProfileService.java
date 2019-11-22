@@ -1,5 +1,7 @@
 package com.ga.profileapi.service;
 
+import com.ga.profileapi.exception.ProfileNotFoundException;
+import com.ga.profileapi.exception.TokenException;
 import com.ga.profileapi.model.Profile;
 
 public interface ProfileService {
@@ -11,10 +13,10 @@ public interface ProfileService {
      *
      *************************************************************************/
 
-    public Profile createProfile(Profile profile, String token);
+    public Profile createProfile(Profile profile, String token) throws TokenException, ProfileNotFoundException;
 
-    Profile getProfile(String token);
+    Profile getProfile(String token) throws TokenException, ProfileNotFoundException;
 
-    public Profile updateProfile(Profile profile, String token);
+    public Profile updateProfile(Profile profile, String token) throws ProfileNotFoundException, TokenException;
 
 }

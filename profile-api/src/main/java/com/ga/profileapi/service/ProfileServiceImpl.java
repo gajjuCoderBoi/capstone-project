@@ -2,6 +2,8 @@ package com.ga.profileapi.service;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ga.profileapi.exception.ProfileNotFoundException;
+import com.ga.profileapi.exception.TokenException;
 import com.ga.profileapi.model.Profile;
 import com.ga.profileapi.model.User;
 import com.ga.profileapi.repository.ProfileRepository;
@@ -64,12 +66,12 @@ public class ProfileServiceImpl implements ProfileService{
      *************************************************************************/
 
     @Override
-    public Profile createProfile(Profile profile, String token) {
+    public Profile createProfile(Profile profile, String token) throws TokenException, ProfileNotFoundException {
         User user = getUserFromUserAPI(token);
         if (user==null){
-            return null;
+            throw new TokenException("Invalid Token.");
         }
-        if(getProfile(token)!=null){
+        if(profileRepository.getProfileByUserId(user.getUserId())!=null){
             return updateProfile(profile, token);
         }
         profile.setUserId(user.getUserId());
@@ -88,14 +90,14 @@ public class ProfileServiceImpl implements ProfileService{
      *************************************************************************/
 
     @Override
-    public Profile getProfile(String token) {
+    public Profile getProfile(String token) throws TokenException, ProfileNotFoundException {
         User user = getUserFromUserAPI(token);
         if (user==null){
-            return null;
+            throw new TokenException("Invalid Token.");
         }
 
         Profile savedProfile = profileRepository.getProfileByUserId(user.getUserId());
-        if (savedProfile==null) return null;
+        if (savedProfile==null) throw new ProfileNotFoundException("Profile does not exist");
         savedProfile.setUsername(user.getEmail());
         return savedProfile;
     }
@@ -119,15 +121,15 @@ public class ProfileServiceImpl implements ProfileService{
      *
      *************************************************************************/
     @Override
-    public Profile updateProfile(Profile profile, String token) {
+    public Profile updateProfile(Profile profile, String token) throws ProfileNotFoundException, TokenException {
         User user = getUserFromUserAPI(token);
         if (user==null){
-            return null;
+            throw new TokenException("Invalid Token.");
         }
 
         Profile savedProfile = profileRepository.getProfileByUserId(user.getUserId());
         if (savedProfile==null){
-            return null;
+            throw new ProfileNotFoundException("Profile does not exist.");
         }
         savedProfile.setAdditionalEmail(profile.getAdditionalEmail());
         savedProfile.setAddress(profile.getAddress());
