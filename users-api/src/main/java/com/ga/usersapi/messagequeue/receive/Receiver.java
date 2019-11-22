@@ -46,4 +46,21 @@ public class Receiver {
         return "";
     }
 
+    @RabbitListener(queues = "CommentToUser")
+    public String messsageHandler_CommentToUser(String message) throws IOException {
+        if(message.startsWith("usersList:")){
+            String userIdsString = message.substring("usersList:".length());
+            Long[] userIds = objectMapper.readValue(userIdsString, Long[].class);
+            List<User> users = userService.userListFromUserIds(Arrays.asList(userIds));
+            String reply = objectMapper.writeValueAsString(users);
+            return reply;
+        }
+        if(message.startsWith("getUserByToken:")){
+            String token = message.substring("getUserByToken:".length());
+            User user = userService.getUserByToken(token);
+            return objectMapper.writeValueAsString(user);
+        }
+        return "";
+    }
+
 }

@@ -1,10 +1,14 @@
 package com.ga.commentsapi.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ga.commentsapi.bean.User;
 import com.ga.commentsapi.model.Comment;
 
 import com.ga.commentsapi.repository.CommentRepository;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -12,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,6 +32,16 @@ public class CommentServiceImpl implements CommentService {
      *
      *************************************************************************/
     @Autowired
+    RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    ObjectMapper objectMapper;
+
+    @Autowired
+    @Qualifier("CommentToUser")
+    private Queue commentToUser;
+
+    @Autowired
     RestTemplate restTemplate;
 
     @Autowired
@@ -41,12 +56,13 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Comment createComment(Comment comment, Long postId, String token){
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        headers.setBearerAuth(token.substring(7));
-        HttpEntity<String> entity = new HttpEntity<String>(headers);
-        User user = restTemplate.exchange("http://users-api:5001/", HttpMethod.GET, entity, User.class).getBody();
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+//        headers.setBearerAuth(token.substring(7));
+//        HttpEntity<String> entity = new HttpEntity<String>(headers);
+//        User user = restTemplate.exchange("http://users-api:5001/", HttpMethod.GET, entity, User.class).getBody();
 
+        User user = getUserFromUserAPI(token);
         if (user==null){
             return null;
         }
@@ -73,10 +89,22 @@ public class CommentServiceImpl implements CommentService {
 
         List<Comment> savedComments = (List<Comment>) commentRepository.findCommentsbyPostId(postId);
         Set<Long> userIdList = savedComments.stream().map(Comment::getUserId).collect(Collectors.toSet());
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Set<Long>> requestEntity = new HttpEntity<Set<Long>>(userIdList,headers);
-        User[] rateResponse = restTemplate.exchange("http://users-api:5001/userlist", HttpMethod.POST, requestEntity,User[].class).getBody();
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        HttpEntity<Set<Long>> requestEntity = new HttpEntity<Set<Long>>(userIdList,headers);
+//        User[] rateResponse = restTemplate.exchange("http://users-api:5001/userlist", HttpMethod.POST, requestEntity,User[].class).getBody();
+        String message = "";
+        User[] rateResponse = null;
+        try {
+            message = objectMapper.writeValueAsString(userIdList);
+
+            String response = (String) rabbitTemplate.convertSendAndReceive(commentToUser.getName(), "usersList:"+message);
+
+            rateResponse = objectMapper.readValue(response, User[].class);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         HashMap<Long, User> userHashMap = new LinkedHashMap<>();
         for (User user:rateResponse){
             userHashMap.put(user.getUserId(), user);
@@ -150,10 +178,14 @@ public class CommentServiceImpl implements CommentService {
      *************************************************************************/
 
     private User getUserFromUserAPI(String token){
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        headers.setBearerAuth(token.substring(7));
-        HttpEntity<String> entity = new HttpEntity<String>(headers);
-        return restTemplate.exchange("http://users-api:5001/", HttpMethod.GET, entity, User.class).getBody();
+//
+        String response = (String) rabbitTemplate.convertSendAndReceive(commentToUser.getName(), "getUserByToken:"+token);
+        User user=null;
+        try {
+            user =  objectMapper.readValue(response,User.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 }
