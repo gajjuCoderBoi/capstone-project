@@ -1,5 +1,6 @@
 package com.ga.usersapi.service;
 
+import com.ga.usersapi.exception.LoginException;
 import com.ga.usersapi.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -11,7 +12,7 @@ public interface UserService extends UserDetailsService {
 
     public List<String> signup(User user);
 
-    public List<String> login(User user);
+    public List<String> login(User user) throws LoginException;
 
     public User getUserByToken(String token);
 

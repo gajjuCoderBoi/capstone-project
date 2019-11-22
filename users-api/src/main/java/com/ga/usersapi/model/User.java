@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +24,12 @@ public class User {
     private Long userId;
 
     @Column(name = "username", nullable = false)
+    @NotBlank(message = "Username field cannot be blanked.")
     private String email;
 
 
     @Column(name = "password", nullable = false)
+    @NotBlank(message = "Password field cannot be blanked.")
     private String password;
 
     @JsonIgnore
@@ -39,7 +42,7 @@ public class User {
     private List<UserRole> roles;
 
     public List<UserRole> getRoles() {
-        if(roles==null) roles=new ArrayList<>();
+        if (roles == null) roles = new ArrayList<>();
         return roles;
     }
 

@@ -2,6 +2,7 @@ package com.ga.usersapi.controller;
 
 
 import com.ga.usersapi.config.JwtUtil;
+import com.ga.usersapi.exception.LoginException;
 import com.ga.usersapi.model.JwtResponse;
 import com.ga.usersapi.model.User;
 import com.ga.usersapi.service.UserService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,22 +29,22 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody User user){
+    public ResponseEntity signup(@Valid @RequestBody User user){
         return ResponseEntity.ok(new JwtResponse(userService.signup(user)));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User user){
+    public ResponseEntity login(@Valid @RequestBody User user) throws LoginException {
         return ResponseEntity.ok(new JwtResponse(userService.login(user)));
     }
 
     @GetMapping
-    public ResponseEntity<?> getUser(@RequestHeader("Authorization") String token){
+    public ResponseEntity getUser(@RequestHeader("Authorization") String token){
         return ResponseEntity.ok(userService.getUserByToken(token));
     }
 
     @PostMapping("/userlist")
-    public ResponseEntity<?> userListFromUserIds(@RequestBody List<Long> list){
+    public ResponseEntity userListFromUserIds(@RequestBody List<Long> list){
         return ResponseEntity.ok(userService.userListFromUserIds(list));
     }
 

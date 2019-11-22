@@ -1,6 +1,7 @@
 package com.ga.usersapi.service;
 
 import com.ga.usersapi.config.JwtUtil;
+import com.ga.usersapi.exception.LoginException;
 import com.ga.usersapi.model.User;
 import com.ga.usersapi.model.UserRole;
 import com.ga.usersapi.repository.UserRepository;
@@ -61,27 +62,28 @@ public class UserServiceImpl implements UserService {
             userRoleRepository.save(userRole);
         }
         user.getRoles().add(userRole);
-
-
-
         if (userRepository.save(user).getUserId() != null) {
             UserDetails userDetails = loadUserByUsername(user.getEmail());
-            return Arrays.asList(user.getEmail(), jwtUtil.generateToken(userDetails));        }
+            return Arrays.asList(user.getEmail(), jwtUtil.generateToken(userDetails));
+        }
 
         return null;
     }
 
     @Override
-    public List<String> login(User user) {
+    public List<String> login(User user) throws LoginException {
         User foundUser = userRepository.getUserByUsername(user.getEmail());
         if(foundUser != null &&
                 foundUser.getUserId() != null &&
                 bCryptPasswordEncoder.matches(user.getPassword(), foundUser.getPassword())) {
             UserDetails userDetails = loadUserByUsername(foundUser.getEmail());
             return Arrays.asList(user.getEmail(), jwtUtil.generateToken(userDetails));
-
         }
-
+        else if(foundUser!=null  &&
+                !bCryptPasswordEncoder.matches(user.getPassword(), foundUser.getPassword())
+        ){
+            throw new LoginException("Invalid Username and Password.");
+        }
 
 
         return null;
@@ -115,8 +117,6 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         User user = userRepository.getUserByUsername(username);
-
-
 
         if (user == null)
             throw new UsernameNotFoundException("Unknown user: " + username);
