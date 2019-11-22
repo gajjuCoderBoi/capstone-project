@@ -6,6 +6,9 @@ import com.ga.usersapi.model.UserRole;
 import com.ga.usersapi.repository.UserRepository;
 import com.ga.usersapi.repository.UserRoleRepository;
 import com.netflix.discovery.converters.Auto;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,6 +38,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRoleRepository userRoleRepository;
 
+    @Autowired
+    @Qualifier("UserToPost")
+    private Queue queue;
+
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+
     @Override
     public List<User> listUsers() {
         return (List<User>) userRepository.findAll();
@@ -50,6 +60,8 @@ public class UserServiceImpl implements UserService {
             userRoleRepository.save(userRole);
         }
         user.getRoles().add(userRole);
+
+
 
         if (userRepository.save(user).getUserId() != null) {
             UserDetails userDetails = loadUserByUsername(user.getEmail());
@@ -68,6 +80,8 @@ public class UserServiceImpl implements UserService {
             return Arrays.asList(user.getEmail(), jwtUtil.generateToken(userDetails));
 
         }
+
+
 
         return null;
     }
@@ -100,6 +114,8 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         User user = userRepository.getUserByUsername(username);
+
+
 
         if (user == null)
             throw new UsernameNotFoundException("Unknown user: " + username);

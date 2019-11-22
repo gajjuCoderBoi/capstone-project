@@ -1,9 +1,13 @@
 package com.ga.profileapi.service;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ga.profileapi.model.Profile;
 import com.ga.profileapi.model.User;
 import com.ga.profileapi.repository.ProfileRepository;
+import com.netflix.discovery.converters.Auto;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 
@@ -25,6 +30,11 @@ public class ProfileServiceImpl implements ProfileService{
      *      this service
      *
      *************************************************************************/
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    Queue queue;
 
     @Autowired
     RestTemplate restTemplate;
@@ -34,6 +44,9 @@ public class ProfileServiceImpl implements ProfileService{
 
     @Autowired
     ProfileRepository profileRepository;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
 
     /*************************************************************************
@@ -131,11 +144,20 @@ public class ProfileServiceImpl implements ProfileService{
      *
      *************************************************************************/
 
-    private User getUserFromUserAPI(String token){
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        headers.setBearerAuth(token.substring(7));
-        HttpEntity<String> entity = new HttpEntity<String>(headers);
-        return restTemplate.exchange("http://users-api:5001/", HttpMethod.GET, entity, User.class).getBody();
+    private User getUserFromUserAPI(String token) {
+        String response = (String) rabbitTemplate.convertSendAndReceive(queue.getName(), token);
+        User user=null;
+        try {
+            user =  objectMapper.readValue(response,User.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return user;
+
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+//        headers.setBearerAuth(token.substring(7));
+//        HttpEntity<String> entity = new HttpEntity<String>(headers);
+//        return restTemplate.exchange("http://users-api:5001/", HttpMethod.GET, entity, User.class).getBody();
     }
 }
