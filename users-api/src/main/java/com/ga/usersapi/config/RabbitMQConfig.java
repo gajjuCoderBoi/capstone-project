@@ -9,8 +9,13 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     @Bean
-    public Queue queue(){
+    public Queue userToProfileQueue(){
         String QUEUE_NAME = "UserToProfile";
+        return new Queue(QUEUE_NAME, false, false, false);
+    }
+    @Bean("PostToUser")
+    public Queue postToUserQueue(){
+        String QUEUE_NAME = "PostToUser";
         return new Queue(QUEUE_NAME, false, false, false);
     }
 }

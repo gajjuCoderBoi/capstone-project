@@ -48,7 +48,11 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     @Qualifier("PostToComment")
-    private Queue queue;
+    private Queue postToComment;
+
+    @Autowired
+    @Qualifier("PostToUser")
+    private Queue postToUser;
 
     /*************************************************************************
      *
@@ -62,7 +66,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post createPost(Post post, String token) {
         User user = getUserFromUserAPI(token);
-        if(user==null) return null;
+        if (user == null) return null;
         post.setUserId(user.getUserId());
         post.setUser(user);
         Post savedPost = postRepository.save(post);
@@ -83,9 +87,9 @@ public class PostServiceImpl implements PostService {
     @Override
     public Long deletePost(Long postId, String token) {
         User user = getUserFromUserAPI(token);
-        if(user==null) return null;
+        if (user == null) return null;
         Post savedPost = postRepository.findById(postId).orElse(null);
-        if(savedPost.getUserId().longValue() != user.getUserId().longValue()) return null;
+        if (savedPost.getUserId().longValue() != user.getUserId().longValue()) return null;
         deleteCommentsOfPost(savedPost.getPostId());
         postRepository.delete(savedPost);
         return savedPost.getPostId();
@@ -103,12 +107,25 @@ public class PostServiceImpl implements PostService {
     public List<Post> postList() {
         List<Post> savedPosts = (List<Post>) postRepository.findAll();
         Set<Long> userIdList = savedPosts.stream().map(Post::getUserId).collect(Collectors.toSet());
-        HttpHeaders headers = new HttpHeaders();
+        /*HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Set<Long>> requestEntity = new HttpEntity<Set<Long>>(userIdList,headers);
         User[] rateResponse = restTemplate.exchange("http://users-api:5001/userlist", HttpMethod.POST, requestEntity,User[].class).getBody();
+        */
+        String message = "";
+        User[] rateResponse = null;
+        try {
+            message = objectMapper.writeValueAsString(userIdList);
+
+            String response = (String) rabbitTemplate.convertSendAndReceive(postToUser.getName(), "usersList:"+message);
+
+            rateResponse = objectMapper.readValue(response, User[].class);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         HashMap<Long, User> userHashMap = new LinkedHashMap<>();
-        for (User user:rateResponse){
+        for (User user : rateResponse) {
             userHashMap.put(user.getUserId(), user);
         }
         for (Post savedPost : savedPosts) {
@@ -127,10 +144,10 @@ public class PostServiceImpl implements PostService {
      *************************************************************************/
 
     @Override
-    public Post getPostById(Long postId){
+    public Post getPostById(Long postId) {
         Post savedPost = postRepository.findById(postId).orElse(null);
 
-        String res = (String) rabbitTemplate.convertSendAndReceive(this.queue.getName(),"findCommentsByPostId:"+postId);
+        String res = (String) rabbitTemplate.convertSendAndReceive(this.postToComment.getName(), "findCommentsByPostId:" + postId);
 
         Comment[] comments = new Comment[0];
         try {
@@ -150,12 +167,21 @@ public class PostServiceImpl implements PostService {
      *
      *************************************************************************/
 
-    private User getUserFromUserAPI(String token){
-        HttpHeaders headers = new HttpHeaders();
+    private User getUserFromUserAPI(String token) {
+        String response = (String) rabbitTemplate.convertSendAndReceive(postToUser.getName(), "getUserByToken:"+token);
+        User user=null;
+        try {
+            user =  objectMapper.readValue(response,User.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return user;
+        /*HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.setBearerAuth(token.substring(7));
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         return restTemplate.exchange("http://users-api:5001/", HttpMethod.GET, entity, User.class).getBody();
+    */
     }
 
 
@@ -166,8 +192,8 @@ public class PostServiceImpl implements PostService {
      *      postId.
      *
      *************************************************************************/
-    private Long deleteCommentsOfPost(Long postId){
-        String res = (String) rabbitTemplate.convertSendAndReceive(this.queue.getName(),"deleteCommentsByPostId:"+postId);
+    private Long deleteCommentsOfPost(Long postId) {
+        String res = (String) rabbitTemplate.convertSendAndReceive(this.postToComment.getName(), "deleteCommentsByPostId:" + postId);
         return Long.valueOf(res);
     }
 }

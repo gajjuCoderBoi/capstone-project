@@ -38,9 +38,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRoleRepository userRoleRepository;
 
-    @Autowired
-    @Qualifier("UserToPost")
-    private Queue queue;
+//    @Autowired
+//    private Queue queue;
 
     @Autowired
     RabbitTemplate rabbitTemplate;
