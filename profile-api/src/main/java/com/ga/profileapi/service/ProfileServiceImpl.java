@@ -148,7 +148,7 @@ public class ProfileServiceImpl implements ProfileService{
         String response = (String) rabbitTemplate.convertSendAndReceive(queue.getName(), token);
         User user=null;
         try {
-            user =  objectMapper.readValue(response,User.class);
+            user = response.equals("null") ? null :  objectMapper.readValue(response,User.class);
         } catch (IOException e) {
             e.printStackTrace();
         }

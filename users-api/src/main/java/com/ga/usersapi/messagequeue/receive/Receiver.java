@@ -25,8 +25,14 @@ public class Receiver {
     @RabbitListener(queues = "UserToProfile")
     public String messsageHandler_UserToProfile(String message) throws JsonProcessingException {
         String token = message;
-        User user = userService.getUserByToken(token);
-        return objectMapper.writeValueAsString(user);
+        User user = null;
+        try {
+            user = userService.getUserByToken(token);
+        } catch (Exception e) {
+            System.out.println("Invalid Token.");
+        }
+
+        return user == null ? "null" : objectMapper.writeValueAsString(user);
     }
 
     @RabbitListener(queues = "PostToUser")
@@ -38,7 +44,7 @@ public class Receiver {
         if (message.startsWith("getUserByToken:")) {
             return getUserByToken(message);
         }
-        return "";
+        return null;
     }
 
     @RabbitListener(queues = "CommentToUser")
@@ -49,7 +55,7 @@ public class Receiver {
         if (message.startsWith("getUserByToken:")) {
             return getUserByToken(message);
         }
-        return "";
+        return "null";
     }
 
     private String getUsersList(String input) throws IOException {
