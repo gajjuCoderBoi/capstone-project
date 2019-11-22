@@ -31,36 +31,39 @@ public class Receiver {
 
     @RabbitListener(queues = "PostToUser")
     public String messsageHandler_PostToUser(String message) throws IOException {
-        if(message.startsWith("usersList:")){
-           String userIdsString = message.substring("usersList:".length());
-           Long[] userIds = objectMapper.readValue(userIdsString, Long[].class);
-           List<User> users = userService.userListFromUserIds(Arrays.asList(userIds));
-           String reply = objectMapper.writeValueAsString(users);
-           return reply;
+
+        if (message.startsWith("usersList:")) {
+            return getUsersList(message);
         }
-        if(message.startsWith("getUserByToken:")){
-            String token = message.substring("getUserByToken:".length());
-            User user = userService.getUserByToken(token);
-            return objectMapper.writeValueAsString(user);
+        if (message.startsWith("getUserByToken:")) {
+            return getUserByToken(message);
         }
         return "";
     }
 
     @RabbitListener(queues = "CommentToUser")
     public String messsageHandler_CommentToUser(String message) throws IOException {
-        if(message.startsWith("usersList:")){
-            String userIdsString = message.substring("usersList:".length());
-            Long[] userIds = objectMapper.readValue(userIdsString, Long[].class);
-            List<User> users = userService.userListFromUserIds(Arrays.asList(userIds));
-            String reply = objectMapper.writeValueAsString(users);
-            return reply;
+        if (message.startsWith("usersList:")) {
+            return getUsersList(message);
         }
-        if(message.startsWith("getUserByToken:")){
-            String token = message.substring("getUserByToken:".length());
-            User user = userService.getUserByToken(token);
-            return objectMapper.writeValueAsString(user);
+        if (message.startsWith("getUserByToken:")) {
+            return getUserByToken(message);
         }
         return "";
+    }
+
+    private String getUsersList(String input) throws IOException {
+
+        String userIdsString = input.substring("usersList:".length());
+        Long[] userIds = objectMapper.readValue(userIdsString, Long[].class);
+        List<User> users = userService.userListFromUserIds(Arrays.asList(userIds));
+        return objectMapper.writeValueAsString(users);
+    }
+
+    private String getUserByToken(String input) throws JsonProcessingException {
+        String token = input.substring("getUserByToken:".length());
+        User user = userService.getUserByToken(token);
+        return objectMapper.writeValueAsString(user);
     }
 
 }

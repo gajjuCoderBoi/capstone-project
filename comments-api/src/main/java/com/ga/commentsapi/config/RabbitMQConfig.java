@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    @Bean("CommentToPost")
+    @Bean("PostToComment")
     public Queue queue() {
-        String QUEUE_NAME = "CommentToPost";
+        String QUEUE_NAME = "PostToComment";
         return new Queue(QUEUE_NAME, false, false, false);
     }
 
