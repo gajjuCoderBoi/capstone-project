@@ -1,7 +1,14 @@
 package com.ga.commentsapi.service;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ga.commentsapi.bean.Post;
 import com.ga.commentsapi.bean.User;
+import com.ga.commentsapi.exception.CommentNotExistException;
+import com.ga.commentsapi.exception.PostNotExistException;
+import com.ga.commentsapi.exception.TokenException;
+import com.ga.commentsapi.exception.UnauthorizeActionException;
 import com.ga.commentsapi.model.Comment;
 
 import com.ga.commentsapi.repository.CommentRepository;
@@ -9,10 +16,6 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -40,13 +43,17 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     @Qualifier("CommentToUser")
-    private Queue commentToUser;
+    private Queue commentToUserQueue;
 
     @Autowired
-    RestTemplate restTemplate;
+    @Qualifier("CommentToPost")
+    private Queue commentToPostQueue;
 
     @Autowired
-    CommentRepository commentRepository;
+    private RestTemplate restTemplate;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     /*************************************************************************
      * The createComment method will create a comment. It takes three parameters:
@@ -56,18 +63,23 @@ public class CommentServiceImpl implements CommentService {
      *
      *************************************************************************/
     @Override
-    public Comment createComment(Comment comment, Long postId, String token) {
+    public Comment createComment(Comment comment, Long postId, String token) throws TokenException, PostNotExistException {
 
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-//        headers.setBearerAuth(token.substring(7));
-//        HttpEntity<String> entity = new HttpEntity<String>(headers);
-//        User user = restTemplate.exchange("http://users-api:5001/", HttpMethod.GET, entity, User.class).getBody();
 
         User user = getUserFromUserAPI(token);
-        if (user == null) {
-            return null;
+        if (user == null) throw new TokenException("Invalid Token.");
+
+        String response = (String) rabbitTemplate.convertSendAndReceive(commentToPostQueue.getName(), "getPostByPostId:" + postId);
+        Post post = null;
+
+        try {
+            post = response.equals("null") ? null : objectMapper.readValue(response, Post.class);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+
+        if (post == null) throw new PostNotExistException("Post Doesn't Exist!");
 
         comment.setUserId(user.getUserId());
         comment.setPostId(postId);
@@ -92,35 +104,31 @@ public class CommentServiceImpl implements CommentService {
         //return commentRepository.findCommentsbyPostId(postId);
 
         List<Comment> savedComments = (List<Comment>) commentRepository.findCommentsbyPostId(postId);
-        Set<Long> userIdList = savedComments.stream().map(Comment::getUserId).collect(Collectors.toSet());
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//        HttpEntity<Set<Long>> requestEntity = new HttpEntity<Set<Long>>(userIdList,headers);
-//        User[] rateResponse = restTemplate.exchange("http://users-api:5001/userlist", HttpMethod.POST, requestEntity,User[].class).getBody();
-        String message = "";
-        User[] rateResponse = null;
-        try {
-            message = objectMapper.writeValueAsString(userIdList);
+        if (savedComments.size() > 0) {
+            Set<Long> userIdList = savedComments.stream().map(Comment::getUserId).collect(Collectors.toSet());
+            String message = "";
+            User[] rateResponse = null;
+            try {
+                message = objectMapper.writeValueAsString(userIdList);
 
-            String response = (String) rabbitTemplate.convertSendAndReceive(commentToUser.getName(), "usersList:" + message);
+                String response = (String) rabbitTemplate.convertSendAndReceive(commentToUserQueue.getName(), "usersList:" + message);
 
-            rateResponse = objectMapper.readValue(response, User[].class);
+                rateResponse = objectMapper.readValue(response, User[].class);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            HashMap<Long, User> userHashMap = new LinkedHashMap<>();
+            for (User user : rateResponse) {
+                userHashMap.put(user.getUserId(), user);
+            }
+            for (Comment savedComment : savedComments) {
+                savedComment.setUser(userHashMap.get(savedComment.getUserId()));
+            }
+            System.out.println(rateResponse);
         }
-        HashMap<Long, User> userHashMap = new LinkedHashMap<>();
-        for (User user : rateResponse) {
-            userHashMap.put(user.getUserId(), user);
-        }
-        for (Comment savedComment : savedComments) {
-            savedComment.setUser(userHashMap.get(savedComment.getUserId()));
-        }
-        System.out.println(rateResponse);
         return savedComments;
     }
-
-    ;
 
     /*************************************************************************
      * The deleteCommentByCommentId gets two arguments: a commentId (commentId
@@ -130,14 +138,17 @@ public class CommentServiceImpl implements CommentService {
      * @return*/
 
     @Override
-    public Long deleteCommentByCommentId(Long commentId, String token) {
+    public Long deleteCommentByCommentId(Long commentId, String token) throws TokenException, UnauthorizeActionException, CommentNotExistException {
         Comment savedComment = commentRepository.findById(commentId).orElse(null);
+        if(savedComment==null) throw new CommentNotExistException("Comment Doesn't Exist.");
         User user = getUserFromUserAPI(token);
+        if (user == null) throw new TokenException("Invalid Token.");
         if (user.getUserId().equals(savedComment.getUserId())) {
             commentRepository.deleteById(commentId);
             return savedComment.getId();
+        } else if (!user.getUserId().equals(savedComment.getUserId())) {
+            throw new UnauthorizeActionException("Unauthorized Action.");
         }
-        ;
         return -1L;
     }
 
@@ -152,12 +163,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void getCommentsByUser(User user) {
         Long userid = user.getUserId();
-        if (userid == null) throw new EntityNotFoundException("User not found.");
         commentRepository.findCommentsbyUserId(userid);
-
     }
-
-    ;
 
     /*************************************************************************
      * the listComments will bring all comments from the repository
@@ -180,12 +187,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Long deleteCommentsByPostId(Long postId) {
         List<Comment> savedComments = (List<Comment>) commentRepository.findCommentsbyPostId(postId);
-        if (savedComments == null) {
-            throw new EntityNotFoundException("No comments were found for this post");}
-        else {
         commentRepository.deleteAll(savedComments);
-            return 1L;
-        }
+        return 1L;
     }
 
     /*************************************************************************
@@ -194,11 +197,10 @@ public class CommentServiceImpl implements CommentService {
      *************************************************************************/
 
     private User getUserFromUserAPI(String token) {
-//
-        String response = (String) rabbitTemplate.convertSendAndReceive(commentToUser.getName(), "getUserByToken:" + token);
+        String response = (String) rabbitTemplate.convertSendAndReceive(commentToUserQueue.getName(), "getUserByToken:" + token);
         User user = null;
         try {
-            user = objectMapper.readValue(response, User.class);
+            user = response.equals("null") ? null :  objectMapper.readValue(response,User.class);
         } catch (IOException e) {
             e.printStackTrace();
         }

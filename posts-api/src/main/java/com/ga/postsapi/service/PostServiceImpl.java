@@ -180,12 +180,6 @@ public class PostServiceImpl implements PostService {
             e.printStackTrace();
         }
         return user;
-        /*HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        headers.setBearerAuth(token.substring(7));
-        HttpEntity<String> entity = new HttpEntity<String>(headers);
-        return restTemplate.exchange("http://users-api:5001/", HttpMethod.GET, entity, User.class).getBody();
-    */
     }
 
 

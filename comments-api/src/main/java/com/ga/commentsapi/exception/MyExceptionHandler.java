@@ -1,4 +1,4 @@
-package com.ga.postsapi.exception;
+package com.ga.commentsapi.exception;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,6 +15,7 @@ import java.util.List;
 
 @ControllerAdvice
 public class MyExceptionHandler extends ResponseEntityExceptionHandler {
+
 
     @ExceptionHandler(UnauthorizeActionException.class)
     public ResponseEntity<ErrorResponse> handleUnauthorizedActionException(UnauthorizeActionException e) {
@@ -34,8 +35,17 @@ public class MyExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(CommentNotExistException.class)
+    public ResponseEntity<ErrorResponse> handleCommentNotExistException(CommentNotExistException e) {
+        List<String> details = new ArrayList<>();
+        details.add("Comment Doesn't Exist.");
+        String causeMessage = (e.getCause() == null) ? "" : e.getMessage();
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND, details, causeMessage);
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(PostNotExistException.class)
-    public ResponseEntity<ErrorResponse> handlePostNotExistException(PostNotExistException e) {
+    public ResponseEntity<ErrorResponse> handlePostNotExistException(CommentNotExistException e) {
         List<String> details = new ArrayList<>();
         details.add("Post Doesn't Exist.");
         String causeMessage = (e.getCause() == null) ? "" : e.getMessage();
@@ -49,10 +59,11 @@ public class MyExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   WebRequest request) {
 
         List<String> details = new ArrayList<>();
-        for (ObjectError error : ex.getBindingResult().getAllErrors()) {
+        for(ObjectError error : ex.getBindingResult().getAllErrors()) {
             details.add(error.getDefaultMessage());
         }
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, details);
+        System.out.println("!!!!!! Invalid field !!!!!!");
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }

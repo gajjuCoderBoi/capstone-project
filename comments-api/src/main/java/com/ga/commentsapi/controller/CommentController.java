@@ -1,9 +1,15 @@
 package com.ga.commentsapi.controller;
 
+import com.ga.commentsapi.exception.CommentNotExistException;
+import com.ga.commentsapi.exception.PostNotExistException;
+import com.ga.commentsapi.exception.TokenException;
+import com.ga.commentsapi.exception.UnauthorizeActionException;
 import com.ga.commentsapi.model.Comment;
 import com.ga.commentsapi.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @RestController
@@ -29,7 +35,7 @@ public class CommentController {
      *************************************************************************/
 
     @PostMapping("/{postId}")
-    public Comment createComment(@RequestBody Comment comment, @PathVariable Long postId, @RequestHeader("Authorization") String token){
+    public Comment createComment(@Valid @RequestBody Comment comment, @PathVariable Long postId, @RequestHeader("Authorization") String token) throws TokenException, PostNotExistException {
         return commentService.createComment(comment, postId, token);
     }
 
@@ -54,7 +60,7 @@ public class CommentController {
      *************************************************************************/
 
     @DeleteMapping("/{commentId}")
-    public Long deleteComment(@PathVariable Long commentId, @RequestHeader("Authorization") String token){
+    public Long deleteComment(@PathVariable Long commentId, @RequestHeader("Authorization") String token) throws UnauthorizeActionException, TokenException, CommentNotExistException {
         return commentService.deleteCommentByCommentId(commentId, token);
     }
 

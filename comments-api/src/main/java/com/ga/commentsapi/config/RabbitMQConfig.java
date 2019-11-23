@@ -14,9 +14,16 @@ public class RabbitMQConfig {
         return new Queue(QUEUE_NAME, false, false, false);
     }
 
+    @Bean("CommentToPost")
+    public Queue commentToPostQueue() {
+        String QUEUE_NAME = "CommentToPost";
+        return new Queue(QUEUE_NAME, false, false, false);
+    }
+
     @Bean("CommentToUser")
     public Queue commentToUserQueue(){
         String QUEUE_NAME = "CommentToUser";
         return new Queue(QUEUE_NAME, false, false, false);
     }
+
 }

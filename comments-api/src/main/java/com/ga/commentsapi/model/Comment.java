@@ -3,6 +3,7 @@ package com.ga.commentsapi.model;
 import com.ga.commentsapi.bean.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "comments")
@@ -27,6 +28,7 @@ public class Comment {
     private Long id;
 
     @Column(name = "text")
+    @NotBlank(message = "Comment Body field cannot be blanked. ")
     private String text;
 
     @Column(name = "postId")
