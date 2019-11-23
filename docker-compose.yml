@@ -118,5 +118,17 @@ services:
     command: 'mvn spring-boot:run'
     environment:
       - SPRING_PROFILES_ACTIVE=dev
+  swagger-app:
+    image: maven:3.6.1-jdk-8
+    ports:
+      - '6000:6000'
+    working_dir: /app
+    volumes:
+      - ./swagger-app:/app
+    depends_on:
+      - eureka
+    command: 'mvn spring-boot:run'
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
 
     
