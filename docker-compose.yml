@@ -22,6 +22,7 @@ services:
     volumes:
       - "./rabbitmq_data:/data"
   api-gateway:
+    hostname: 'api-gateway'
     image: maven:3.6.1-jdk-8
     ports:
       - '8080:8080'
@@ -67,6 +68,7 @@ services:
      - POSTGRES_USER=postgres
      - POSTGRES_DB=commentsdev
   users-api:
+    hostname: 'users-api'
     image: maven:3.6.1-jdk-8
     ports:
       - '5001:5001'
@@ -80,6 +82,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=dev
   profile-api:
+    hostname: 'profile-api'
     image: maven:3.6.1-jdk-8
     ports:
       - '5004:5004'
@@ -93,6 +96,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=dev
   posts-api:
+    hostname: 'posts-api'
     image: maven:3.6.1-jdk-8
     ports:
       - '5002:5002'
@@ -106,6 +110,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=dev
   comments-api:
+    hostname: 'comments-api'
     image: maven:3.6.1-jdk-8
     ports:
       - '5003:5003'
@@ -119,6 +124,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=dev
   swagger-app:
+    hostname: 'swagger-app'
     image: maven:3.6.1-jdk-8
     ports:
       - '6000:6000'
