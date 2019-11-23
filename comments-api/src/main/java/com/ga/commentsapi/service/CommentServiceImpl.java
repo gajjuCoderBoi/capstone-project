@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -46,15 +47,16 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     CommentRepository commentRepository;
-/*************************************************************************
- * The createComment method will create a comment. It takes three parameters:
- * a comment, a postId (for the post that is getting the comment) and a token
- * from which the comment will get the userid of the user who is posting the
- * comment. It uses the HttpHeaders to verify the token
- *
- *************************************************************************/
+
+    /*************************************************************************
+     * The createComment method will create a comment. It takes three parameters:
+     * a comment, a postId (for the post that is getting the comment) and a token
+     * from which the comment will get the userid of the user who is posting the
+     * comment. It uses the HttpHeaders to verify the token
+     *
+     *************************************************************************/
     @Override
-    public Comment createComment(Comment comment, Long postId, String token){
+    public Comment createComment(Comment comment, Long postId, String token) {
 
 //        HttpHeaders headers = new HttpHeaders();
 //        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -63,7 +65,7 @@ public class CommentServiceImpl implements CommentService {
 //        User user = restTemplate.exchange("http://users-api:5001/", HttpMethod.GET, entity, User.class).getBody();
 
         User user = getUserFromUserAPI(token);
-        if (user==null){
+        if (user == null) {
             return null;
         }
 
@@ -71,7 +73,9 @@ public class CommentServiceImpl implements CommentService {
         comment.setPostId(postId);
         comment.setUser(user);
         return commentRepository.save(comment);
-    };
+    }
+
+    ;
 
     /*************************************************************************
      * The getCommentsbyPostId takes a single parameter postId and calls
@@ -83,7 +87,7 @@ public class CommentServiceImpl implements CommentService {
      * @return*/
 
     @Override
-    public Iterable<Comment> getCommentsbyPostId(Long postId){
+    public Iterable<Comment> getCommentsbyPostId(Long postId) {
 
         //return commentRepository.findCommentsbyPostId(postId);
 
@@ -98,7 +102,7 @@ public class CommentServiceImpl implements CommentService {
         try {
             message = objectMapper.writeValueAsString(userIdList);
 
-            String response = (String) rabbitTemplate.convertSendAndReceive(commentToUser.getName(), "usersList:"+message);
+            String response = (String) rabbitTemplate.convertSendAndReceive(commentToUser.getName(), "usersList:" + message);
 
             rateResponse = objectMapper.readValue(response, User[].class);
 
@@ -106,7 +110,7 @@ public class CommentServiceImpl implements CommentService {
             e.printStackTrace();
         }
         HashMap<Long, User> userHashMap = new LinkedHashMap<>();
-        for (User user:rateResponse){
+        for (User user : rateResponse) {
             userHashMap.put(user.getUserId(), user);
         }
         for (Comment savedComment : savedComments) {
@@ -114,7 +118,9 @@ public class CommentServiceImpl implements CommentService {
         }
         System.out.println(rateResponse);
         return savedComments;
-    };
+    }
+
+    ;
 
     /*************************************************************************
      * The deleteCommentByCommentId gets two arguments: a commentId (commentId
@@ -124,15 +130,18 @@ public class CommentServiceImpl implements CommentService {
      * @return*/
 
     @Override
-    public Long deleteCommentByCommentId(Long commentId, String token){
+    public Long deleteCommentByCommentId(Long commentId, String token) {
         Comment savedComment = commentRepository.findById(commentId).orElse(null);
         User user = getUserFromUserAPI(token);
-        if(user.getUserId().equals(savedComment.getUserId())) {
+        if (user.getUserId().equals(savedComment.getUserId())) {
             commentRepository.deleteById(commentId);
             return savedComment.getId();
         }
+        ;
         return -1L;
-    };
+    }
+
+    ;
 
     /*************************************************************************
      * The getCommentsByUser method takes one argument: a User. From the user
@@ -141,11 +150,14 @@ public class CommentServiceImpl implements CommentService {
      *************************************************************************/
 
     @Override
-    public void getCommentsByUser(User user){
+    public void getCommentsByUser(User user) {
         Long userid = user.getUserId();
+        if (userid == null) throw new EntityNotFoundException("User not found.");
         commentRepository.findCommentsbyUserId(userid);
 
-    };
+    }
+
+    ;
 
     /*************************************************************************
      * the listComments will bring all comments from the repository
@@ -168,8 +180,12 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Long deleteCommentsByPostId(Long postId) {
         List<Comment> savedComments = (List<Comment>) commentRepository.findCommentsbyPostId(postId);
+        if (savedComments == null) {
+            throw new EntityNotFoundException("No comments were found for this post");}
+        else {
         commentRepository.deleteAll(savedComments);
-        return 1L;
+            return 1L;
+        }
     }
 
     /*************************************************************************
@@ -177,12 +193,12 @@ public class CommentServiceImpl implements CommentService {
      * method that returns the user that owns the token
      *************************************************************************/
 
-    private User getUserFromUserAPI(String token){
+    private User getUserFromUserAPI(String token) {
 //
-        String response = (String) rabbitTemplate.convertSendAndReceive(commentToUser.getName(), "getUserByToken:"+token);
-        User user=null;
+        String response = (String) rabbitTemplate.convertSendAndReceive(commentToUser.getName(), "getUserByToken:" + token);
+        User user = null;
         try {
-            user =  objectMapper.readValue(response,User.class);
+            user = objectMapper.readValue(response, User.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
