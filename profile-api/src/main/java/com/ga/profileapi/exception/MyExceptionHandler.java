@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -13,23 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ControllerAdvice
-public class ExceptionHandler extends ResponseEntityExceptionHandler {
-
-   /* @org.springframework.web.bind.annotation.ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleException(Exception e) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage());
-
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-    }
-
-    @org.springframework.web.bind.annotation.ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleEntityNotFoundException(Exception e) {
-        String causeMessage = (e.getCause() == null) ? "" : e.getCause().getMessage();
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), causeMessage);
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-*/
-   @org.springframework.web.bind.annotation.ExceptionHandler(ProfileNotFoundException.class)
+public class MyExceptionHandler extends ResponseEntityExceptionHandler {
+   @ExceptionHandler(ProfileNotFoundException.class)
    public ResponseEntity<ErrorResponse> handleProfileException(ProfileNotFoundException e){
        List<String> details = new ArrayList<>();
        details.add("Profile does not exist.");
@@ -40,7 +26,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
 
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(TokenException.class)
+    @ExceptionHandler(TokenException.class)
     public ResponseEntity<ErrorResponse> handleTokenException(TokenException e){
         List<String> details = new ArrayList<>();
         details.add("Invalid Token.");

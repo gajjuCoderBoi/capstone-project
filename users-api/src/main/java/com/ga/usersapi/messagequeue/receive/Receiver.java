@@ -29,7 +29,8 @@ public class Receiver {
         try {
             user = userService.getUserByToken(token);
         } catch (Exception e) {
-            System.out.println("Invalid Token.");
+            System.out.println("UserToProfile: Invalid Token.");
+            e.printStackTrace();
         }
 
         return user == null ? "null" : objectMapper.writeValueAsString(user);
@@ -42,7 +43,16 @@ public class Receiver {
             return getUsersList(message);
         }
         if (message.startsWith("getUserByToken:")) {
-            return getUserByToken(message);
+            User user = null;
+            try {
+                String token = message.substring("getUserByToken:".length());
+                user = userService.getUserByToken(token);
+            } catch (Exception e) {
+                System.out.println("PostToUser: Invalid Token.");
+                //e.printStackTrace();
+            }
+
+            return user == null ? "null" : objectMapper.writeValueAsString(user);
         }
         return null;
     }
@@ -53,9 +63,18 @@ public class Receiver {
             return getUsersList(message);
         }
         if (message.startsWith("getUserByToken:")) {
-            return getUserByToken(message);
+            User user = null;
+            try {
+                String token = message.substring("getUserByToken:".length());
+                user = userService.getUserByToken(token);
+            } catch (Exception e) {
+                System.out.println("PostToUser: Invalid Token.");
+                //e.printStackTrace();
+            }
+
+            return user == null ? "null" : objectMapper.writeValueAsString(user);
         }
-        return "null";
+        return null;
     }
 
     private String getUsersList(String input) throws IOException {

@@ -4,6 +4,7 @@ import com.ga.postsapi.bean.Comment;
 import com.ga.postsapi.bean.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /*************************************************************************
@@ -31,9 +32,11 @@ public class Post {
 
 
     @Column(name = "title", nullable = false)
+    @NotBlank(message = "Comment Title field can not be blank.")
     private String title;
 
     @Column(name = "text")
+    @NotBlank(message = "Comment Body field can not be blank.")
     private String text;
 
     @Column(name = "user_id", nullable = false)
@@ -44,8 +47,6 @@ public class Post {
 
     @Transient
     private List<Comment> comments;
-
-
 
     public List<Comment> getComments() {
         return comments;

@@ -1,10 +1,15 @@
 package com.ga.postsapi.controller;
 
+import com.ga.postsapi.exception.PostNotExistException;
+import com.ga.postsapi.exception.TokenException;
+import com.ga.postsapi.exception.UnauthorizeActionException;
 import com.ga.postsapi.model.Post;
 import com.ga.postsapi.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /*************************************************************************
  *
@@ -54,7 +59,7 @@ public class PostController {
      *  these two values which will in turn create the post
      *************************************************************************/
     @PostMapping
-    public Post createPost(@RequestBody Post post,@RequestHeader("Authorization") String token){
+    public Post createPost(@Valid @RequestBody Post post, @RequestHeader("Authorization") String token) throws TokenException {
         return postService.createPost(post, token);
     }
 
@@ -67,7 +72,7 @@ public class PostController {
      *************************************************************************/
 
     @DeleteMapping("/{postId}")
-    public Long deletePost(@PathVariable Long postId,@RequestHeader("Authorization") String token){
+    public Long deletePost(@PathVariable Long postId,@RequestHeader("Authorization") String token) throws UnauthorizeActionException, TokenException, PostNotExistException {
         return postService.deletePost(postId, token);
     }
 

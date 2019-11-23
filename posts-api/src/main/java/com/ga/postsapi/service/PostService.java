@@ -1,6 +1,9 @@
 package com.ga.postsapi.service;
 
 
+import com.ga.postsapi.exception.PostNotExistException;
+import com.ga.postsapi.exception.TokenException;
+import com.ga.postsapi.exception.UnauthorizeActionException;
 import com.ga.postsapi.model.Post;
 
 import java.io.IOException;
@@ -19,9 +22,9 @@ public interface PostService {
      *
      *************************************************************************/
 
-    public Post createPost(Post post, String token);
+    public Post createPost(Post post, String token) throws TokenException;
 
-    public Long deletePost(Long postId, String token);
+    public Long deletePost(Long postId, String token) throws TokenException, UnauthorizeActionException, PostNotExistException;
 
     public List<Post> postList();
 
