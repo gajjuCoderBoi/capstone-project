@@ -1,15 +1,12 @@
 package com.ga.usersapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ga.usersapi.config.JwtRequestFilter;
-import com.ga.usersapi.config.JwtUtil;
-import com.ga.usersapi.service.UserServiceImpl;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +20,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
 
-    @Column(name = "username", nullable = false)
-    @NotBlank(message = "Username field cannot be blanked.")
+    @Column(name = "email", nullable = false)
+    @NotBlank(message = "Email field cannot be blanked.")
+    @Email(message = "Invalid Email.")
     private String email;
 
 
     @Column(name = "password", nullable = false)
     @NotBlank(message = "Password field cannot be blanked.")
     private String password;
+
+    @Column(name = "username", nullable = false)
+    @NotBlank(message = "Username field cannot be blanked")
+    private String username;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
@@ -58,16 +60,20 @@ public class User {
         this.userId = userId;
     }
 
-    public String getusername() {
-        return email;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -78,9 +84,10 @@ public class User {
         this.password = password;
     }
 
-    public User(Long userId, String email, String password) {
+    public User(Long userId, String email, String password, String username) {
         setUserId(userId);
         setEmail(email);
+        setUsername(username);
         setPassword(new BCryptPasswordEncoder().encode(password));
     }
 
@@ -93,6 +100,7 @@ public class User {
                 "userId=" + userId +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", username='" + username + '\'' +
                 '}';
     }
 }

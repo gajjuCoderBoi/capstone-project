@@ -1,4 +1,4 @@
-package com.ga.profileapi.model;
+package com.ga.profileapi.bean;
 
 
 public class User {
@@ -14,7 +14,7 @@ public class User {
 
     private String email;
 
-    private String password;
+    private String username;
 
     public Long getUserId() {
         return userId;
@@ -32,11 +32,11 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUsername() {
+        return username;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

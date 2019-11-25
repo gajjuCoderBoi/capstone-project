@@ -5,21 +5,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ga.profileapi.exception.ProfileNotFoundException;
 import com.ga.profileapi.exception.TokenException;
 import com.ga.profileapi.model.Profile;
-import com.ga.profileapi.model.User;
+import com.ga.profileapi.bean.User;
 import com.ga.profileapi.repository.ProfileRepository;
-import com.netflix.discovery.converters.Auto;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 
 @Service

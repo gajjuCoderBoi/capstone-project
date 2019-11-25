@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @ControllerAdvice
@@ -23,6 +25,14 @@ public class MyExceptionHandler extends ResponseEntityExceptionHandler {
         String causeMessage = (e.getCause() == null) ? "" : e.getMessage();
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED, details, causeMessage);
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(UserAlreadyExistException.class)
+    public ResponseEntity<ErrorResponse> handleUserAlreadyExistException(UserAlreadyExistException e){
+        List<String> details = Arrays.asList(e.getMessage());
+        String causeMessage = (e.getCause() == null) ? "" : e.getMessage();
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, details, causeMessage);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @Override

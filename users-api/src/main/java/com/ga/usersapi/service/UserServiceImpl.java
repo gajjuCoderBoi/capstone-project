@@ -2,6 +2,7 @@ package com.ga.usersapi.service;
 
 import com.ga.usersapi.config.JwtUtil;
 import com.ga.usersapi.exception.LoginException;
+import com.ga.usersapi.exception.UserAlreadyExistException;
 import com.ga.usersapi.model.User;
 import com.ga.usersapi.model.UserRole;
 import com.ga.usersapi.repository.UserRepository;
@@ -53,7 +54,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<String> signup(User user) {
+    public List<String> signup(User user) throws UserAlreadyExistException {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         UserRole userRole = userRoleRepository.getRoleByName("USER");
         if(userRole==null){
@@ -62,6 +63,7 @@ public class UserServiceImpl implements UserService {
             userRoleRepository.save(userRole);
         }
         user.getRoles().add(userRole);
+        if(getUserbyUsername(user.getUsername())!=null) throw new UserAlreadyExistException("User with this username already exist.");
         if (userRepository.save(user).getUserId() != null) {
             UserDetails userDetails = loadUserByUsername(user.getEmail());
             return Arrays.asList(user.getEmail(), jwtUtil.generateToken(userDetails));
