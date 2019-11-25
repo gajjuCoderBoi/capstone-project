@@ -17,7 +17,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping
 @Api(tags = "Profile Management System", produces = "application/json")
-public class ProfileController {
+public class UserProfileController {
 
     @ApiOperation(value = "Test for the profile controller", produces = "application/json")
     @ApiResponses({
