@@ -3,6 +3,7 @@ package com.ga.usersapi.controller;
 
 import com.ga.usersapi.config.JwtUtil;
 import com.ga.usersapi.exception.LoginException;
+import com.ga.usersapi.exception.UserAlreadyExistException;
 import com.ga.usersapi.model.JwtResponse;
 import com.ga.usersapi.model.User;
 import com.ga.usersapi.service.UserService;
@@ -29,7 +30,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity signup(@Valid @RequestBody User user){
+    public ResponseEntity signup(@Valid @RequestBody User user) throws UserAlreadyExistException {
         return ResponseEntity.ok(new JwtResponse(userService.signup(user)));
     }
 

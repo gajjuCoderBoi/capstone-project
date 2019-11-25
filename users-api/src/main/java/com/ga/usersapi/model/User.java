@@ -1,13 +1,9 @@
 package com.ga.usersapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ga.usersapi.config.JwtRequestFilter;
-import com.ga.usersapi.config.JwtUtil;
-import com.ga.usersapi.service.UserServiceImpl;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
