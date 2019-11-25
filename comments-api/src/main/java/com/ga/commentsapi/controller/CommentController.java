@@ -1,11 +1,16 @@
 package com.ga.commentsapi.controller;
 
+import com.ga.commentsapi.bean.Post;
 import com.ga.commentsapi.exception.CommentNotExistException;
 import com.ga.commentsapi.exception.PostNotExistException;
 import com.ga.commentsapi.exception.TokenException;
 import com.ga.commentsapi.exception.UnauthorizeActionException;
 import com.ga.commentsapi.model.Comment;
 import com.ga.commentsapi.service.CommentService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +19,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping
+@Api(tags = "Comment Management System", produces = "application/json")
 public class CommentController {
 
     /*************************************************************************
@@ -33,7 +39,10 @@ public class CommentController {
      *      from the service layer so that a comment will be created and saved in the repository
      *
      *************************************************************************/
-
+    @ApiOperation(value = "Creates a comment attached to a Post Id", produces = "application/json")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successfully Created a comments attached to a PostId", response = Comment.class)
+    })
     @PostMapping("/{postId}")
     public Comment createComment(@Valid @RequestBody Comment comment, @PathVariable Long postId, @RequestHeader("Authorization") String token) throws TokenException, PostNotExistException {
         return commentService.createComment(comment, postId, token);
@@ -45,7 +54,10 @@ public class CommentController {
      *      calls commentService layer to get the comments by postID
      *
      *************************************************************************/
-
+    @ApiOperation(value = "Return the a list of comments by Post Id", produces = "application/json")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successfully Retrieved comments by PostId", response = Comment.class)
+    })
     @GetMapping("/{postId}")
     public Iterable<Comment> getCommentsByPostId(@PathVariable Long postId){
         return commentService.getCommentsbyPostId(postId);
@@ -58,7 +70,10 @@ public class CommentController {
      *      calls commentService layer to delete the comments by commentID
      *
      *************************************************************************/
-
+    @ApiOperation(value = "Deletes a comment by Comment Id", produces = "application/json")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successfully Deleted comments by CommentId", response = Comment.class)
+    })
     @DeleteMapping("/{commentId}")
     public Long deleteComment(@PathVariable Long commentId, @RequestHeader("Authorization") String token) throws UnauthorizeActionException, TokenException, CommentNotExistException {
         return commentService.deleteCommentByCommentId(commentId, token);
@@ -70,7 +85,10 @@ public class CommentController {
      *      Call the deleteCommentsByPostId from commentService.
      *
      *************************************************************************/
-
+    @ApiOperation(value = "Deletes comments related to a Post by Post Id", produces = "application/json")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successfully Deleted comments by PostId", response = Comment.class)
+    })
     @DeleteMapping("/{postId}/comments")
     public Long deleteCommentsByPostId(@PathVariable Long postId){
         return commentService.deleteCommentsByPostId(postId);

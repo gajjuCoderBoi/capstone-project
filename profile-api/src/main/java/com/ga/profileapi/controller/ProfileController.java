@@ -4,6 +4,10 @@ import com.ga.profileapi.exception.ProfileNotFoundException;
 import com.ga.profileapi.exception.TokenException;
 import com.ga.profileapi.model.Profile;
 import com.ga.profileapi.service.ProfileService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +15,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping
+@Api(tags = "Profile Management System", produces = "application/json")
 public class ProfileController {
 
+    @ApiOperation(value = "Test for the profile controller", produces = "application/json")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Test Profile")
+    })
     @GetMapping("/test")
     public String test() {
         return "Test Profile";
@@ -41,6 +50,10 @@ public class ProfileController {
      *
      *************************************************************************/
 
+    @ApiOperation(value = "Retrieves a user profile", produces = "application/json")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successfully retrieved  Profile")
+    })
     @GetMapping
     public ResponseEntity<?> getProfile(@RequestHeader("Authorization") String token) throws ProfileNotFoundException, TokenException {
         Profile savedProfile = profileService.getProfile(token);
@@ -60,6 +73,11 @@ public class ProfileController {
      *
      *************************************************************************/
 
+
+    @ApiOperation(value = "Creates a user profile", produces = "application/json")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successfully retrieved  Profile")
+    })
     @PostMapping
     public ResponseEntity<?> createProfile(@Valid @RequestBody Profile profile, @RequestHeader("Authorization") String token) throws ProfileNotFoundException, TokenException {
         Profile savedProfile = profileService.createProfile(profile, token);
