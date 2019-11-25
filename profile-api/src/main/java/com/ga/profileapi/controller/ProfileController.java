@@ -93,6 +93,12 @@ public class ProfileController {
      *      return the response according to Service layer response.
      *
      *************************************************************************/
+
+
+    @ApiOperation(value = "Updates a user profile", produces = "application/json")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successfully updated  Profile")
+    })
     @PutMapping
     public ResponseEntity<?> updateProfile(@Valid @RequestBody Profile profile, @RequestHeader("Authorization") String token) throws ProfileNotFoundException, TokenException {
         Profile savedProfile = profileService.updateProfile(profile, token);
