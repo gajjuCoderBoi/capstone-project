@@ -15,16 +15,19 @@ pipeline {
                     sh "pwd"
                     sh 'mvn -B -DskipTests clean package'
                 }
-                sh 'mvn -B -DskipTests clean package'
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn test'
+                dir("api-gateway") {
+                    sh 'mvn test'
+                }
             }
             post {
                 always {
-                    junit 'target/surefire-reports/*.xml'
+                    dir("api-gateway") {
+                        junit 'target/surefire-reports/*.xml'
+                     }
                 }
             }
         }
