@@ -4,7 +4,7 @@ FROM openjdk:8-jdk-alpine
 # Add Maintainer info:
 MAINTAINER ghazanfar9131 <ghazanfar9131@gmail.com>
 
-# Make port 8761 available to the world outside this container:
+# Make port 8080 available to the world outside this container:
 EXPOSE 8080
 
 # Add a volume pointing to /tmp:

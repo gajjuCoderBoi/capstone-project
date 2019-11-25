@@ -2,6 +2,8 @@ package com.ga.postsapi.model;
 
 import com.ga.postsapi.bean.Comment;
 import com.ga.postsapi.bean.User;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -23,29 +25,35 @@ import java.util.List;
 
 @Entity
 @Table(name="posts")
+@ApiModel(description = "All details about the Post. ")
 public class Post {
 
     @Id
     @Column(name = "post_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @ApiModelProperty(notes = "The database Generated Post ID")
     private Long postId;
-
 
     @Column(name = "title", nullable = false)
     @NotBlank(message = "Comment Title field can not be blank.")
+    @ApiModelProperty(notes = "Title of the Post.")
     private String title;
 
     @Column(name = "text")
     @NotBlank(message = "Comment Body field can not be blank.")
+    @ApiModelProperty(notes = "Body of the Post. ")
     private String text;
 
     @Column(name = "user_id", nullable = false)
+    @ApiModelProperty(notes = "Id of a User who created this Post. ")
     private Long userId;
 
     @Transient
+    @ApiModelProperty(notes = "User Object of Post.")
     private User user;
 
     @Transient
+    @ApiModelProperty(notes = "List of Comments that belongs to this post. ")
     private List<Comment> comments;
 
     public List<Comment> getComments() {

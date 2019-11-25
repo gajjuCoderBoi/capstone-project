@@ -111,11 +111,6 @@ public class PostServiceImpl implements PostService {
     public List<Post> postList() {
         List<Post> savedPosts = (List<Post>) postRepository.findAll();
         Set<Long> userIdList = savedPosts.stream().map(Post::getUserId).collect(Collectors.toSet());
-        /*HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Set<Long>> requestEntity = new HttpEntity<Set<Long>>(userIdList,headers);
-        User[] rateResponse = restTemplate.exchange("http://users-api:5001/userlist", HttpMethod.POST, requestEntity,User[].class).getBody();
-        */
         String message = "";
         User[] rateResponse = null;
         try {

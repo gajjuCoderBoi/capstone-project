@@ -48,7 +48,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/signup/**", "/login/**").permitAll()
+                .antMatchers("/signup/**", "/login/**",
+
+                        "/v2/api-docs",
+                        "/configuration/ui",
+                        "/swagger-resources/**",
+                        "/configuration/security",
+                        "/swagger-ui.html",
+                        "/webjars/**"
+
+                ).permitAll()
                 .antMatchers("/**").authenticated()
                 /*.antMatchers("/user/**").authenticated()
                 .antMatchers("/role/**").hasRole("DBA")
