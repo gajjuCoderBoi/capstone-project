@@ -16,21 +16,28 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 @Import({SpringDataRestConfiguration.class})
 @Configuration
 public class SwaggerConfig {
-
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("org.springframework.data.jpa.repository.support"))
-                .paths(PathSelectors.any())
-                .build()
-                .apiInfo(apiEndPointsInfo());
-    }
-
-    private ApiInfo apiEndPointsInfo() {
-        return new ApiInfoBuilder().title("Users REST API")
-                .description("Scandit APP User's REST API")
-                .version("1.0.0")
+    ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("Users API")
+                .description(
+                        "Users API for User operations. ")
+                .termsOfServiceUrl("")
+                .version("0.0.1-SNAPSHOT")
                 .build();
     }
+
+    @Bean
+    public Docket configureControllerPackageAndConvertors() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .paths(PathSelectors.any())
+                .apis(
+                        RequestHandlerSelectors.basePackage("com.ga.usersapi.controller")
+                ).build()
+                .apiInfo(apiInfo())
+                .host("http://localhost:8080/users");
+
+
+    }
+
 }
