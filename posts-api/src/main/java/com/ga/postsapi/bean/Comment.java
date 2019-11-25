@@ -2,8 +2,6 @@ package com.ga.postsapi.bean;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name="comments")
 public class Comment {
 
     /*************************************************************************
@@ -19,21 +17,14 @@ public class Comment {
      *
      *************************************************************************/
 
-    @Column(name = "comment_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Id
     private Long id;
 
-    @Column(name = "text")
     private String text;
 
-    @Column(name = "postId")
     private Long postId;
 
-    @Column(name = "userId")
     private Long userId;
 
-    @Transient
     private User user;
 
     public User getUser() {
