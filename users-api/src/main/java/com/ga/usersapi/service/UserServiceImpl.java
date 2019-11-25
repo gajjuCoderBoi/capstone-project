@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
             userRoleRepository.save(userRole);
         }
         user.getRoles().add(userRole);
-        if(getUserbyUsername(user.getusername())!=null) throw new UserAlreadyExistException("User with this username already exist.");
+        if(getUserbyUsername(user.getUsername())!=null) throw new UserAlreadyExistException("User with this username already exist.");
         if (userRepository.save(user).getUserId() != null) {
             UserDetails userDetails = loadUserByUsername(user.getEmail());
             return Arrays.asList(user.getEmail(), jwtUtil.generateToken(userDetails));

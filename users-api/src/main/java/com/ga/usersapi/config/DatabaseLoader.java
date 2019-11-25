@@ -33,10 +33,10 @@ public class DatabaseLoader {
         log.info("Saved {}", userRoleRepository.save(USER));
 
 
-        User batman = new User(1L, "batman","bat");
+        User batman = new User(1L, "batman@email.com","bat","batman");
         batman.getRoles().add(USER);
 
-        User superman = new User(2L, "superman","super");
+        User superman = new User(2L, "superman@email.com","super","batman");
         superman.getRoles().add(USER);
         log.info("Saved {}", userRepository.save(batman));
         log.info("Saved {}", userRepository.save(superman));
