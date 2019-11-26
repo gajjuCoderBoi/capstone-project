@@ -54,13 +54,6 @@ pipeline {
                 }
             }
         }
-        stage('Deliver'){
-            steps{
-                docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-                app.push("1")
-                app.push("latest")
-            }
-        }
     }
 }
 }
