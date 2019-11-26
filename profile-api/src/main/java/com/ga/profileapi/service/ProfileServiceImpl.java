@@ -4,6 +4,7 @@ package com.ga.profileapi.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ga.profileapi.exception.ProfileNotFoundException;
 import com.ga.profileapi.exception.TokenException;
+import com.ga.profileapi.messagequeue.Sender;
 import com.ga.profileapi.model.Profile;
 import com.ga.profileapi.bean.User;
 import com.ga.profileapi.repository.ProfileRepository;
@@ -26,11 +27,7 @@ public class ProfileServiceImpl implements ProfileService{
      *      this service
      *
      *************************************************************************/
-    @Autowired
-    RabbitTemplate rabbitTemplate;
 
-    @Autowired
-    Queue queue;
 
     @Autowired
     RestTemplate restTemplate;
@@ -42,7 +39,7 @@ public class ProfileServiceImpl implements ProfileService{
     ProfileRepository profileRepository;
 
     @Autowired
-    ObjectMapper objectMapper;
+    Sender sender;
 
 
     /*************************************************************************
@@ -61,7 +58,7 @@ public class ProfileServiceImpl implements ProfileService{
 
     @Override
     public Profile createProfile(Profile profile, String token) throws TokenException, ProfileNotFoundException {
-        User user = getUserFromUserAPI(token);
+        User user = sender.getUserFromUserAPI(token);
         if (user==null){
             throw new TokenException("Invalid Token.");
         }
@@ -85,7 +82,7 @@ public class ProfileServiceImpl implements ProfileService{
 
     @Override
     public Profile getProfile(String token) throws TokenException, ProfileNotFoundException {
-        User user = getUserFromUserAPI(token);
+        User user = sender.getUserFromUserAPI(token);
         if (user==null){
             throw new TokenException("Invalid Token.");
         }
@@ -116,7 +113,7 @@ public class ProfileServiceImpl implements ProfileService{
      *************************************************************************/
     @Override
     public Profile updateProfile(Profile profile, String token) throws ProfileNotFoundException, TokenException {
-        User user = getUserFromUserAPI(token);
+        User user = sender.getUserFromUserAPI(token);
         if (user==null){
             throw new TokenException("Invalid Token.");
         }
@@ -133,27 +130,5 @@ public class ProfileServiceImpl implements ProfileService{
         savedProfile.setUsername(user.getEmail());
         return profileRepository.save(savedProfile);
     }
-    /*************************************************************************
-     *
-     *      getUserFromUserAPI is responsible to send the token to the User-API
-     *      and return the response, the response is either User model or NULL.
-     *
-     *************************************************************************/
 
-    private User getUserFromUserAPI(String token) {
-        String response = (String) rabbitTemplate.convertSendAndReceive(queue.getName(), token);
-        User user=null;
-        try {
-            user = response.equals("null") ? null :  objectMapper.readValue(response,User.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return user;
-
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-//        headers.setBearerAuth(token.substring(7));
-//        HttpEntity<String> entity = new HttpEntity<String>(headers);
-//        return restTemplate.exchange("http://users-api:5001/", HttpMethod.GET, entity, User.class).getBody();
-    }
 }
