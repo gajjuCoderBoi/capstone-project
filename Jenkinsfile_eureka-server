@@ -45,5 +45,19 @@ pipeline {
                 }
             }
         }
+        stage('Build Img'){
+            steps{
+                dir("eureka-server"){
+                    sh 'docker build -t ghazanfar9131/eureka-server:0.0.1-SNAPSHOT .'
+                }
+            }
+        }
+        stage('Deliver'){
+            steps{
+                dir("eureka-server"){
+                    sh 'docker push ghazanfar9131/eureka-server:0.0.1-SNAPSHOT'
+                }
+            }
+        }
     }
 }
