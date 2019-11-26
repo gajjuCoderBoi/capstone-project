@@ -1,9 +1,9 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3-alpine'
-            args '-v /tmp/.m2:/tmp/.m2'
-        }
+                    image 'maven:3.6.2-jdk-8'
+                    args ' --privileged -u="root" -v /tmp/.m2:/root/.m2 -v /usr/local/bin/docker:/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock'
+                }
     }
     options {
         skipStagesAfterUnstable()
@@ -28,6 +28,29 @@ pipeline {
                     dir("comments-api") {
                         junit 'target/surefire-reports/*.xml'
                      }
+                }
+            }
+        }
+        stage('Coverage') {
+            steps {
+                dir("comments-api"){
+                        sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
+                    }
+            }
+            post {
+              always {
+                    dir("comments-api"){
+                        cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml'
+                    }
+                }
+            }
+            stage('Build Img'){
+                steps{
+                    dir("comments-api"){
+                        script{
+                            docker.build("ghazanfar9131/comments-api:0.0.1-SNAPSHOT")
+                        }
+                    }
                 }
             }
         }
