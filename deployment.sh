@@ -3,42 +3,49 @@
 # Building eureka-server
 cd eureka-server/
 mvn package
+mvn clean sonar:sonar
 docker build -t ghazanfar9131/eureka-server:0.0.1-SNAPSHOT .
 cd ..
 
 # Building api-gateway
 cd api-gateway/
 mvn package
+mvn clean sonar:sonar
 docker build -t ghazanfar9131/api-gateway:0.0.1-SNAPSHOT .
 cd ..
 
 # Building users-api
 cd users-api/
 mvn package
+mvn clean sonar:sonar
 docker build -t ghazanfar9131/users-api:0.0.1-SNAPSHOT .
 cd ..
 
 # Building profile-api
 cd profile-api/
 mvn package
+mvn clean sonar:sonar
 docker build -t ghazanfar9131/profile-api:0.0.1-SNAPSHOT .
 cd ..
 
 # Building posts-api
 cd posts-api
 mvn package
+mvn clean sonar:sonar
 docker build -t ghazanfar9131/posts-api:0.0.1-SNAPSHOT .
 cd ..
 
 # Building comments-api
 cd comments-api
 mvn package
+mvn clean sonar:sonar
 docker build -t ghazanfar9131/comments-api:0.0.1-SNAPSHOT .
 cd ..
 
 # Building swagger-app
 cd swagger-app
 mvn package
+mvn clean sonar:sonar
 docker build -t ghazanfar9131/swagger-app-0.0.1-SNAPSHOT .
 cd ..
 

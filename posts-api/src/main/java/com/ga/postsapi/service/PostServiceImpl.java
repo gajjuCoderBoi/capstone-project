@@ -6,6 +6,7 @@ import com.ga.postsapi.bean.User;
 import com.ga.postsapi.exception.PostNotExistException;
 import com.ga.postsapi.exception.TokenException;
 import com.ga.postsapi.exception.UnauthorizeActionException;
+import com.ga.postsapi.messagequeue.Sender;
 import com.ga.postsapi.model.Post;
 import com.ga.postsapi.repository.PostRepository;
 import org.springframework.amqp.core.Queue;
@@ -57,6 +58,9 @@ public class PostServiceImpl implements PostService {
     @Qualifier("PostToUser")
     private Queue postToUser;
 
+    @Autowired
+    private Sender sender;
+
     /*************************************************************************
      *
      *      createPost is method with two params Post, Token(String) and Post
@@ -68,12 +72,16 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post createPost(Post post, String token) throws TokenException {
-        User user = getUserFromUserAPI(token);
+        User user = sender.getUserFromUserAPI(token);
         if (user == null) throw new TokenException("Invalid Token.");
         post.setUserId(user.getUserId());
         post.setUser(user);
         Post savedPost = postRepository.save(post);
         return savedPost;
+    }
+
+    public Post testMethode(Post post){
+        return postRepository.save(post);
     }
 
     /*************************************************************************
@@ -89,12 +97,12 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Long deletePost(Long postId, String token) throws TokenException, UnauthorizeActionException, PostNotExistException {
-        User user = getUserFromUserAPI(token);
+        User user = sender.getUserFromUserAPI(token);
         if (user == null) throw new TokenException("Invalid Token.");
         Post savedPost = postRepository.findById(postId).orElse(null);
         if(savedPost==null) throw new PostNotExistException("Post Doesn't Exist.");
         if (savedPost.getUserId().longValue() != user.getUserId().longValue()) throw new UnauthorizeActionException("Unauthorized Action.");
-        deleteCommentsOfPost(savedPost.getPostId());
+        sender.deleteCommentsOfPost(savedPost.getPostId());
         postRepository.delete(savedPost);
         return savedPost.getPostId();
     }
@@ -159,34 +167,5 @@ public class PostServiceImpl implements PostService {
         return savedPost;
     }
 
-    /*************************************************************************
-     *
-     *      getUserFromUserAPI is responsible to send the token to the User-API
-     *      and return the response, the response is either User model or NULL.
-     *
-     *************************************************************************/
 
-    private User getUserFromUserAPI(String token) {
-        String response = (String) rabbitTemplate.convertSendAndReceive(postToUser.getName(), "getUserByToken:"+token);
-        User user=null;
-        try {
-            user = response.equals("null") ? null :  objectMapper.readValue(response,User.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return user;
-    }
-
-
-    /*************************************************************************
-     *
-     *      deleteCommentsOfPost is a helper method that calls the delete api
-     *      of the Comments-API which delete all the comments related to the
-     *      postId.
-     *
-     *************************************************************************/
-    private Long deleteCommentsOfPost(Long postId) {
-        String res = (String) rabbitTemplate.convertSendAndReceive(this.postToComment.getName(), "deleteCommentsByPostId:" + postId);
-        return Long.valueOf(res);
-    }
 }
