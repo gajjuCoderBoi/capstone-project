@@ -44,12 +44,12 @@ pipeline {
                     }
                 }
             }
-            stage('Build Img'){
-                steps{
-                    dir("users-api"){
-                        script{
-                            docker.build("ghazanfar9131/users-api:0.0.1-SNAPSHOT")
-                        }
+         }
+        stage('Build Img'){
+            steps{
+                dir("users-api"){
+                    script{
+                        docker.build("ghazanfar9131/users-api:0.0.1-SNAPSHOT")
                     }
                 }
             }

@@ -44,12 +44,12 @@ pipeline {
                     }
                 }
             }
-            stage('Build Img'){
-                steps{
-                    dir("swagger-app"){
-                        script{
-                            docker.build("ghazanfar9131/swagger-app:0.0.1-SNAPSHOT")
-                        }
+         }
+        stage('Build Img'){
+            steps{
+                dir("swagger-app"){
+                    script{
+                        docker.build("ghazanfar9131/swagger-app:0.0.1-SNAPSHOT")
                     }
                 }
             }

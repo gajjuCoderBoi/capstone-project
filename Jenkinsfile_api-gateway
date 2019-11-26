@@ -44,12 +44,12 @@ pipeline {
                     }
                 }
             }
-            stage('Build Img'){
-                steps{
-                    dir("api-gateway"){
-                        script{
-                            docker.build("ghazanfar9131/api-gateway:0.0.1-SNAPSHOT")
-                        }
+         }
+        stage('Build Img'){
+            steps{
+                dir("api-gateway"){
+                    script{
+                        docker.build("ghazanfar9131/api-gateway:0.0.1-SNAPSHOT")
                     }
                 }
             }

@@ -44,12 +44,12 @@ pipeline {
                     }
                 }
             }
-            stage('Build Img'){
-                steps{
-                    dir("profile-api"){
-                        script{
-                            docker.build("ghazanfar9131/profile-api:0.0.1-SNAPSHOT")
-                        }
+         }
+        stage('Build Img'){
+            steps{
+                dir("profile-api"){
+                    script{
+                        docker.build("ghazanfar9131/profile-api:0.0.1-SNAPSHOT")
                     }
                 }
             }

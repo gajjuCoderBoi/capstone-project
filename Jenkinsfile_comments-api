@@ -44,12 +44,12 @@ pipeline {
                     }
                 }
             }
-            stage('Build Img'){
-                steps{
-                    dir("comments-api"){
-                        script{
-                            docker.build("ghazanfar9131/comments-api:0.0.1-SNAPSHOT")
-                        }
+         }
+        stage('Build Img'){
+            steps{
+                dir("comments-api"){
+                    script{
+                        docker.build("ghazanfar9131/comments-api:0.0.1-SNAPSHOT")
                     }
                 }
             }
