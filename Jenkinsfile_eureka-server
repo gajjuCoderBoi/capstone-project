@@ -1,5 +1,4 @@
 pipeline {
-    def app
     agent {
         docker {
             image 'maven:3-alpine'
@@ -49,7 +48,7 @@ pipeline {
         stage('Build Img'){
             steps{
                 dir("eureka-server"){
-                    app = docker.build("ghazanfar9131/eureka-server:0.0.1-SNAPSHOT")
+                    docker.build("ghazanfar9131/eureka-server:0.0.1-SNAPSHOT")
                 }
             }
         }
