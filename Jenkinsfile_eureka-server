@@ -48,7 +48,9 @@ pipeline {
         stage('Build Img'){
             steps{
                 dir("eureka-server"){
-                    docker.build("ghazanfar9131/eureka-server:0.0.1-SNAPSHOT")
+                    script{
+                        docker.build("ghazanfar9131/eureka-server:0.0.1-SNAPSHOT")
+                    }
                 }
             }
         }
