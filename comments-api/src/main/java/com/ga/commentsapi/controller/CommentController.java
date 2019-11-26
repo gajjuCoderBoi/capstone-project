@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 
@@ -54,10 +55,11 @@ public class CommentController {
      *      calls commentService layer to get the comments by postID
      *
      *************************************************************************/
-    @ApiOperation(value = "Return the a list of comments by Post Id", produces = "application/json")
+    @ApiIgnore
+    /*@ApiOperation(value = "Return the a list of comments by Post Id", produces = "application/json")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully Retrieved comments by PostId", response = Comment.class)
-    })
+    })*/
     @GetMapping("/{postId}")
     public Iterable<Comment> getCommentsByPostId(@PathVariable Long postId){
         return commentService.getCommentsbyPostId(postId);
@@ -85,10 +87,11 @@ public class CommentController {
      *      Call the deleteCommentsByPostId from commentService.
      *
      *************************************************************************/
-    @ApiOperation(value = "Deletes comments related to a Post by Post Id", produces = "application/json")
+    @ApiIgnore
+    /*@ApiOperation(value = "Deletes comments related to a Post by Post Id", produces = "application/json")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully Deleted comments by PostId", response = Comment.class)
-    })
+    })*/
     @DeleteMapping("/{postId}/comments")
     public Long deleteCommentsByPostId(@PathVariable Long postId){
         return commentService.deleteCommentsByPostId(postId);
