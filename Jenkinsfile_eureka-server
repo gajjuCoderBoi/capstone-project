@@ -54,12 +54,11 @@ pipeline {
         }
         stage('Deliver'){
             steps{
-                dir("eureka-server"){
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-                    app.push("1")
-                    app.push("latest")
-                }
+                docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                app.push("1")
+                app.push("latest")
             }
         }
     }
+}
 }
