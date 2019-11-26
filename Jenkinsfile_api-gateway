@@ -31,5 +31,19 @@ pipeline {
                 }
             }
         }
+        stage('Coverage') {
+            steps {
+                dir("api-gateway"){
+                        sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
+                    }
+            }
+            post {
+              always {
+                    dir("api-gateway"){
+                        cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml'
+                    }
+                }
+            }
+        }
     }
 }

@@ -32,14 +32,18 @@ pipeline {
             }
         }
         stage('Coverage') {
-                    steps {
+            steps {
+                dir("eureka-server"){
                         sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
                     }
-                    post {
-                      always {
+            }
+            post {
+              always {
+                    dir("eureka-server"){
                         cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml'
-                        }
                     }
                 }
+            }
+        }
     }
 }
