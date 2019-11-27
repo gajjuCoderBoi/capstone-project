@@ -34,23 +34,31 @@ pipeline {
         stage('Coverage') {
             steps {
                 dir("users-api"){
-                        sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
+                        sh 'mvn clean package jacoco:report'
                     }
             }
             post {
               always {
                     dir("users-api"){
-                        cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml'
+                        publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]
                     }
                 }
             }
          }
-        stage('Build Img'){
+        stage('Build Image'){
             steps{
                 dir("users-api"){
                     script{
-                        docker.build("ghazanfar9131/users-api:0.0.1-SNAPSHOT")
+                        app = docker.build("ghazanfar9131/users-api:0.0.1-SNAPSHOT")
                     }
+                }
+            }
+        }
+        stage('Deliver Image'){
+                steps{
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                    app.push("1")
+                    app.push("latest")
                 }
             }
         }
