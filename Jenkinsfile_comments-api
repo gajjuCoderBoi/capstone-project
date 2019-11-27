@@ -1,4 +1,5 @@
 pipeline {
+    def app
     agent {
         docker {
                     image 'maven:3.6.2-jdk-8'
@@ -34,23 +35,31 @@ pipeline {
         stage('Coverage') {
             steps {
                 dir("comments-api"){
-                        sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
+                        sh 'mvn clean package jacoco:report'
                     }
             }
             post {
               always {
                     dir("comments-api"){
-                        cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml'
+                        publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]
                     }
                 }
             }
          }
-        stage('Build Img'){
+        stage('Build Image'){
             steps{
                 dir("comments-api"){
                     script{
-                        docker.build("ghazanfar9131/comments-api:0.0.1-SNAPSHOT")
+                        app = docker.build("ghazanfar9131/comments-api:0.0.1-SNAPSHOT")
                     }
+                }
+            }
+        }
+        stage('Deliver Image'){
+                steps{
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                    app.push("1")
+                    app.push("latest")
                 }
             }
         }

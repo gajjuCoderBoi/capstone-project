@@ -7,13 +7,8 @@ import com.ga.usersapi.model.User;
 import com.ga.usersapi.model.UserRole;
 import com.ga.usersapi.repository.UserRepository;
 import com.ga.usersapi.repository.UserRoleRepository;
-import com.netflix.discovery.converters.Auto;
-import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,11 +18,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-
 
     @Autowired
     @Qualifier("encoder")
@@ -42,11 +37,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRoleRepository userRoleRepository;
 
-//    @Autowired
-//    private Queue queue;
-
-    @Autowired
-    RabbitTemplate rabbitTemplate;
 
     @Override
     public List<User> listUsers() {
@@ -63,13 +53,14 @@ public class UserServiceImpl implements UserService {
             userRoleRepository.save(userRole);
         }
         user.getRoles().add(userRole);
-        if(getUserbyUsername(user.getUsername())!=null) throw new UserAlreadyExistException("User with this username already exist.");
-        if (userRepository.save(user).getUserId() != null) {
+        User savedUser = getUserbyUsername(user.getUsername());
+        if(savedUser.getUserId() != null) throw new UserAlreadyExistException("User with this username already exist.");
+        if (userRepository.save(user).getEmail() != null) {
             UserDetails userDetails = loadUserByUsername(user.getEmail());
             return Arrays.asList(user.getEmail(), jwtUtil.generateToken(userDetails));
         }
 
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -88,7 +79,7 @@ public class UserServiceImpl implements UserService {
         }
 
 
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -109,14 +100,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> userListFromUserIds(List<Long> userIds) {
-        System.out.println(userIds);
-        List<User> userlist = (List<User>) userRepository.findAllById(userIds);
-        System.out.println(userlist);
-        return userlist;
+        return (List<User>) userRepository.findAllById(userIds);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
 
         User user = userRepository.getUserByUsername(username);
 
@@ -128,7 +116,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private List<GrantedAuthority> getGrantedAuthorities(User user) {
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        List<GrantedAuthority> authorities = new ArrayList<>();
         for (UserRole role: user.getRoles()){
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
