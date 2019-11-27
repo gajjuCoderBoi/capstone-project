@@ -18,13 +18,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -99,7 +98,6 @@ public class UserServiceTest {
     public void signup_UserToken_Success() throws UserAlreadyExistException {
         when(bCryptPasswordEncoder.encode(any())).thenReturn(encodedPass);
         when(userRoleRepository.getRoleByName(anyString())).thenReturn(dummyUserRole);
-        when(userRoleRepository.save(any())).thenReturn(dummyUserRole);
         user.setUserId(null);
         when(userRepository.getUserByUsername(anyString())).thenReturn(user);
         when(userRepository.save(any())).thenReturn(user);
@@ -115,10 +113,7 @@ public class UserServiceTest {
     public void signup_Exception_Error() throws UserAlreadyExistException {
         when(bCryptPasswordEncoder.encode(any())).thenReturn(encodedPass);
         when(userRoleRepository.getRoleByName(anyString())).thenReturn(dummyUserRole);
-        when(userRoleRepository.save(any())).thenReturn(dummyUserRole);
         when(userRepository.getUserByUsername(anyString())).thenReturn(user);
-        when(userRepository.save(any())).thenReturn(user);
-        when(jwtUtil.generateToken(any())).thenReturn(dummyToken);
 
         userService.signup(user);
 
@@ -140,9 +135,7 @@ public class UserServiceTest {
     @Test(expected = LoginException.class)
     public void login_LoginException_Error() throws LoginException {
         when(userRepository.getUserByUsername(anyString())).thenReturn(user);
-        when(jwtUtil.generateToken(any())).thenReturn(dummyToken);
         when(bCryptPasswordEncoder.matches(anyString(),anyString())).thenReturn(false);
-        when(bCryptPasswordEncoder.encode(any())).thenReturn(encodedPass);
 
         List<String> actual = userService.login(user);
 
