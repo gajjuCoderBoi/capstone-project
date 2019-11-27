@@ -119,18 +119,9 @@ public class PostServiceImpl implements PostService {
     public List<Post> postList() {
         List<Post> savedPosts = (List<Post>) postRepository.findAll();
         Set<Long> userIdList = savedPosts.stream().map(Post::getUserId).collect(Collectors.toSet());
-        String message = "";
-        User[] rateResponse = null;
-        try {
-            message = objectMapper.writeValueAsString(userIdList);
 
-            String response = (String) rabbitTemplate.convertSendAndReceive(postToUser.getName(), "usersList:"+message);
+        User[] rateResponse = sender.getUsersByUserId(userIdList);
 
-            rateResponse = objectMapper.readValue(response, User[].class);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         HashMap<Long, User> userHashMap = new LinkedHashMap<>();
         for (User user : rateResponse) {
             userHashMap.put(user.getUserId(), user);

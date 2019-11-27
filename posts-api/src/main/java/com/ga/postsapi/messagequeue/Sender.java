@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Set;
 
 @Component
 public class Sender {
@@ -56,5 +57,21 @@ public class Sender {
     public Long deleteCommentsOfPost(Long postId) {
         String res = (String) rabbitTemplate.convertSendAndReceive(this.postToComment.getName(), "deleteCommentsByPostId:" + postId);
         return Long.valueOf(res);
+    }
+
+    public User[] getUsersByUserId(Set<Long> userIdList){
+        String message = "";
+        User[] rateResponse = null;
+        try {
+            message = objectMapper.writeValueAsString(userIdList);
+
+            String response = (String) rabbitTemplate.convertSendAndReceive(postToUser.getName(), "usersList:"+message);
+
+            rateResponse = objectMapper.readValue(response, User[].class);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return rateResponse;
     }
 }
