@@ -101,7 +101,7 @@ public class CommentsServiceTest {
         commentRepository.findCommentsbyPostId(post.getPostId());
 
         when(commentRepository.findCommentsbyPostId(any())).thenReturn((comments));
-        List<Comment> savedComments = (List<Comment>) commentService.getCommentsbyPostId(post.getPostId());
+        List<Comment> savedComments = (List<Comment>) commentRepository.findCommentsbyPostId(post.getPostId());
 
         assertEquals(comments, savedComments);
 
