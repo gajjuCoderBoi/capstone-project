@@ -136,6 +136,15 @@ public class CommentsServiceTest {
 
     }
 
+    @Test
+    public void listComments() {
+        List<Comment> comments = new ArrayList<>();
+        comments.add(comment);
+        when(commentRepository.findAll()).thenReturn(comments);
+         List<Comment> retrievedComments = commentService.listComments();
+
+        assertEquals(comments, retrievedComments);
+    }
 
 
 
