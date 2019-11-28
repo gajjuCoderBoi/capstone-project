@@ -54,8 +54,6 @@ public class UserControllerTest {
 
     private User user;
 
-    private String encodedPass = "abc";
-
     private String dummyToken = "xyz";
 
     @Before

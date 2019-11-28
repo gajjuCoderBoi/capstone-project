@@ -1,20 +1,14 @@
 package com.ga.profileapi.service;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ga.profileapi.bean.User;
 import com.ga.profileapi.exception.ProfileNotFoundException;
 import com.ga.profileapi.exception.TokenException;
 import com.ga.profileapi.messagequeue.Sender;
 import com.ga.profileapi.model.Profile;
-import com.ga.profileapi.bean.User;
 import com.ga.profileapi.repository.ProfileRepository;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import java.io.IOException;
 
 
 @Service
@@ -28,9 +22,6 @@ public class ProfileServiceImpl implements ProfileService{
      *
      *************************************************************************/
 
-
-    @Autowired
-    RestTemplate restTemplate;
 
     @Autowired
     ProfileService profileService;
