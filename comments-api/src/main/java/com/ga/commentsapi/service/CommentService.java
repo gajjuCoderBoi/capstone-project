@@ -19,15 +19,15 @@ import java.util.List;
 
 public interface CommentService {
 
-    public Comment createComment(Comment comment, Long postId, String token) throws TokenException, PostNotExistException;
+    Comment createComment(Comment comment, Long postId, String token) throws TokenException, PostNotExistException;
 
-    public Iterable<Comment> getCommentsbyPostId(Long postId);
+    Iterable<Comment> getCommentsbyPostId(Long postId);
 
-    public Long deleteCommentByCommentId(Long commentId, String token) throws TokenException, UnauthorizeActionException, CommentNotExistException;
+    Long deleteCommentByCommentId(Long commentId, String token) throws TokenException, UnauthorizeActionException, CommentNotExistException;
 
-    public void getCommentsByUser(User user);
+    List<Comment>  getCommentsByUser(User user);
 
-    public List<Comment> listComments();
+    List<Comment> listComments();
 
-    public Long deleteCommentsByPostId(Long postId);
+    Long deleteCommentsByPostId(Long postId);
 }
