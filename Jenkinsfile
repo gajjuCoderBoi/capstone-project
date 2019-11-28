@@ -1,11 +1,11 @@
 pipeline {
-    def eureka
-    def api
-    def users
-    def profile
-    def posts
-    def comments
-    def swagger
+//    def eureka
+//    def api
+//    def users
+//    def profile
+//    def posts
+//    def comments
+//    def swagger
     agent {
         docker {
             image 'maven:3.6.2-jdk-8'
