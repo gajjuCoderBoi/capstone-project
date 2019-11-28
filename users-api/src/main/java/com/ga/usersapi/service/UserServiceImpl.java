@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
         if(savedUser.getUserId() != null) throw new UserAlreadyExistException("User with this username already exist.");
         if (userRepository.save(user).getEmail() != null) {
             UserDetails userDetails = loadUserByUsername(user.getEmail());
-            return Arrays.asList(user.getEmail(), jwtUtil.generateToken(userDetails));
+            return Arrays.asList(user.getUsername(), jwtUtil.generateToken(userDetails));
         }
 
         return Collections.emptyList();
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
                 foundUser.getUserId() != null &&
                 bCryptPasswordEncoder.matches(user.getPassword(), foundUser.getPassword())) {
             UserDetails userDetails = loadUserByUsername(foundUser.getEmail());
-            return Arrays.asList(user.getEmail(), jwtUtil.generateToken(userDetails));
+            return Arrays.asList(user.getUsername(), jwtUtil.generateToken(userDetails));
         }
         else if(foundUser!=null  &&
                 !bCryptPasswordEncoder.matches(user.getPassword(), foundUser.getPassword())
