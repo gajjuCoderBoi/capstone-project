@@ -58,13 +58,5 @@ public class UserController {
     }
 
 
-    @ApiOperation(value = "Return all the Users that exist in the Server", produces = "application/json")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Successfully retrieved list")
-    })
-    @PostMapping("/userlist")
-    public ResponseEntity userListFromUserIds(@RequestBody List<Long> list){
-        return ResponseEntity.ok(userService.userListFromUserIds(list));
-    }
 
 }

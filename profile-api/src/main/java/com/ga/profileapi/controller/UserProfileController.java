@@ -18,17 +18,8 @@ import javax.validation.Valid;
 @RequestMapping
 @Api(tags = "Profile Management System", produces = "application/json")
 public class UserProfileController {
-
-    @ApiOperation(value = "Test for the profile controller", produces = "application/json")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Test Profile")
-    })
-    @GetMapping("/test")
-    public String test() {
-        return "Test Profile";
-    }
-
-
+    //TODO
+    // Work on Profile Api
     /*************************************************************************
      *
      *      Autowiring the profileService that will be used to get the data
@@ -57,7 +48,6 @@ public class UserProfileController {
     @GetMapping
     public ResponseEntity<?> getProfile(@RequestHeader("Authorization") String token) throws ProfileNotFoundException, TokenException {
         Profile savedProfile = profileService.getProfile(token);
-        System.out.println(savedProfile);
         return ResponseEntity.ok(savedProfile) ;
 
     }
