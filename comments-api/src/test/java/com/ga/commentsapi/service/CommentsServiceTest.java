@@ -146,6 +146,18 @@ public class CommentsServiceTest {
         assertEquals(comments, retrievedComments);
     }
 
+    @Test
+    public void  deleteCommentsByPostId()
+    {
+        List<Comment> comments = new ArrayList<>();
+        comments.add(comment);
 
+        when(commentRepository.findCommentsbyPostId(any())).thenReturn(comments);
+        List<Comment> savedComments = (List<Comment>) commentRepository.findCommentsbyPostId(comment.getPostId());
+        commentRepository.deleteAll(savedComments);
+        assertEquals(comments, savedComments);
+    };
 
 }
+
+
