@@ -13,10 +13,6 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -80,9 +76,6 @@ public class PostServiceImpl implements PostService {
         return savedPost;
     }
 
-    public Post testMethode(Post post){
-        return postRepository.save(post);
-    }
 
     /*************************************************************************
      *

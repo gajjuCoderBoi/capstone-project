@@ -1,0 +1,8 @@
+applications:
+  - name: ghazanfar9131-swagger-app
+    memory: 256M
+    instances: 1
+    env:
+      SPRING_PROFILES_ACTIVE: pcf,global
+    docker:
+      image: ghazanfar9131/swagger-app:0.0.1-SNAPSHOT

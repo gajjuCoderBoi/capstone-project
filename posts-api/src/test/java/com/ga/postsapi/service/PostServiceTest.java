@@ -6,21 +6,14 @@ import com.ga.postsapi.messagequeue.Sender;
 import com.ga.postsapi.model.Post;
 import com.ga.postsapi.repository.PostRepository;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
-import org.mockito.junit.MockitoJUnit;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.junit.MockitoRule;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.doReturn;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -28,9 +21,6 @@ public class PostServiceTest {
 
     private static final String USERNAME = "user";
     private static final String TOKEN = "abcdef";
-
-//    @Spy
-//    private PostServiceImpl postService;
 
     @InjectMocks
     private PostServiceImpl postService;

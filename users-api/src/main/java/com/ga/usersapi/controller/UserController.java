@@ -1,7 +1,6 @@
 package com.ga.usersapi.controller;
 
 
-import com.ga.usersapi.config.JwtUtil;
 import com.ga.usersapi.exception.LoginException;
 import com.ga.usersapi.exception.UserAlreadyExistException;
 import com.ga.usersapi.model.JwtResponse;
@@ -26,19 +25,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private JwtUtil jwtUtil;
 
-    @ApiOperation(value = "Test for connectivity to the controller", produces = "application/json")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Successfully tested user")
-    })
-    @GetMapping("/test")
-    public String test(){
-        return "Test User";
-    }
-
-
+// TODO
+    // Re-Work on Swagger API.
     @ApiOperation(value = "Sign Up a new user", produces = "application/json")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully signed up user")
@@ -77,22 +66,5 @@ public class UserController {
     public ResponseEntity userListFromUserIds(@RequestBody List<Long> list){
         return ResponseEntity.ok(userService.userListFromUserIds(list));
     }
-
-
-
-    /*@PutMapping("/reset")
-    public ResponseEntity<?> resetPassword(@RequestBody User user, @RequestHeader("Authorization") String token){
-        return ResponseEntity.ok(new JwtResponse(userService.update(user, token)));
-    }*/
-
-    /*@PostMapping("/profile")
-    public UserProfile createProfile(@RequestBody UserProfile userProfile, @RequestHeader("Authorization") String token){
-        return userProfileService.createUserProfile(userProfile, jwtUtil.getUsernameFromToken(token));
-    }
-
-    @PutMapping("/profile")
-    public UserProfile updateProfile(@RequestBody UserProfile userProfile, @RequestHeader("Authorization") String token){
-        return userProfileService.updateProfile(userProfile, jwtUtil.getUsernameFromToken(token));
-    }*/
 
 }

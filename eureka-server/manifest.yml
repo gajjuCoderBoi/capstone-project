@@ -7,7 +7,7 @@ applications:
   # - java_buildpack
   # env:
   #   SPRING_PROFILES_ACTIVE: pcf
-  memory: 341.33M
+  memory: 256M
   instances: 1
   env:
     SPRING_PROFILES_ACTIVE: pcf,global

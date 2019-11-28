@@ -1,0 +1,55 @@
+applications:
+  - name: ghazanfar9131-eureka-server
+    memory: 256M
+    instances: 1
+    env:
+      SPRING_PROFILES_ACTIVE: pcf,global
+    docker:
+      image: ghazanfar9131/eureka-server:0.0.1-SNAPSHOT
+  - name: ghazanfar9131-api-gateway
+    memory: 256M
+    instances: 1
+    env:
+      SPRING_PROFILES_ACTIVE: pcf,global
+    docker:
+      image: ghazanfar9131/api-gateway:0.0.1-SNAPSHOT
+#  - name: ghazanfar9131/rabbitmq
+#    memory: 256M
+#    instances: 1
+#    docker:
+#      image: rabbitmq:3-management
+  - name: ghazanfar9131-comments-api
+    memory: 256M
+    instances: 1
+    env:
+      SPRING_PROFILES_ACTIVE: pcf,global
+    docker:
+      image: ghazanfar9131/comments-api:0.0.1-SNAPSHOT
+  - name: ghazanfar9131-posts-api
+    memory: 256M
+    instances: 1
+    env:
+      SPRING_PROFILES_ACTIVE: pcf,global
+    docker:
+      image: ghazanfar9131/posts-api:0.0.1-SNAPSHOT
+  - name: ghazanfar9131-profile-api
+    memory: 256M
+    instances: 1
+    env:
+      SPRING_PROFILES_ACTIVE: pcf,global
+    docker:
+      image: ghazanfar9131/profile-api:0.0.1-SNAPSHOT
+  - name: ghazanfar9131-users-api
+    memory: 512M
+    instances: 1
+    env:
+      SPRING_PROFILES_ACTIVE: pcf,global
+    docker:
+      image: ghazanfar9131/users-api:0.0.1-SNAPSHOT
+  - name: ghazanfar9131-swagger-app
+    memory: 256M
+    instances: 1
+    env:
+      SPRING_PROFILES_ACTIVE: pcf,global
+    docker:
+      image: ghazanfar9131/swagger-app:0.0.1-SNAPSHOT
