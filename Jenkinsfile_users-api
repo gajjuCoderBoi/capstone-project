@@ -61,7 +61,13 @@ pipeline {
                         app.push("1")
                         app.push("latest")
                     }
-
+                }
+            }
+        }
+        stage('Deployment'){
+            steps{
+                dir("users-api"){
+                    pushToCloudFoundry cloudSpace: 'development', credentialsId: 'pcf', organization: 'general-assembly', target: 'ghazanfar9131-users-api'
                 }
             }
         }
