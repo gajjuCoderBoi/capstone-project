@@ -1,4 +1,11 @@
 pipeline {
+    def eureka
+    def api
+    def users
+    def profile
+    def posts
+    def comments
+    def swagger
     agent {
         docker {
             image 'maven:3.6.2-jdk-8'
@@ -6,10 +13,13 @@ pipeline {
         }
 
     }
+    options {
+        skipStagesAfterUnstable()
+    }
     stages {
         stage('Build') {
             parallel {
-                stage('Eureka-Server-Build') {
+                stage('Eureka-Server') {
                     steps {
                         dir("eureka-server") {
                             sh 'mvn -B -DskipTests clean package'
@@ -18,7 +28,7 @@ pipeline {
                     }
                 }
 
-                stage('Api-Gateway-Build') {
+                stage('Api-Gateway') {
                     steps {
                         dir("api-gateway") {
                             sh 'mvn -B -DskipTests clean package'
@@ -26,7 +36,7 @@ pipeline {
                     }
                 }
 
-                stage('Users-Build') {
+                stage('User') {
                     steps {
                         dir("users-api") {
                             sh 'mvn -B -DskipTests clean package'
@@ -34,7 +44,7 @@ pipeline {
                     }
                 }
 
-                stage('Profile-Build') {
+                stage('Profile') {
                     steps {
                         dir("profile-api") {
                             sh 'mvn -B -DskipTests clean package'
@@ -42,7 +52,7 @@ pipeline {
                     }
                 }
 
-                stage('Posts-Build') {
+                stage('Posts') {
                     steps {
                         dir("posts-api") {
                             sh 'mvn -B -DskipTests clean package'
@@ -50,7 +60,7 @@ pipeline {
                     }
                 }
 
-                stage('Comments-Build') {
+                stage('Comments') {
                     steps {
                         dir("comments-api") {
                             sh 'mvn -B -DskipTests clean package'
@@ -58,7 +68,7 @@ pipeline {
                     }
                 }
 
-                stage('Swagger-Build') {
+                stage('Swagger') {
                     steps {
                         dir("swagger-app") {
                             sh 'mvn -B -DskipTests clean package'
@@ -70,37 +80,37 @@ pipeline {
 
         stage('Test') {
             parallel {
-                stage('Eureka-Server-Test') {
+                stage('Eureka-Server') {
                     steps {
                         dir("eureka-server") {
                             sh 'mvn test'
                         }
                     }
-                    post {
-                        always {
-                            dir("eureka-server") {
-                                junit 'target/surefire-reports/*.xml'
-                            }
-                        }
-                    }
+//                    post {
+//                        always {
+//                            dir("eureka-server") {
+//                                junit 'target/surefire-reports/*.xml'
+//                            }
+//                        }
+//                    }
                 }
 
-                stage('Api-Gateway-Test') {
+                stage('Api-Gateway') {
                     steps {
                         dir("api-gateway") {
                             sh 'mvn test'
                         }
                     }
-                    post {
-                        always {
-                            dir("api-gateway") {
-                                junit 'target/surefire-reports/*.xml'
-                            }
-                        }
-                    }
+//                    post {
+//                        always {
+//                            dir("api-gateway") {
+//                                junit 'target/surefire-reports/*.xml'
+//                            }
+//                        }
+//                    }
                 }
 
-                stage('Users-Test') {
+                stage('Users') {
                     steps {
                         dir("users-api") {
                             sh 'mvn test'
@@ -115,7 +125,7 @@ pipeline {
                     }
                 }
 
-                stage('Profile-Test') {
+                stage('Profile') {
                     steps {
                         dir("profile-api") {
                             sh 'mvn test'
@@ -130,7 +140,7 @@ pipeline {
                     }
                 }
 
-                stage('Posts-Test') {
+                stage('Posts') {
                     steps {
                         dir("posts-api") {
                             sh 'mvn test'
@@ -145,7 +155,7 @@ pipeline {
                     }
                 }
 
-                stage('Comments-Test') {
+                stage('Comments') {
                     steps {
                         dir("comments-api") {
                             sh 'mvn test'
@@ -160,21 +170,307 @@ pipeline {
                     }
                 }
 
-                stage('Swagger-Test') {
+                stage('Swagger') {
                     steps {
                         dir("swagger-app") {
                             sh 'mvn test'
                         }
                     }
+//                    post {
+//                        always {
+//                            dir("swagger-app") {
+//                                junit 'target/surefire-reports/*.xml'
+//                            }
+//                        }
+//                    }
+                }
+            }
+        }
+
+        stage('Coverage') {
+            parallel {
+
+                stage('Users') {
+                    steps {
+                        dir("users-api") {
+                            sh 'mvn test'
+                        }
+                    }
                     post {
                         always {
-                            dir("swagger-app") {
+                            dir("users-api") {
                                 junit 'target/surefire-reports/*.xml'
                             }
                         }
                     }
                 }
+
+                stage('Profile') {
+                    steps {
+                        dir("profile-api") {
+                            sh 'mvn test'
+                        }
+                    }
+                    post {
+                        always {
+                            dir("profile-api") {
+                                junit 'target/surefire-reports/*.xml'
+                            }
+                        }
+                    }
+                }
+
+                stage('Posts') {
+                    steps {
+                        dir("posts-api") {
+                            sh 'mvn test'
+                        }
+                    }
+                    post {
+                        always {
+                            dir("posts-api") {
+                                junit 'target/surefire-reports/*.xml'
+                            }
+                        }
+                    }
+                }
+
+                stage('Comments') {
+                    steps {
+                        dir("comments-api") {
+                            sh 'mvn test'
+                        }
+                    }
+                    post {
+                        always {
+                            dir("comments-api") {
+                                junit 'target/surefire-reports/*.xml'
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
+        stage('Build Image') {
+            parallel {
+                stage('Eureka-Server') {
+                    steps {
+                        script {
+                            eureka = docker.build("ghazanfar9131/eureka-server:0.0.1-SNAPSHOT")
+                        }
+                    }
+//                    post {
+//                        always {
+//                            dir("eureka-server") {
+//                                junit 'target/surefire-reports/*.xml'
+//                            }
+//                        }
+//                    }
+                }
+
+                stage('Api-Gateway') {
+                    steps {
+                        dir("api-gateway") {
+                            script {
+                                api = docker.build("ghazanfar9131/api-gateway:0.0.1-SNAPSHOT")
+                            }
+                        }
+                    }
+//                    post {
+//                        always {
+//                            dir("api-gateway") {
+//                                junit 'target/surefire-reports/*.xml'
+//                            }
+//                        }
+//                    }
+                }
+
+                stage('Users') {
+                    steps {
+                        dir("users-api") {
+                            script {
+                                users = docker.build("ghazanfar9131/users-api:0.0.1-SNAPSHOT")
+                            }
+                        }
+                    }
+                }
+
+                stage('Profile') {
+                    steps {
+                        dir("profile-api") {
+                            script {
+                                profile = docker.build("ghazanfar9131/profile-api:0.0.1-SNAPSHOT")
+                            }
+                        }
+                    }
+                }
+
+                stage('Posts') {
+                    steps {
+                        dir("posts-api") {
+                            script {
+                                posts = docker.build("ghazanfar9131/posts-api:0.0.1-SNAPSHOT")
+                            }
+                        }
+                    }
+                }
+
+                stage('Comments') {
+                    steps {
+                        dir("comments-api") {
+                            script {
+                                comments = docker.build("ghazanfar9131/comments-api:0.0.1-SNAPSHOT")
+                            }
+                        }
+                    }
+                }
+
+                stage('Swagger') {
+                    steps {
+                        dir("swagger-app") {
+                            script {
+                                swagger = docker.build("ghazanfar9131/swagger-app:0.0.1-SNAPSHOT")
+                            }
+                        }
+                    }
+//                    post {
+//                        always {
+//                            dir("swagger-app") {
+//                                junit 'target/surefire-reports/*.xml'
+//                            }
+//                        }
+//                    }
+                }
+            }
+        }
+
+        stage('Deliver Image') {
+            parallel {
+                stage('Eureka-Server') {
+                    steps {
+                        script {
+                            docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                                eureka.push()
+                            }
+                        }
+                    }
+//                    post {
+//                        always {
+//                            dir("eureka-server") {
+//                                junit 'target/surefire-reports/*.xml'
+//                            }
+//                        }
+//                    }
+                }
+
+                stage('Api-Gateway') {
+                    steps {
+                        dir("api-gateway") {
+                            script {
+                                docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                                    api.push()
+                                }
+                            }
+                        }
+                    }
+//                    post {
+//                        always {
+//                            dir("api-gateway") {
+//                                junit 'target/surefire-reports/*.xml'
+//                            }
+//                        }
+//                    }
+                }
+
+                stage('Users') {
+                    steps {
+                        dir("users-api") {
+                            script {
+                                docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                                    users.push()
+                                }
+                            }
+                        }
+                    }
+                }
+
+                stage('Profile') {
+                    steps {
+                        dir("profile-api") {
+                            script {
+                                docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                                    profile.push()
+                                }
+                            }
+                        }
+                    }
+                }
+
+                stage('Posts') {
+                    steps {
+                        dir("posts-api") {
+                            script {
+                                docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                                    posts.push()
+                                }
+                            }
+                        }
+                    }
+                }
+
+                stage('Comments') {
+                    steps {
+                        dir("comments-api") {
+                            script {
+                                docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                                    comments.push()
+                                }
+                            }
+                        }
+                    }
+                }
+
+                stage('Swagger') {
+                    steps {
+                        dir("swagger-app") {
+                            script {
+                                docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                                    swagger.push()
+                                }
+                            }
+                        }
+                    }
+//                    post {
+//                        always {
+//                            dir("swagger-app") {
+//                                junit 'target/surefire-reports/*.xml'
+//                            }
+//                        }
+//                    }
+                }
             }
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
