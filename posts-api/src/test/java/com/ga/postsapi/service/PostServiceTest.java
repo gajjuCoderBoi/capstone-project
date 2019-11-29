@@ -1,6 +1,5 @@
 package com.ga.postsapi.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ga.postsapi.bean.Comment;
 import com.ga.postsapi.bean.User;
 import com.ga.postsapi.exception.PostNotExistException;
@@ -10,25 +9,20 @@ import com.ga.postsapi.messagequeue.Sender;
 import com.ga.postsapi.model.Post;
 import com.ga.postsapi.repository.PostRepository;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
-import org.mockito.junit.MockitoJUnit;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.junit.MockitoRule;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -37,13 +31,10 @@ public class PostServiceTest {
     private static final String USERNAME = "user";
     private static final String TOKEN = "abcdef";
 
-//    @Spy
-//    private PostServiceImpl postService;
-
     @InjectMocks
     private PostServiceImpl postService;
 
-    @Mock
+    @Spy
     private PostRepository postRepository;
 
     @InjectMocks
@@ -51,10 +42,6 @@ public class PostServiceTest {
 
     @InjectMocks
     private User user;
-
-
-    @InjectMocks
-    private ObjectMapper objectMapper;
 
 
     @Mock
@@ -72,33 +59,92 @@ public class PostServiceTest {
     }
 
     @Test
-    public void createPost() throws TokenException {
+    public void createPost_Post_Success() throws TokenException {
         when(sender.getUserFromUserAPI(any())).thenReturn(user);
         when(postRepository.save(post)).thenReturn(post);
         Post actual = postService.createPost(post, TOKEN);
 
-        assertEquals(post, actual);
+        assertEquals(post.getTitle(), actual.getTitle());
+
+    }
+
+    @Test(expected = TokenException.class)
+    public void createPost_Unauthorized_Error() throws TokenException {
+        when(sender.getUserFromUserAPI(any())).thenReturn(null);
+        Post actual = postService.createPost(post, TOKEN);
+
+        assertEquals(post.getTitle(), actual.getTitle());
 
     }
 
     @Test
-    public void deletePost() throws TokenException, UnauthorizeActionException, PostNotExistException {
+    public void deletePost_Long_Success() throws TokenException, UnauthorizeActionException, PostNotExistException {
 
-        when(postRepository.findById(any())).thenReturn(java.util.Optional.of(post));
-        Post savedPost = postRepository.findById(post.getPostId()).orElse(null);
-        if (savedPost == null) throw new PostNotExistException("Post Doesn't Exist.");
-        if (savedPost.getUserId().longValue() != user.getUserId().longValue())
-            throw new UnauthorizeActionException("Unauthorized Action.");
-        sender.deleteCommentsOfPost(savedPost.getPostId());
-        Post actual = savedPost;
-        postRepository.delete(savedPost);
-        assertEquals(post, actual);
+        when(sender.getUserFromUserAPI(anyString())).thenReturn(user);
+        when(postRepository.findById(anyLong())).thenReturn(Optional.of(post));
+        when(sender.deleteCommentsOfPost(anyLong())).thenReturn(1L);
+        doNothing().when(postRepository).delete(any());
+
+        Long actual = postService.deletePost(1L, "xyz");
+
+        assertEquals(Optional.of(1L), Optional.of(actual));
+
+    }
+
+    @Test(expected = TokenException.class)
+    public void deletePost_TokenException_Error() throws TokenException, UnauthorizeActionException, PostNotExistException {
+
+        when(sender.getUserFromUserAPI(anyString())).thenReturn(null);
+
+        Long actual = postService.deletePost(1L, "xyz");
+
+        assertEquals(Optional.of(1L), Optional.of(actual));
+
+    }
+
+    @Test(expected = Exception.class)
+    public void deletePost_PostNotExist_Error() throws TokenException, UnauthorizeActionException, PostNotExistException {
+
+        when(sender.getUserFromUserAPI(anyString())).thenReturn(user);
+        when(postRepository.findById(anyLong())).thenReturn(null);
+
+        Long actual = postService.deletePost(1L, "xyz");
+
+        assertEquals(Optional.of(1L), Optional.of(actual));
+
+    }
+
+    @Test(expected = UnauthorizeActionException.class)
+    public void deletePost_UnauthorizedAction_Error() throws TokenException, UnauthorizeActionException, PostNotExistException {
+
+        User user = new User();
+        user.setUserId(3L);
+        when(sender.getUserFromUserAPI(anyString())).thenReturn(user);
+        when(postRepository.findById(anyLong())).thenReturn(Optional.of(post));
+
+        Long actual = postService.deletePost(1L, "xyz");
+
+        assertEquals(Optional.of(1L), Optional.of(actual));
+
     }
 
     @Test
-    public void postList() {
+    public void getPostById_Post_Success() {
+        Comment[] comments = new Comment[1];
+        when(postRepository.findById(anyLong())).thenReturn(Optional.of(post));
+        when(sender.findCommentsByPostId(anyLong())).thenReturn(comments);
+
+        Post actual = postService.getPostById(1L);
+
+        assertEquals(post.getTitle(), actual.getTitle());
+
+
+    }
+
+
+    @Test
+    public void postList_Posts_Success() {
         Post post1 = new Post();
-        List<Post> addedPosts = new ArrayList<Post>();
         post1.setTitle("Example post1 title");
         post1.setText("Example post1 description is cool.");
         post1.setPostId(2L);
@@ -116,15 +162,20 @@ public class PostServiceTest {
         post3.setPostId(4L);
         post3.setUser(user);
         post3.setUserId(1L);
-        addedPosts.add(post1);
-        addedPosts.add(post2);
-        addedPosts.add(post3);
-        postRepository.save(post1);
-        postRepository.save(post2);
-        postRepository.save(post3);
-        List<Post> actualPosts = addedPosts;
+        List<Post> posts = Arrays.asList(post1, post2, post3);
+        User user1 = new User();
+        user1.setUserId(3L);
+        User user2 = new User();
+        user2.setUserId(4L);
+        User[] users = {user1, user2};
 
-        assertEquals(addedPosts, actualPosts);
+        when(postRepository.findAll()).thenReturn(posts);
+        when(sender.getUsersByUserId(anySet())).thenReturn(users);
+
+        List<Post> actual = postService.postList();
+
+        assertEquals(posts.size(), actual.size());
+
     }
 
 }

@@ -1,6 +1,7 @@
 package com.ga.postsapi.messagequeue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ga.postsapi.bean.Comment;
 import com.ga.postsapi.bean.User;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -73,5 +74,18 @@ public class Sender {
             e.printStackTrace();
         }
         return rateResponse;
+    }
+
+    public Comment[] findCommentsByPostId(Long postId){
+        String res = (String) rabbitTemplate.convertSendAndReceive(this.postToComment.getName(), "findCommentsByPostId:" + postId);
+
+        Comment[] comments = new Comment[0];
+        try {
+            comments = objectMapper.readValue(res, Comment[].class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return comments;
     }
 }

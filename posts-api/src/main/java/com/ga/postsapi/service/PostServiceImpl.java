@@ -47,14 +47,6 @@ public class PostServiceImpl implements PostService {
     ObjectMapper objectMapper;
 
     @Autowired
-    @Qualifier("PostToComment")
-    private Queue postToComment;
-
-    @Autowired
-    @Qualifier("PostToUser")
-    private Queue postToUser;
-
-    @Autowired
     private Sender sender;
 
     /*************************************************************************
@@ -138,14 +130,7 @@ public class PostServiceImpl implements PostService {
     public Post getPostById(Long postId) {
         Post savedPost = postRepository.findById(postId).orElse(null);
 
-        String res = (String) rabbitTemplate.convertSendAndReceive(this.postToComment.getName(), "findCommentsByPostId:" + postId);
-
-        Comment[] comments = new Comment[0];
-        try {
-            comments = objectMapper.readValue(res, Comment[].class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Comment[] comments = sender.findCommentsByPostId(savedPost.getPostId());
 
         savedPost.setComments(Arrays.asList(comments));
         return savedPost;
