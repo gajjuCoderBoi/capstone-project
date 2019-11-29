@@ -81,11 +81,6 @@ public class PostControllerTest {
         post3.setUser(user);
         post3.setUserId(1L);
         posts = Arrays.asList(post1, post2, post3);
-//        User user1 = new User();
-//        user1.setUserId(3L);
-//        User user2 = new User();
-//        user2.setUserId(4L);
-//        User[] users = {user1, user2};
     }
 
     @Test
