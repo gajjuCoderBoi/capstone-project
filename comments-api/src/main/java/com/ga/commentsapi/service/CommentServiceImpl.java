@@ -60,7 +60,7 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.save(comment);
     }
 
-    ;
+
 
     /*************************************************************************
      * The getCommentsbyPostId takes a single parameter postId and calls
@@ -86,7 +86,7 @@ public class CommentServiceImpl implements CommentService {
             for (Comment savedComment : savedComments) {
                 savedComment.setUser(userHashMap.get(savedComment.getUserId()));
             }
-            System.out.println(rateResponse);
+
         }
         return savedComments;
     }
@@ -113,7 +113,7 @@ public class CommentServiceImpl implements CommentService {
         return -1L;
     }
 
-    ;
+
 
     /*************************************************************************
      * The getCommentsByUser method takes one argument: a User. From the user
@@ -122,9 +122,9 @@ public class CommentServiceImpl implements CommentService {
      *************************************************************************/
 
     @Override
-    public void getCommentsByUser(User user) {
-        Long userid = user.getUserId();
-        commentRepository.findCommentsbyUserId(userid);
+    public List<Comment>  getCommentsByUser(User user) {
+        Long userId = user.getUserId();
+        return (List<Comment>) commentRepository.findCommentsbyUserId(userId);
     }
 
     /*************************************************************************

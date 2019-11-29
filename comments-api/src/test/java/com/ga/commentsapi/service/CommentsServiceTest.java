@@ -18,6 +18,7 @@ import org.mockito.*;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.MockitoRule;
+import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -66,6 +67,7 @@ public class CommentsServiceTest {
 
     @Before
     public void initDummies() {
+        MockitoAnnotations.initMocks(this);
         user.setUsername(USERNAME);
         user.setUserId(1L);
         post.setTitle("Example post title");
@@ -92,6 +94,21 @@ public class CommentsServiceTest {
     }
 
     @Test
+    public void getCommentsbyPostId() {
+
+        List<Comment> comments = new ArrayList<>();
+        comments.add(comment);
+        commentRepository.findCommentsbyPostId(post.getPostId());
+
+        when(commentRepository.findCommentsbyPostId(any())).thenReturn((comments));
+        List<Comment> savedComments = (List<Comment>) commentRepository.findCommentsbyPostId(post.getPostId());
+
+        assertEquals(comments, savedComments);
+
+    }
+
+
+    @Test
     public void deleteCommentByCommentId() throws TokenException, UnauthorizeActionException, PostNotExistException {
 
         when(commentRepository.findById(any())).thenReturn(java.util.Optional.of(comment));
@@ -103,22 +120,44 @@ public class CommentsServiceTest {
         commentRepository.delete(savedComment);
         assertEquals(comment, actual);
     }
-/*
+
     @Test
-    public void getCommentsByUser(User user) {
+    public void getCommentsByUser() {
+        List<Comment> comments = new ArrayList<>();
+        comments.add(comment);
 
-        commentRepository.save(comment);
-        Long userid = when(user.getUserId();
-        commentRepository.findCommentsbyUserId(userid);
+        commentRepository.findCommentsbyUserId(user.getUserId());
 
-        /*
-        Long userid = when(user.getUserId();
-        commentRepository.findCommentsbyUserId(userid);
-         */
+        when(commentRepository.findCommentsbyUserId(any())).thenReturn(comments);
+        List<Comment> retrievedComments = commentService.getCommentsByUser(user);
 
-   // }
+        assertEquals(comments, retrievedComments);
 
 
+    }
 
+    @Test
+    public void listComments() {
+        List<Comment> comments = new ArrayList<>();
+        comments.add(comment);
+        when(commentRepository.findAll()).thenReturn(comments);
+         List<Comment> retrievedComments = commentService.listComments();
+
+        assertEquals(comments, retrievedComments);
+    }
+
+    @Test
+    public void  deleteCommentsByPostId()
+    {
+        List<Comment> comments = new ArrayList<>();
+        comments.add(comment);
+
+        when(commentRepository.findCommentsbyPostId(any())).thenReturn(comments);
+        List<Comment> savedComments = (List<Comment>) commentRepository.findCommentsbyPostId(comment.getPostId());
+        commentRepository.deleteAll(savedComments);
+        assertEquals(comments, savedComments);
+    };
 
 }
+
+
