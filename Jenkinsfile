@@ -257,8 +257,10 @@ pipeline {
             parallel {
                 stage('Eureka-Server') {
                     steps {
-                        script {
-                            eureka = docker.build("ghazanfar9131/eureka-server:0.0.1-SNAPSHOT")
+                        dir("eureka-server") {
+                            script {
+                                eureka = docker.build("ghazanfar9131/eureka-server:0.0.1-SNAPSHOT")
+                            }
                         }
                     }
 //                    post {
