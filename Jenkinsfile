@@ -193,13 +193,13 @@ pipeline {
                 stage('Users') {
                     steps {
                         dir("users-api") {
-                            sh 'mvn test'
+                            sh 'mvn clean package jacoco:report'
                         }
                     }
                     post {
                         always {
                             dir("users-api") {
-                                junit 'target/surefire-reports/*.xml'
+                                publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]
                             }
                         }
                     }
@@ -208,13 +208,13 @@ pipeline {
                 stage('Profile') {
                     steps {
                         dir("profile-api") {
-                            sh 'mvn test'
+                            sh 'mvn clean package jacoco:report'
                         }
                     }
                     post {
                         always {
                             dir("profile-api") {
-                                junit 'target/surefire-reports/*.xml'
+                                publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]
                             }
                         }
                     }
@@ -223,13 +223,13 @@ pipeline {
                 stage('Posts') {
                     steps {
                         dir("posts-api") {
-                            sh 'mvn test'
+                            sh 'mvn clean package jacoco:report'
                         }
                     }
                     post {
                         always {
                             dir("posts-api") {
-                                junit 'target/surefire-reports/*.xml'
+                                publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]
                             }
                         }
                     }
@@ -238,13 +238,13 @@ pipeline {
                 stage('Comments') {
                     steps {
                         dir("comments-api") {
-                            sh 'mvn test'
+                            sh 'mvn clean package jacoco:report'
                         }
                     }
                     post {
                         always {
                             dir("comments-api") {
-                                junit 'target/surefire-reports/*.xml'
+                                publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]
                             }
                         }
                     }
