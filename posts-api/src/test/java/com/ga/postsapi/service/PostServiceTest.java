@@ -49,7 +49,6 @@ public class PostServiceTest {
 
     @Before
     public void initDummies() {
-        MockitoAnnotations.initMocks(this);
         user.setUsername(USERNAME);
         user.setUserId(1L);
         post.setTitle("Example post title");
