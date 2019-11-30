@@ -6,6 +6,19 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+
+/***********************************************************************************
+ *
+ *      The ErrorResponse has the following variables: httpStatus, the message, the cause and a timestamp.
+ *      It has several constructors and it has four getter methods:
+ *
+ *      1. getHttpStatus()
+ *      2. getMessage()
+ *      3. getCause()
+ *      4. getTimestamp()
+ *
+ ******************************************************************************************/
+
 public class ErrorResponse {
 
     private HttpStatus httpStatus;
