@@ -5,6 +5,13 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/*************************************************************************
+ *
+ *      RabbitMQConfig configures RabbitMQ. It creates three queues that will enable communication
+ *      with the PostAPI and the UsersAPI
+ *
+ *************************************************************************/
+
 @Configuration
 public class RabbitMQConfig {
 
