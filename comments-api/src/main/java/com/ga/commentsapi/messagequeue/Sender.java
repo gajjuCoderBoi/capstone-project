@@ -12,6 +12,20 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.Set;
 
+/*************************************************************************
+ *
+ *      The Sender class sends messages to the queues commentToUserQueue
+ *      and commentToPostQueue. It has three methods:
+ *
+ *      1. getUserFromUserAPI(String token)
+ *      2. getPostByPostId(Long postId)
+ *      3. getUsersByUsersId(Set<Long> userIdList)
+ *
+ *************************************************************************/
+
+
+
+
 @Component
 public class Sender {
     @Autowired
@@ -44,6 +58,11 @@ public class Sender {
         return user;
     }
 
+
+    /*************************************************************************
+     * the getPostsByPostID takes a postId as argument. It is an auxiliary
+     * method that returns a Post using its postId
+     *************************************************************************/
     public Post getPostByPostId(Long postId){
         String response = (String) rabbitTemplate.convertSendAndReceive(commentToPostQueue.getName(), "getPostByPostId:" + postId);
         Post post = null;
@@ -56,6 +75,10 @@ public class Sender {
         return post;
     }
 
+    /*************************************************************************
+     * the getUsersByUsersId takes a list of userIdList as argument. It is an auxiliary
+     * method that returns the users to whom the userIds belong
+     *************************************************************************/
     public User[] getUsersByUsersId(Set<Long> userIdList){
         String message = "";
         User[] rateResponse = null;
