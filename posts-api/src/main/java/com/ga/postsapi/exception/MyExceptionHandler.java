@@ -13,6 +13,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.ArrayList;
 import java.util.List;
 
+
+/*************************************************************************
+ *
+ *      The MyExceptionHandler class extends ResponseEntityExceptionHandler class and
+ *      handles the different exceptions. It is here where the message details and status are built
+ *      for the http response
+ *
+ *************************************************************************/
+
 @ControllerAdvice
 public class MyExceptionHandler extends ResponseEntityExceptionHandler {
 

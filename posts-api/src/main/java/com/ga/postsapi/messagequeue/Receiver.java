@@ -8,6 +8,14 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/*************************************************************************
+ *
+ *      The Receiver class in the postsapi listens to the CommentToPost
+ *      queue. It directs the message to a function in the postService
+ *      class depending on the contents of the message
+ *
+ *************************************************************************/
+
 @Component
 public class Receiver {
 

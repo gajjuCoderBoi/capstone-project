@@ -15,6 +15,19 @@ import java.util.Set;
 @Component
 public class Sender {
 
+    /*************************************************************************
+     *
+     *      The Sender class sends messages to the queues commentToUserQueue
+     *      and commentToPostQueue. It has four methods:
+     *
+     *      1. getUserFromUserAPI(String token)
+     *      2. deleteCommentsOfPost(Long postId)
+     *      3.  getUsersByUserId(Set<Long> userIdList)
+     *      4. findCommentsByPostId(Long postId)
+     *
+     *************************************************************************/
+
+
     @Autowired
     RabbitTemplate rabbitTemplate;
 
@@ -60,6 +73,12 @@ public class Sender {
         return Long.valueOf(res);
     }
 
+    /*************************************************************************
+     *
+     *      getUsersByUserId is a helper method that gets a list of UserIds and
+     *      returns a list of users
+     *
+     *************************************************************************/
     public User[] getUsersByUserId(Set<Long> userIdList){
         String message = "";
         User[] rateResponse = null;
@@ -76,6 +95,13 @@ public class Sender {
         return rateResponse;
     }
 
+
+    /*************************************************************************
+     *
+     *      findCommentsByPostId is a helper method that gets a postId and
+     *      returns a list of comments attached to that post
+     *
+     *************************************************************************/
     public Comment[] findCommentsByPostId(Long postId){
         String res = (String) rabbitTemplate.convertSendAndReceive(this.postToComment.getName(), "findCommentsByPostId:" + postId);
 
