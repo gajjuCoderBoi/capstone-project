@@ -5,6 +5,14 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/*******************************************************************
+ * The RabbitMQConfig class sets up the following queues for
+ * microservices communication:
+ * 1. userToProfileQueue()
+ * 2. postToUserQueue()
+ * 3. commentToUserQueue()
+ */
+
 @Configuration
 public class RabbitMQConfig {
 

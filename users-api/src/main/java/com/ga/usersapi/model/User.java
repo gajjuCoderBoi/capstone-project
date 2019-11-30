@@ -11,6 +11,20 @@ import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
+/*************************************************************************
+ *
+ *      User Entity which behave like a table in the database.
+ *
+ *      User Entity has four properties as follows:
+ *
+ *      userId -> Store the id of Profile (Primary Key) Long type
+ *      email -> String type
+ *      password -> String type
+ *      username -> Long type
+ *
+ *************************************************************************/
+
+
 @Entity
 @Table(name = "users")
 public class User {

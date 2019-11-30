@@ -5,6 +5,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.List;
 
+
+/*************************************************************************
+ *
+ *      User Role which behave like a table in the database.
+ *
+ *      User Role has two properties as follows:
+ *
+ *      roleId -> Store the id of Profile (Primary Key) Long type
+ *      name -> String type
+ *
+ *************************************************************************/
+
 @Entity
 @Table(name = "roles")
 public class UserRole {

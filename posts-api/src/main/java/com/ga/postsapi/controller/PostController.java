@@ -16,7 +16,8 @@ import java.util.List;
 
 /*************************************************************************
  *
- *      Comment for Autowired
+ *      This is the postcontroller class that defines the differnt endpoints used
+ *      by this microservice
  *
  *************************************************************************/
 

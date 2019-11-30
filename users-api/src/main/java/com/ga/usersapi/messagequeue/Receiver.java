@@ -13,6 +13,16 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+
+/*************************************************************************
+ *
+ *      The Receiver class in the usersapi listens to the UserToProfile
+ *      PostToUser CommentToUser queues.
+ *      It directs the message to a function in the
+ *      userService class depending on the contents of the message
+ *
+ *************************************************************************/
+
 @Component
 //@RabbitListener(queues = {"UserToProfile", "PostToUser"})
 public class Receiver {

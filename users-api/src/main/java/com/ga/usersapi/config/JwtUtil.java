@@ -13,6 +13,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/***************************************************************************
+ *  the JwtUtil class is in charge of parsing the token into User object
+ *  and generating the token from the User object.
+ ********************************************************************************/
+
 @Component
 public class JwtUtil implements Serializable {
 

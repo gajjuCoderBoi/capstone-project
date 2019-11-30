@@ -26,6 +26,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+/*******************************************************************************************************
+ * The UserServiceTest class tests the UserService class and its methods
+ *  using Mockito and JUnit
+ **************************************************************************/
+
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
 
