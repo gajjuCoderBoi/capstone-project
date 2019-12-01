@@ -11,6 +11,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
+/********************************************************************************************************
+ * The ZuulGateWayApplication class is the APIgateway for this app and takes all API calls from clients, then routes them to the appropriate
+ *  microservice with request routing, composition, and protocol translation.
+*********************************************************************************************************/
 @SpringBootApplication
 @EnableZuulProxy
 @EnableEurekaClient

@@ -20,6 +20,18 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
+
+/*************************************************************************
+ *
+ *     The SecurityConfig class extends WebSecurityConfigurerAdapter configures
+ *     security for the comments-api. It prevents cors and csrf issues and
+ *     handles authentication
+ *
+ *************************************************************************/
+
+
+
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)

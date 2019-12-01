@@ -12,6 +12,14 @@ import springfox.documentation.spring.data.rest.configuration.SpringDataRestConf
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
+
+/************************************************************************
+ *
+ *     The SwaggerDocumentationConfiguration class enables Swagger.
+ *     It declares the base Package as well as the base url where the endpoints
+ *     will be viewed by the user*
+ *************************************************************************/
+
 @EnableSwagger2WebMvc
 @Import({SpringDataRestConfiguration.class})
 @Configuration

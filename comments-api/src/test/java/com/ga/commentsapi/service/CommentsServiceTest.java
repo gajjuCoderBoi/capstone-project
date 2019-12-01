@@ -1,9 +1,6 @@
 package com.ga.commentsapi.service;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ga.commentsapi.bean.Post;
 import com.ga.commentsapi.bean.User;
-import com.ga.commentsapi.exception.CommentNotExistException;
 import com.ga.commentsapi.exception.PostNotExistException;
 import com.ga.commentsapi.exception.TokenException;
 import com.ga.commentsapi.exception.UnauthorizeActionException;
@@ -11,58 +8,82 @@ import com.ga.commentsapi.messagequeue.Sender;
 import com.ga.commentsapi.model.Comment;
 import com.ga.commentsapi.repository.CommentRepository;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.*;
-import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.junit.MockitoRule;
-import org.mockito.stubbing.OngoingStubbing;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
-
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
+
+/*************************************************************************
+ * The comment service Test class tests the methods that live in the
+ *  CommentServiceImpl class using Mockito
+ *
+ *************************************************************************/
 
 @RunWith(MockitoJUnitRunner.class)
 public class CommentsServiceTest {
 
+    /*************************************************************************
+     * The static variable final Strings USERNAME and TOKEN are used to
+     *  support the testing by providing username and token values to be used
+     * in testing
+     *************************************************************************/
     private static final String USERNAME = "user";
     private static final String TOKEN = "abcdef";
 
+/*************************************************************************
+ * @InnjectMocks of CommentServiceImpl is declared here so that
+ *  CommentServiceImpl can be tested and its dependencies mocked
+ **************************************************************************/
 
     @InjectMocks
     private CommentServiceImpl commentService;
 
+    /*************************************************************************
+     * For testing a mock of CommentRespository is needed
+     *
+     **************************************************************************/
+
     @Mock
     private CommentRepository commentRepository;
 
+    /*************************************************************************
+     * A Comment mock: comment is used throughout the test
+     *
+     **************************************************************************/
+
     @InjectMocks
     private Comment comment;
+    /*************************************************************************
+     * A User mock: user is used throughout the test
+     *
+     **************************************************************************/
 
     @InjectMocks
     private User user;
+    /*************************************************************************
+     * A Post mock: post is used throughout the test
+     *
+     **************************************************************************/
 
     @InjectMocks
     private Post post;
 
-
-
-    @InjectMocks
-    private ObjectMapper objectMapper;
-
+    /*************************************************************************
+     *  A Sender mock: sender is used throughout the test to mock for
+     * RabbitMQ services
+     **************************************************************************/
 
     @Mock
     Sender sender;
+
+    /*************************************************************************
+     * The initDummies() method annoted with @Before initializes our mocks to
+     * set up for testing
+     **************************************************************************/
 
     @Before
     public void initDummies() {
@@ -80,6 +101,12 @@ public class CommentsServiceTest {
         comment.setText("This is a simnple comment");
     }
 
+    /*************************************************************************
+     * This tests the createComment method
+     *
+     **************************************************************************/
+
+
     @Test
     public void createComment() throws TokenException, PostNotExistException {
 
@@ -91,6 +118,11 @@ public class CommentsServiceTest {
         assertEquals(comment, actual);
 
     }
+
+    /*************************************************************************
+     * This tests the getCommentsbyPostId method
+     *
+     **************************************************************************/
 
     @Test
     public void getCommentsbyPostId() {
@@ -107,6 +139,11 @@ public class CommentsServiceTest {
     }
 
 
+    /*************************************************************************
+     * This tests the deleteCommentbyCommentId method
+     *
+     **************************************************************************/
+
     @Test
     public void deleteCommentByCommentId() throws TokenException, UnauthorizeActionException, PostNotExistException {
 
@@ -119,6 +156,12 @@ public class CommentsServiceTest {
         commentRepository.delete(savedComment);
         assertEquals(comment, actual);
     }
+
+
+    /*************************************************************************
+     * This tests the getCommentsByUser method
+     *
+     **************************************************************************/
 
     @Test
     public void getCommentsByUser() {
@@ -135,6 +178,12 @@ public class CommentsServiceTest {
 
     }
 
+
+    /*************************************************************************
+     * This tests the listComments method
+     *
+     **************************************************************************/
+
     @Test
     public void listComments() {
         List<Comment> comments = new ArrayList<>();
@@ -144,6 +193,12 @@ public class CommentsServiceTest {
 
         assertEquals(comments, retrievedComments);
     }
+
+
+    /*************************************************************************
+     * This tests the deleteCommentsByPostId method
+     *
+     **************************************************************************/
 
     @Test
     public void  deleteCommentsByPostId()

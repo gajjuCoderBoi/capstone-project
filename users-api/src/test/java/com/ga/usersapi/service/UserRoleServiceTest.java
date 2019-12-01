@@ -13,6 +13,12 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+/*******************************************************************************************************
+ * The UserRoleServiceTest class tests the UserRoleService class and its methods
+ *  using Mockito and JUnit
+ **************************************************************************/
+
+
 @RunWith(MockitoJUnitRunner.class)
 public class UserRoleServiceTest {
 

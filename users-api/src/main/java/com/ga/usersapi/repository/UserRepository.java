@@ -9,11 +9,18 @@ import org.springframework.stereotype.Repository;
 import java.net.UnknownServiceException;
 import io.swagger.annotations.ApiOperation;
 
+/*************************************************************************
+ * The UserRepository handles all DB calls related to userss
+ * it implements the CrudRepository class
+ * A special Query was set up to find users by username
+ *
+ *************************************************************************/
+
 @Repository
 @RepositoryRestResource
 public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query("FROM User u where u.email = ?1")
-    public User getUserByUsername(String username);
+    User getUserByUsername(String username);
 
 }

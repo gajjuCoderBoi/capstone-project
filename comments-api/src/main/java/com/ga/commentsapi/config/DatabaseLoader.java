@@ -9,6 +9,14 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
+/*************************************************************************
+ *
+ *      The DatabaseLoader creates some initial records in the commentRepository
+ *      to facilitate development
+ *
+ *************************************************************************/
+
+
 @Service
 public class DatabaseLoader {
 

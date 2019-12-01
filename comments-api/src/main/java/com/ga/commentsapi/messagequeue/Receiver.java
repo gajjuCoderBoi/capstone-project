@@ -11,6 +11,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/*************************************************************************
+ *
+ *      The Receiver class in the commentsapi listens to the PostToComment
+ *      queue. It directs the message to a function in the commentService
+ *      class depending on the contents of the message
+ *
+ *************************************************************************/
+
 @Component
 @RabbitListener(queues = "PostToComment")
 public class Receiver {

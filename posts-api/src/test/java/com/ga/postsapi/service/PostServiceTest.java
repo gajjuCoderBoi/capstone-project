@@ -25,6 +25,10 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
+/********************************************************************************************************
+ * The PostServiceTest class tests the PostService class and its methods
+ *  using Mockito and JUnit
+ *********************************************************************************************************/
 @RunWith(MockitoJUnitRunner.class)
 public class PostServiceTest {
 

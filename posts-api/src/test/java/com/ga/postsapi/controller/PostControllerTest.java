@@ -29,6 +29,11 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
+/********************************************************************************************************
+ * The PostControllerTest class tests the PostController class and its
+ *  methods using Mockito and jUnit
+ *********************************************************************************************************/
 @RunWith(MockitoJUnitRunner.class)
 public class PostControllerTest {
 

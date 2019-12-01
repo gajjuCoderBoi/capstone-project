@@ -18,8 +18,7 @@ import javax.validation.Valid;
 @RequestMapping
 @Api(tags = "Profile Management System", produces = "application/json")
 public class UserProfileController {
-    //TODO
-    // Work on Profile Api
+
     /*************************************************************************
      *
      *      Autowiring the profileService that will be used to get the data

@@ -17,6 +17,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/*********************************************************************************
+ * The UserController class manages the endpoints for the user microservices.
+ * It interacts with Swagger for the documenting these endpoints to the user,
+ * This is implemented though the use of the @Api annotations that help create
+ * the swagger documents with the end points
+ * The mapping annotations show and describe the type of http request required
+ * by the endpoints
+ */
+
 @RestController
 @RequestMapping("/")
 @Api(tags = "User Management System", produces = "application/json")

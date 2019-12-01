@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
+/*************************************************************************
+ *  The DatabaseLoader class loads some records to the users database to
+ *  help with testing and development
+ *************************************************************************/
 @Service
 public class DatabaseLoader {
 
