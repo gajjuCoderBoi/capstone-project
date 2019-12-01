@@ -33,3 +33,4 @@ build/
 
 ### Logger ###
 *.log
+**.log.**
