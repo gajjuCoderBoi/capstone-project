@@ -7,12 +7,17 @@ import com.ga.profileapi.exception.TokenException;
 import com.ga.profileapi.messagequeue.Sender;
 import com.ga.profileapi.model.Profile;
 import com.ga.profileapi.repository.ProfileRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class ProfileServiceImpl implements ProfileService{
+
+    private Logger logger = LoggerFactory.getLogger(ProfileServiceImpl.class);
+
 
     /*************************************************************************
      *
@@ -51,6 +56,7 @@ public class ProfileServiceImpl implements ProfileService{
     public Profile createProfile(Profile profile, String token) throws TokenException, ProfileNotFoundException {
         User user = sender.getUserFromUserAPI(token);
         if (user==null){
+            logger.info("Failed Created Profile. Unauthorized Credentials.");
             throw new TokenException("Invalid Token.");
         }
         if(profileRepository.getProfileByUserId(user.getUserId())!=null){
@@ -60,6 +66,7 @@ public class ProfileServiceImpl implements ProfileService{
         profile.setUsername(user.getEmail());
         Profile savedProfile = profileRepository.save(profile);
         savedProfile.setUsername(user.getEmail());
+        logger.info("Profile by User: {}", user);
         return savedProfile;
     }
 
@@ -81,6 +88,7 @@ public class ProfileServiceImpl implements ProfileService{
         Profile savedProfile = profileRepository.getProfileByUserId(user.getUserId());
         if (savedProfile==null) throw new ProfileNotFoundException("Profile does not exist");
         savedProfile.setUsername(user.getEmail());
+        logger.info("Profile Fetched by User: {}", user);
         return savedProfile;
     }
 
@@ -106,11 +114,13 @@ public class ProfileServiceImpl implements ProfileService{
     public Profile updateProfile(Profile profile, String token) throws ProfileNotFoundException, TokenException {
         User user = sender.getUserFromUserAPI(token);
         if (user==null){
+            logger.info("Failed Update Profile. Unauthorized Credentials.");
             throw new TokenException("Invalid Token.");
         }
 
         Profile savedProfile = profileRepository.getProfileByUserId(user.getUserId());
         if (savedProfile==null){
+            logger.info("Failed Update Profile. Profile Doesn't Exist.");
             throw new ProfileNotFoundException("Profile does not exist.");
         }
         savedProfile.setAdditionalEmail(profile.getAdditionalEmail());
@@ -119,6 +129,7 @@ public class ProfileServiceImpl implements ProfileService{
 
         profileRepository.save(savedProfile);
         savedProfile.setUsername(user.getEmail());
+        logger.info("Profile Updated by User: {}", user);
         return profileRepository.save(savedProfile);
     }
 

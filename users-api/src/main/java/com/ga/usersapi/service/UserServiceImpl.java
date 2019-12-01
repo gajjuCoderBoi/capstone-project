@@ -15,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +25,9 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
 
     @Autowired
     @Qualifier("encoder")
@@ -47,16 +52,21 @@ public class UserServiceImpl implements UserService {
     public List<String> signup(User user) throws UserAlreadyExistException {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         UserRole userRole = userRoleRepository.getRoleByName("USER");
-        if(userRole==null){
+        if (userRole == null) {
             userRole = new UserRole();
             userRole.setName("USER");
             userRoleRepository.save(userRole);
         }
         user.getRoles().add(userRole);
         User savedUser = getUserbyUsername(user.getUsername());
-        if(savedUser.getUserId() != null) throw new UserAlreadyExistException("User with this username already exist.");
-        if (userRepository.save(user).getEmail() != null) {
+        if (savedUser != null) {
+            logger.info("Failed User Signing Up : {}", user);
+            throw new UserAlreadyExistException("User with this username already exist.");
+        }
+        savedUser = userRepository.save(user);
+        if (savedUser.getEmail() != null) {
             UserDetails userDetails = loadUserByUsername(user.getEmail());
+            logger.info("User SignedUp: {}", user);
             return Arrays.asList(user.getUsername(), jwtUtil.generateToken(userDetails));
         }
 
@@ -66,18 +76,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<String> login(User user) throws LoginException {
         User foundUser = userRepository.getUserByUsername(user.getEmail());
-        if(foundUser != null &&
-                foundUser.getUserId() != null &&
+        if (foundUser != null &&
                 bCryptPasswordEncoder.matches(user.getPassword(), foundUser.getPassword())) {
             UserDetails userDetails = loadUserByUsername(foundUser.getEmail());
+            logger.info("User LoggedIn: {}", foundUser);
             return Arrays.asList(user.getUsername(), jwtUtil.generateToken(userDetails));
-        }
-        else if(foundUser!=null  &&
+        } else if (foundUser != null &&
                 !bCryptPasswordEncoder.matches(user.getPassword(), foundUser.getPassword())
-        ){
+        ) {
+            logger.info("Failed User Logged Up : {}", foundUser);
             throw new LoginException("Invalid Username and Password.");
         }
-
 
         return Collections.emptyList();
     }
@@ -108,8 +117,9 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.getUserByUsername(username);
 
-        if (user == null)
+        if (user == null) {
             throw new UsernameNotFoundException("Unknown user: " + username);
+        }
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(), bCryptPasswordEncoder.encode(user.getPassword()),
                 true, true, true, true, getGrantedAuthorities(user));
@@ -117,7 +127,7 @@ public class UserServiceImpl implements UserService {
 
     private List<GrantedAuthority> getGrantedAuthorities(User user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for (UserRole role: user.getRoles()){
+        for (UserRole role : user.getRoles()) {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
         return authorities;

@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-//@RabbitListener(queues = {"UserToProfile", "PostToUser"})
 public class Receiver {
     @Autowired
     UserService userService;
