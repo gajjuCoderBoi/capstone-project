@@ -1,6 +1,7 @@
 package com.ga.commentsapi.service;
 import com.ga.commentsapi.bean.Post;
 import com.ga.commentsapi.bean.User;
+import com.ga.commentsapi.exception.CommentNotExistException;
 import com.ga.commentsapi.exception.PostNotExistException;
 import com.ga.commentsapi.exception.TokenException;
 import com.ga.commentsapi.exception.UnauthorizeActionException;
@@ -146,16 +147,15 @@ public class CommentsServiceTest {
      **************************************************************************/
 
     @Test
-    public void deleteCommentByCommentId() throws TokenException, UnauthorizeActionException, PostNotExistException {
+    public void deleteCommentByCommentId() throws TokenException, UnauthorizeActionException, CommentNotExistException {
 
         when(commentRepository.findById(any())).thenReturn(java.util.Optional.of(comment));
-        Comment savedComment = commentRepository.findById(comment.getId()).orElse(null);
+        when(sender.getUserFromUserAPI(anyString())).thenReturn(user);
+        doNothing().when(commentRepository).deleteById(anyLong());
 
-        if (savedComment.getId().longValue() != user.getUserId().longValue())
-            throw new UnauthorizeActionException("Unauthorized Action.");
-        Comment actual = savedComment;
-        commentRepository.delete(savedComment);
-        assertEquals(comment, actual);
+        Long actual = commentService.deleteCommentByCommentId(1l, "xyz");
+
+        assertEquals(Optional.ofNullable(1L), Optional.ofNullable(actual));
     }
 
 
