@@ -116,13 +116,13 @@ pipeline {
                             sh 'mvn test'
                         }
                     }
-                    post {
-                        always {
-                            dir("users-api") {
-                                junit 'target/surefire-reports/*.xml'
-                            }
-                        }
-                    }
+//                    post {
+//                        always {
+//                            dir("users-api") {
+//                                junit 'target/surefire-reports/*.xml'
+//                            }
+//                        }
+//                    }
                 }
 
                 stage('Profile') {
@@ -131,13 +131,13 @@ pipeline {
                             sh 'mvn test'
                         }
                     }
-                    post {
-                        always {
-                            dir("profile-api") {
-                                junit 'target/surefire-reports/*.xml'
-                            }
-                        }
-                    }
+//                    post {
+//                        always {
+//                            dir("profile-api") {
+//                                junit 'target/surefire-reports/*.xml'
+//                            }
+//                        }
+//                    }
                 }
 
                 stage('Posts') {
@@ -146,13 +146,13 @@ pipeline {
                             sh 'mvn test'
                         }
                     }
-                    post {
-                        always {
-                            dir("posts-api") {
-                                junit 'target/surefire-reports/*.xml'
-                            }
-                        }
-                    }
+//                    post {
+//                        always {
+//                            dir("posts-api") {
+//                                junit 'target/surefire-reports/*.xml'
+//                            }
+//                        }
+//                    }
                 }
 
                 stage('Comments') {
@@ -161,13 +161,13 @@ pipeline {
                             sh 'mvn test'
                         }
                     }
-                    post {
-                        always {
-                            dir("comments-api") {
-                                junit 'target/surefire-reports/*.xml'
-                            }
-                        }
-                    }
+//                    post {
+//                        always {
+//                            dir("comments-api") {
+//                                junit 'target/surefire-reports/*.xml'
+//                            }
+//                        }
+//                    }
                 }
 
                 stage('Swagger') {
