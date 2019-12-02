@@ -29,3 +29,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+
+### Logger ###
+*.log
+**.log.**
