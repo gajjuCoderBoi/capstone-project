@@ -150,6 +150,14 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<excludes>
+						<exclude>com/ga/postsapi/config/*</exclude>
+						<exclude>com/ga/postsapi/exception/*</exclude>
+						<exclude>com/ga/postsapi/model/*</exclude>
+						<exclude>com/ga/postsapi/repository/*</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

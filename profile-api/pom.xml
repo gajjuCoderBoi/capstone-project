@@ -151,6 +151,14 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<excludes>
+						<exclude>com/ga/profileapi/config/*</exclude>
+						<exclude>com/ga/profileapi/exception/*</exclude>
+						<exclude>com/ga/profileapi/model/*</exclude>
+						<exclude>com/ga/profileapi/repository/*</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
