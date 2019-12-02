@@ -9,6 +9,8 @@ import com.ga.postsapi.exception.UnauthorizeActionException;
 import com.ga.postsapi.messagequeue.Sender;
 import com.ga.postsapi.model.Post;
 import com.ga.postsapi.repository.PostRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,7 @@ import java.util.stream.Collectors;
 @Service
 public class PostServiceImpl implements PostService {
 
-
+    private Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
     /*************************************************************************
      *
      *      Autowiring RestTemplate, just to make API calls from other services.
@@ -61,7 +63,9 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post createPost(Post post, String token) throws TokenException {
         User user = sender.getUserFromUserAPI(token);
-        if (user == null) throw new TokenException("Invalid Token.");
+        if (user == null) {
+            logger.info("Invalid token: "+ token  +" User could not be retrieved");
+            throw new TokenException("Invalid Token.");};
         post.setUserId(user.getUserId());
         post.setUser(user);
         Post savedPost = postRepository.save(post);
@@ -83,9 +87,14 @@ public class PostServiceImpl implements PostService {
     @Override
     public Long deletePost(Long postId, String token) throws TokenException, UnauthorizeActionException, PostNotExistException {
         User user = sender.getUserFromUserAPI(token);
-        if (user == null) throw new TokenException("Invalid Token.");
+        if (user == null) {
+            logger.info("Invalid token: " + token + " User could not be found");
+            throw new TokenException("Invalid Token.");};
         Post savedPost = postRepository.findById(postId).orElse(null);
-        if(savedPost==null) throw new PostNotExistException("Post Doesn't Exist.");
+        if(savedPost==null)
+        {
+            logger.info("Post not found for this postId: " + postId +  " Delete operation could not be performed");
+            throw new PostNotExistException("Post Doesn't Exist.");};
         if (savedPost.getUserId().longValue() != user.getUserId().longValue()) throw new UnauthorizeActionException("Unauthorized Action.");
         sender.deleteCommentsOfPost(savedPost.getPostId());
         postRepository.delete(savedPost);
