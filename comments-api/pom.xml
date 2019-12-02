@@ -148,6 +148,14 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<excludes>
+						<exclude>com/ga/commentsapi/config/*</exclude>
+						<exclude>com/ga/commentsapi/exception/*</exclude>
+						<exclude>com/ga/commentsapi/model/*</exclude>
+						<exclude>com/ga/commentsapi/repository/*</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

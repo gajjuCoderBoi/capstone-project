@@ -176,7 +176,6 @@
 				<executions>
 					<execution>
 						<goals>
-
 							<goal>prepare-agent</goal>
 						</goals>
 					</execution>
@@ -188,6 +187,14 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<excludes>
+						<exclude>com/ga/usersapi/config/*</exclude>
+						<exclude>com/ga/usersapi/exception/*</exclude>
+						<exclude>com/ga/usersapi/model/*</exclude>
+						<exclude>com/ga/usersapi/repository/*</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 
 		</plugins>
