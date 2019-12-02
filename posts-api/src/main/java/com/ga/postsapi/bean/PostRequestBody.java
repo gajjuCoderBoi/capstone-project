@@ -2,6 +2,10 @@ package com.ga.postsapi.bean;
 
 import springfox.documentation.annotations.ApiIgnore;
 
+/**
+ * @author      Mohammad Javed and Carlos Kruger
+ ************************************************************/
+
 @ApiIgnore
 public class PostRequestBody {
     private String title;

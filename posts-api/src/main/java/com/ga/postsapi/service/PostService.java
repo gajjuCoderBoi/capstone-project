@@ -9,17 +9,22 @@ import com.ga.postsapi.model.Post;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * @author      Mohammad Javed and Carlos Kruger
+ ************************************************************/
+
+
 public interface PostService {
 
-    /*************************************************************************
+    /**
      *
-     *       All methods are implemented into PostServiceImpl class
+     *    <p> All methods are implemented into PostServiceImpl class
      *
      *      createPost method to Create the Post.
      *      deletePost method to delete the Post.
      *      postList method is to get All the Post exist into the database.
      *      getPostById method to fetch the specfic Post with it's Comments.
-     *
+     *      </p>
      *************************************************************************/
 
     public Post createPost(Post post, String token) throws TokenException;

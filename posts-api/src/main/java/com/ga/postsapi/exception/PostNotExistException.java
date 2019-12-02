@@ -1,9 +1,13 @@
 package com.ga.postsapi.exception;
 
-/*************************************************************************
+/**
+ * @author      Mohammad Javed and Carlos Kruger
+ ************************************************************/
+
+/**
  *
- *      The PostNotExistException class extends Exception and
- *      handles the post no exist exception with an appropriate message
+ *    <p>The PostNotExistException class extends Exception and
+ *      handles the post no exist exception with an appropriate message</p>
  *
  *************************************************************************/
 

@@ -22,13 +22,15 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * @author      Mohammad Javed and Carlos Kruger
+ ************************************************************/
 
 @Service
 public class PostServiceImpl implements PostService {
 
     private Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
-    /*************************************************************************
-     *
+    /**
      *      Autowiring RestTemplate, just to make API calls from other services.
      *
      *      Autowiring PostRepository to handle data from CRUD Postgres SQL
@@ -51,12 +53,12 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private Sender sender;
 
-    /*************************************************************************
+    /**
      *
-     *      createPost is method with two params Post, Token(String) and Post
+     *     <p> createPost is method with two params Post, Token(String) and Post
      *      return type. It will validate token from User-API service and
      *      get the User Object or null. And then set the userId of Post
-     *      and save into database.
+     *      and save into database.</p>
      *
      *************************************************************************/
 
@@ -73,14 +75,15 @@ public class PostServiceImpl implements PostService {
     }
 
 
-    /*************************************************************************
+    /**
      *
-     *      deletePost is a method with postId(long) and Token(String) and
+     *    <p>  deletePost is a method with postId(long) and Token(String) and
      *      Long return type.
      *
      *      This method validate token from User-API and matches userId from
      *      User and userId from Post and then delete Comments of that post
      *      by calling deleteCommentsOfPost.
+     *      </p>
      *
      *************************************************************************/
 
@@ -101,11 +104,14 @@ public class PostServiceImpl implements PostService {
         return savedPost.getPostId();
     }
 
-    /*************************************************************************
+    /**
      *
-     *      postList is a method that will return all Posts exist into the
+     *    <p></p>  postList is a method that will return all Posts exist into the
      *      database. And also collect Users of the Posts from the User-API
-     *      and attached to related Posts.
+     *      and attached to related Posts. </p>
+     *
+     *      @param void   No parameter is passed
+     *      @return a list of posts will be returned
      *
      *************************************************************************/
 
@@ -126,12 +132,18 @@ public class PostServiceImpl implements PostService {
         return savedPosts;
     }
 
-    /*************************************************************************
+    /**
      *
-     *      getPostById is a method that will return the specific Post by
+     *     <p>getPostById is a method that will return the specific Post by
      *      postId and also all the Comments liked to that specific Post.
      *
      *      Comments are collected from Comments-API by sending the postId.
+     *      </p>
+     *
+     *      @param postId  The type is long
+     *      @return a Post that owns postId
+     *
+     *
      *
      *************************************************************************/
 
@@ -144,6 +156,21 @@ public class PostServiceImpl implements PostService {
         savedPost.setComments(Arrays.asList(comments));
         return savedPost;
     }
+
+    /**
+     *
+     *     <p>getPostByUser is a method that will return the specific Post by
+     *      user and also all the Comments liked to that specific Post.
+     *
+     *      Comments are collected from Comments-API by sending the token.
+     *      </p>
+     *
+     *      @param token  The type is String
+     *      @return a list of the Posts created by the user that
+     *      owns the token
+     *
+     *************************************************************************/
+
 
     @Override
     public List<Post> getPostsByUser(String token) throws TokenException {

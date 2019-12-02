@@ -2,6 +2,10 @@ package com.ga.postsapi.bean;
 
 import javax.persistence.*;
 
+/**
+ * @author      Mohammad Javed and Carlos Kruger
+ ************************************************************/
+
 public class Comment {
 
     /*************************************************************************

@@ -1,10 +1,13 @@
 package com.ga.postsapi.exception;
 
-/*************************************************************************
+/**
+ * @author      Mohammad Javed and Carlos Kruger
+ ************************************************************/
+/**
  *
- *      The UnauthorizedException class extends Exception and
+ *     <p>The UnauthorizedException class extends Exception and
  *      handles the unauthorized exception with an appropriate message
- *
+ *</p>
  *************************************************************************/
 
 

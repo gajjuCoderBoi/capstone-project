@@ -13,11 +13,13 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-
-/*************************************************************************
+/**
+ * @author      Mohammad Javed and Carlos Kruger
+ ************************************************************/
+/**
  *
- *     The WebSecurityConfig class configures security for the comments-api
- *     It prevents cors and csrf issues
+ *    <p>The WebSecurityConfig class configures security for the comments-api
+ *     It prevents cors and csrf issues</p>
  *
  *************************************************************************/
 

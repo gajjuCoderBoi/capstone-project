@@ -10,8 +10,11 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
-/************************************************************************
-*
+/**
+ * @author      Mohammad Javed and Carlos Kruger
+ ************************************************************/
+
+/**
 *     The SwaggerDocumentationConfiguration class enables Swagger.
 *     It declares the base Package as well as the base url where the endpoints
 *     will be viewed by the user*

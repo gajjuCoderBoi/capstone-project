@@ -9,7 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
-/*************************************************************************
+/**
  *
  *      Post Entity which behave like a table in the database.
  *
@@ -19,7 +19,7 @@ import java.util.List;
  *      title -> String type
  *      text -> String type
  *      userId -> Long type
- *
+ * @author Mohammad Javed and Carlos Kruger
  *************************************************************************/
 
 
