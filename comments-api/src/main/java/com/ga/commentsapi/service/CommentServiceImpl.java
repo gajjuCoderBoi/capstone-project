@@ -52,7 +52,7 @@ public class CommentServiceImpl implements CommentService {
 
         User user = sender.getUserFromUserAPI(token);
         if (user == null) {
-            logger.info("Invalid token. Comment not created");
+            logger.info("Invalid token: " + token + " User not found");
             throw new TokenException("Invalid Token.");};
 
 
@@ -60,7 +60,7 @@ public class CommentServiceImpl implements CommentService {
 
 
         if (post == null) {
-            logger.info("Post does not exist. Comment not created");
+            logger.info("Post was not found for this postId: "+ postId + "  Comment not created");
             throw new PostNotExistException("Post Doesn't Exist!");};
 
         comment.setUserId(user.getUserId());
@@ -111,19 +111,22 @@ public class CommentServiceImpl implements CommentService {
     public Long deleteCommentByCommentId(Long commentId, String token) throws TokenException, UnauthorizeActionException, CommentNotExistException {
         Comment savedComment = commentRepository.findById(commentId).orElse(null);
         if(savedComment==null) {
-            logger.info("Comment does not exist. Delete operation not performed");
+            logger.info("Comment could not be found for this commentId: " + commentId + " Delete operation not performed");
             throw new CommentNotExistException("Comment Doesn't Exist.");
         }
         User user = sender.getUserFromUserAPI(token);
         if (user == null) {
-            logger.info("Invalid token. User not retrieved");
+            logger.info("Invalid token: "+ token + " User could not be retrieved");
             throw new TokenException("Invalid Token.");
         };
         if (user.getUserId().equals(savedComment.getUserId())) {
             commentRepository.deleteById(commentId);
             return savedComment.getId();
         } else if (!user.getUserId().equals(savedComment.getUserId())) {
-            throw new UnauthorizeActionException("Unauthorized Action.");
+            {
+                logger.info("user: "+ user.getUserId() + " is not authorized to modify comment written by: "+ savedComment.getUserId());
+                throw new UnauthorizeActionException("Unauthorized Action.");
+            }
         }
         return -1L;
     }
@@ -170,7 +173,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<Comment> getCommentsByUserId(String token) throws TokenException {
         User user =  sender.getUserFromUserAPI(token);
-        if(user==null) throw new TokenException("Invalid Credentials.");
+        if(user==null){
+            logger.info("Invalid token: "+ token + " User could not be retrieved");
+            throw new TokenException("Invalid Credentials.");};
         return (List<Comment>) commentRepository.findCommentsbyUserId(user.getUserId());
     }
 

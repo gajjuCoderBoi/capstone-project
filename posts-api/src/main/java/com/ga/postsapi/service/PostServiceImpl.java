@@ -64,7 +64,7 @@ public class PostServiceImpl implements PostService {
     public Post createPost(Post post, String token) throws TokenException {
         User user = sender.getUserFromUserAPI(token);
         if (user == null) {
-            logger.info("Invalid token. User could not be retrieved");
+            logger.info("Invalid token: "+ token  +" User could not be retrieved");
             throw new TokenException("Invalid Token.");};
         post.setUserId(user.getUserId());
         post.setUser(user);
@@ -88,12 +88,12 @@ public class PostServiceImpl implements PostService {
     public Long deletePost(Long postId, String token) throws TokenException, UnauthorizeActionException, PostNotExistException {
         User user = sender.getUserFromUserAPI(token);
         if (user == null) {
-            logger.info("Invalid token. User could not be found");
+            logger.info("Invalid token: " + token + " User could not be found");
             throw new TokenException("Invalid Token.");};
         Post savedPost = postRepository.findById(postId).orElse(null);
         if(savedPost==null)
         {
-            logger.info("Post not found. Delete operation could not be performed");
+            logger.info("Post not found for this postId: " + postId +  " Delete operation could not be performed");
             throw new PostNotExistException("Post Doesn't Exist.");};
         if (savedPost.getUserId().longValue() != user.getUserId().longValue()) throw new UnauthorizeActionException("Unauthorized Action.");
         sender.deleteCommentsOfPost(savedPost.getPostId());
