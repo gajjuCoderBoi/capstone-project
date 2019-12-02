@@ -11,6 +11,7 @@ import com.ga.commentsapi.model.Comment;
 import com.ga.commentsapi.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.tools.jstat.Token;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -96,7 +97,7 @@ public class CommentServiceImpl implements CommentService {
      * belongs to the comment that will be deleted and a token to validate
      * the authority of the user who is trying to delete
      ************************************************************************
-     * @return*/
+     **/
 
     @Override
     public Long deleteCommentByCommentId(Long commentId, String token) throws TokenException, UnauthorizeActionException, CommentNotExistException {
@@ -150,6 +151,13 @@ public class CommentServiceImpl implements CommentService {
         List<Comment> savedComments = (List<Comment>) commentRepository.findCommentsbyPostId(postId);
         commentRepository.deleteAll(savedComments);
         return 1L;
+    }
+
+    @Override
+    public List<Comment> getCommentsByUserId(String token) throws TokenException {
+        User user =  sender.getUserFromUserAPI(token);
+        if(user==null) throw new TokenException("Invalid Credentials.");
+        return (List<Comment>) commentRepository.findCommentsbyUserId(user.getUserId());
     }
 
 

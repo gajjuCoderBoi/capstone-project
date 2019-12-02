@@ -52,7 +52,7 @@ public class UserController {
             @ApiResponse(code = 200, message = "Successfully user login")
     })
     @PostMapping("/login")
-    public ResponseEntity login(@Valid @RequestBody User user) throws LoginException {
+    public ResponseEntity login(@RequestBody User user) throws LoginException {
         return ResponseEntity.ok(new JwtResponse(userService.login(user)));
     }
 

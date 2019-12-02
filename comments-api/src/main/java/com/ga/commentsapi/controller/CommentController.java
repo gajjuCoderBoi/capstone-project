@@ -7,21 +7,20 @@ import com.ga.commentsapi.exception.TokenException;
 import com.ga.commentsapi.exception.UnauthorizeActionException;
 import com.ga.commentsapi.model.Comment;
 import com.ga.commentsapi.service.CommentService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
 @RequestMapping
 @Api(tags = "Comment Management System", produces = "application/json")
 public class CommentController {
+
 
     /*************************************************************************
      *
@@ -45,7 +44,7 @@ public class CommentController {
             @ApiResponse(code = 200, message = "Successfully Created a comments attached to a PostId", response = Comment.class)
     })
     @PostMapping("/{postId}")
-    public Comment createComment(@Valid @RequestBody Comment comment, @PathVariable Long postId, @RequestHeader("Authorization") String token) throws TokenException, PostNotExistException {
+    public Comment createComment(@Valid @RequestBody Comment comment, @PathVariable Long postId, @RequestHeader("Authorization") @ApiParam(value = "Bearer Token:", required = true) String token) throws TokenException, PostNotExistException {
         return commentService.createComment(comment, postId, token);
     }
 
@@ -77,7 +76,7 @@ public class CommentController {
             @ApiResponse(code = 200, message = "Successfully Deleted comments by CommentId", response = Comment.class)
     })
     @DeleteMapping("/{commentId}")
-    public Long deleteComment(@PathVariable Long commentId, @RequestHeader("Authorization") String token) throws UnauthorizeActionException, TokenException, CommentNotExistException {
+    public Long deleteComment(@PathVariable Long commentId, @RequestHeader("Authorization") @ApiParam(value = "Bearer Token:", required = true) String token) throws UnauthorizeActionException, TokenException, CommentNotExistException {
         return commentService.deleteCommentByCommentId(commentId, token);
     }
 
@@ -95,5 +94,14 @@ public class CommentController {
     @DeleteMapping("/{postId}/comments")
     public Long deleteCommentsByPostId(@PathVariable Long postId){
         return commentService.deleteCommentsByPostId(postId);
+    }
+
+    @ApiOperation(value = "List Comments by UserId", produces = "application/json")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successfully Returned Comment List.", response = Comment.class)
+    })
+    @GetMapping("/user")
+    public List<Comment> getCommentsByUser(@RequestHeader("Authorization") @ApiParam(value = "Bearer Token:", required = true) String token) throws TokenException {
+        return commentService.getCommentsByUserId(token);
     }
 }

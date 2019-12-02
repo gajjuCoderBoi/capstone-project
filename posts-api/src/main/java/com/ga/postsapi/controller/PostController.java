@@ -117,5 +117,21 @@ public class PostController {
         return postService.deletePost(Long.valueOf(postId), token);
     }
 
+    /*************************************************************************
+     *  getPosts() is a method that takes no arguments. It will return a list of
+     *  posts. It will accomplish this through a call to postServices function
+     *  postList()
+     *************************************************************************/
+    @ApiOperation(value = "Return all the Posts exist in the Server", produces = "application/json")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successfully retrieved list"),
+            @ApiResponse(code = 401, message = "Invalid Token.")
+    })
+    @GetMapping("/user")
+    public ResponseEntity<List<Post>> getPostsByUser(@RequestHeader("Authorization") @ApiParam(value = "Bearer Token:", required = true) String token) throws TokenException {
+
+        return ResponseEntity.ok(postService.getPostsByUser(token));
+    }
+
 
 }

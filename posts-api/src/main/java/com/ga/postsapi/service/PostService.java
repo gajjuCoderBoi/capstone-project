@@ -30,5 +30,8 @@ public interface PostService {
 
     public Post getPostById(Long postId);
 
+    public List<Post> getPostsByUser(String token) throws TokenException;
+
+
 
 }

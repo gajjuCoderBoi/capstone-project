@@ -1,5 +1,5 @@
 // const API_ENDPOINT_BASE = 'http://thesi.generalassemb.ly:8080/';
-const API_ENDPOINT_BASE = 'http://172.16.4.206:8080/';
+const API_ENDPOINT_BASE = 'http://localhost:8080/';
 // const API_ENDPOINT_BASE = 'http://localhost:8080/';
 
 // document.cookie parser
