@@ -140,7 +140,7 @@ public class PostServiceImpl implements PostService {
     public List<Post> getPostsByUser(String token) throws TokenException {
         User user = sender.getUserFromUserAPI(token);
         if(user==null) throw new TokenException("Invalid Credentials.");
-        List<Post> postList = (List<Post>) postRepository.getPostsByUserId(user.getUserId());
+        List<Post> postList = postRepository.getPostsByUserId(user.getUserId());
         return postList;
 
     }

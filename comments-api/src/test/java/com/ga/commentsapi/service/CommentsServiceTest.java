@@ -15,6 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.*;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 /*************************************************************************
@@ -47,7 +48,7 @@ public class CommentsServiceTest {
      *
      **************************************************************************/
 
-    @Mock
+    @Spy
     private CommentRepository commentRepository;
 
     /*************************************************************************
@@ -201,15 +202,19 @@ public class CommentsServiceTest {
      **************************************************************************/
 
     @Test
-    public void  deleteCommentsByPostId()
+    public void  deleteCommentsByPostId_PostId_Success()
     {
         List<Comment> comments = new ArrayList<>();
         comments.add(comment);
 
+
         when(commentRepository.findCommentsbyPostId(any())).thenReturn(comments);
-        List<Comment> savedComments = (List<Comment>) commentRepository.findCommentsbyPostId(comment.getPostId());
-        commentRepository.deleteAll(savedComments);
-        assertEquals(comments, savedComments);
+        doNothing().when(commentRepository).deleteAll(anyIterable());
+
+        Long postId = commentService.deleteCommentsByPostId(1L);
+
+        assertEquals(Optional.ofNullable(1L), Optional.ofNullable(postId));
+
     }
 
     /*************************************************************************
@@ -221,12 +226,26 @@ public class CommentsServiceTest {
     public void getCommentsByUserId_List_Success() throws TokenException {
         List<Comment> comments = new ArrayList<>();
         comments.add(comment);
+        when(sender.getUserFromUserAPI(anyString())).thenReturn(user);
         when(commentService.getCommentsByUserId(anyString())).thenReturn(comments);
 
-        List<Comment> retrievedComments = commentService.listComments();
+        List<Comment> retrievedComments = commentService.getCommentsByUserId("123");
         assertEquals(comments.size(), retrievedComments.size());
+    }
+
+
+    @Test
+    public void getCommentsByUserId_Comments_Success() {
+        when(commentRepository.findCommentsbyPostId(anyLong())).thenReturn(Arrays.asList(new Comment(),new Comment()));
+
+        when(sender.getUsersByUsersId(anySet())).thenReturn(new User[0]);
+        List<Comment> retrievedComments = (List<Comment>) commentService.getCommentsbyPostId(1L);
+
+        assertTrue(retrievedComments.size()>0);
 
     }
+
+
 }
 
 

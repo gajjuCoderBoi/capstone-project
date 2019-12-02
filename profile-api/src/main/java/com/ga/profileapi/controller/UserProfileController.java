@@ -88,7 +88,7 @@ public class UserProfileController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully updated  Profile")
     })
-    @PutMapping
+    @PutMapping //todo test
     public ResponseEntity<?> updateProfile(@Valid @RequestBody Profile profile, @RequestHeader("Authorization") String token) throws ProfileNotFoundException, TokenException {
         Profile savedProfile = profileService.updateProfile(profile, token);
         return ResponseEntity.ok(savedProfile);

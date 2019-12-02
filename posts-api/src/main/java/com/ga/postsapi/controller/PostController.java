@@ -122,7 +122,7 @@ public class PostController {
      *  posts. It will accomplish this through a call to postServices function
      *  postList()
      *************************************************************************/
-    @ApiOperation(value = "Return all the Posts exist in the Server", produces = "application/json")
+    @ApiOperation(value = "Return all the Posts exist in the Server of a User", produces = "application/json")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully retrieved list"),
             @ApiResponse(code = 401, message = "Invalid Token.")

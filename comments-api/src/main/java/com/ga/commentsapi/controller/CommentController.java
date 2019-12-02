@@ -1,6 +1,5 @@
 package com.ga.commentsapi.controller;
 
-import com.ga.commentsapi.bean.Post;
 import com.ga.commentsapi.exception.CommentNotExistException;
 import com.ga.commentsapi.exception.PostNotExistException;
 import com.ga.commentsapi.exception.TokenException;
@@ -86,21 +85,21 @@ public class CommentController {
      *      Call the deleteCommentsByPostId from commentService.
      *
      *************************************************************************/
-    @ApiIgnore
-    /*@ApiOperation(value = "Deletes comments related to a Post by Post Id", produces = "application/json")
+    /*@ApiIgnore
+    *//*@ApiOperation(value = "Deletes comments related to a Post by Post Id", produces = "application/json")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully Deleted comments by PostId", response = Comment.class)
-    })*/
-    @DeleteMapping("/{postId}/comments")
+    })*//*
+    @DeleteMapping("/{postId}/comments")//todo test
     public Long deleteCommentsByPostId(@PathVariable Long postId){
         return commentService.deleteCommentsByPostId(postId);
-    }
+    }*/
 
     @ApiOperation(value = "List Comments by UserId", produces = "application/json")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully Returned Comment List.", response = Comment.class)
     })
-    @GetMapping("/user")
+    @GetMapping("/user")//todo test
     public List<Comment> getCommentsByUser(@RequestHeader("Authorization") @ApiParam(value = "Bearer Token:", required = true) String token) throws TokenException {
         return commentService.getCommentsByUserId(token);
     }

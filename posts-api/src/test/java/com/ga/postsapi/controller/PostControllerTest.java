@@ -186,6 +186,33 @@ public class PostControllerTest {
                 .andReturn();
     }
 
+    @Test
+    public void getPostsByUser_Posts_Success() throws Exception {
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/user")
+                .header(HttpHeaders.AUTHORIZATION, "xyz")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        when(postService.getPostsByUser(anyString())).thenReturn(posts);
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andReturn();
+
+    }
+
+    @Test
+    public void getPostsByUser_Unauthorized_Error() throws Exception {
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/user")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andExpect(status().is4xxClientError())
+                .andReturn();
+
+    }
+
     private String createPostJson(String title, String body){
         return "{" +
                 "\"title\":\"" + title + "\", " +

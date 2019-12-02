@@ -134,7 +134,7 @@ public class UserProfileControllerTest {
     @Test
     public void updateProfile_Profile_Success() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post("/")
+                .put("/")
                 .header(HttpHeaders.AUTHORIZATION, "xyz")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(createProfileInJson(dummyProfile.getAdditionalEmail(), dummyProfile.getMobile(), dummyProfile.getAddress()));
@@ -148,7 +148,7 @@ public class UserProfileControllerTest {
     @Test
     public void updateProfile_Unauthorized_Error() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post("/")
+                .put("/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(createProfileInJson(dummyProfile.getAdditionalEmail(), dummyProfile.getMobile(), dummyProfile.getAddress()));
 
@@ -161,7 +161,7 @@ public class UserProfileControllerTest {
     @Test
     public void updateProfile_MissingAttribute_Error() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post("/")
+                .put("/")
                 .header(HttpHeaders.AUTHORIZATION, dummyToken)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -174,7 +174,7 @@ public class UserProfileControllerTest {
     @Test
     public void updateProfile_InvalidInput_Error() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post("/")
+                .put("/")
                 .header(HttpHeaders.AUTHORIZATION, dummyToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(createProfileInJson("email", dummyProfile.getMobile(), dummyProfile.getAddress()));

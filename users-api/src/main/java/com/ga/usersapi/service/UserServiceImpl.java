@@ -58,14 +58,14 @@ public class UserServiceImpl implements UserService {
             userRoleRepository.save(userRole);
         }
         user.getRoles().add(userRole);
-        User savedUser = getUserbyUsername(user.getUsername());
+        User savedUser = userRepository.getUserByUsernameTest(user.getUsername());
         if (savedUser != null) {
             logger.info("Failed User Signing Up : {}", user);
             throw new UserAlreadyExistException("User with this username already exist.");
         }
         savedUser = userRepository.save(user);
         if (savedUser.getEmail() != null) {
-            UserDetails userDetails = loadUserByUsername(user.getEmail());
+            UserDetails userDetails = loadUserByUsername(user.getUsername());
             logger.info("User SignedUp: {}", user);
             return Arrays.asList(user.getUsername(), jwtUtil.generateToken(userDetails));
         }

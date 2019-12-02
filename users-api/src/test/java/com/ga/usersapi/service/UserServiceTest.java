@@ -103,7 +103,7 @@ public class UserServiceTest {
     public void signup_UserToken_Success() throws UserAlreadyExistException {
         when(bCryptPasswordEncoder.encode(any())).thenReturn(encodedPass);
         when(userRoleRepository.getRoleByName(anyString())).thenReturn(dummyUserRole);
-        user.setUserId(null);
+        when(userRepository.getUserByUsernameTest(anyString())).thenReturn(null);
         when(userRepository.getUserByUsername(anyString())).thenReturn(user);
         when(userRepository.save(any())).thenReturn(user);
         when(jwtUtil.generateToken(any())).thenReturn(dummyToken);
@@ -118,7 +118,7 @@ public class UserServiceTest {
     public void signup_Exception_Error() throws UserAlreadyExistException {
         when(bCryptPasswordEncoder.encode(any())).thenReturn(encodedPass);
         when(userRoleRepository.getRoleByName(anyString())).thenReturn(dummyUserRole);
-        when(userRepository.getUserByUsername(anyString())).thenReturn(user);
+        when(userRepository.getUserByUsernameTest(anyString())).thenReturn(user);
 
         userService.signup(user);
 

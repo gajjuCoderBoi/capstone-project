@@ -4,6 +4,9 @@ import com.ga.postsapi.model.Post;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /*************************************************************************
  * The PostRepository handles all DB calls related to posts
  * it implements the CrudRepository class
@@ -18,5 +21,5 @@ public interface PostRepository extends CrudRepository<Post, Long> {
     public Post getPostByUserId(Long userId);
 
     @Query("FROM Post p where p.userId=?1")
-    public Post getPostsByUserId(Long userId);
+    public List<Post> getPostsByUserId(Long userId);
 }

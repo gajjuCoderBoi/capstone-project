@@ -11,7 +11,6 @@ import com.ga.commentsapi.model.Comment;
 import com.ga.commentsapi.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.tools.jstat.Token;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -150,7 +149,7 @@ public class CommentServiceImpl implements CommentService {
     public Long deleteCommentsByPostId(Long postId) {
         List<Comment> savedComments = (List<Comment>) commentRepository.findCommentsbyPostId(postId);
         commentRepository.deleteAll(savedComments);
-        return 1L;
+        return postId; // previous waa 1L
     }
 
     @Override

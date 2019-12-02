@@ -182,4 +182,40 @@ public class PostServiceTest {
 
     }
 
+    @Test
+    public void getPostsByUser_Posts_Success() throws TokenException {
+        Post post1 = new Post();
+        post1.setTitle("Example post1 title");
+        post1.setText("Example post1 description is cool.");
+        post1.setPostId(2L);
+        post1.setUser(user);
+        post1.setUserId(1L);
+        Post post2 = new Post();
+        post2.setTitle("Example post2 title");
+        post2.setText("Example post2 description is cool.");
+        post2.setPostId(3L);
+        post2.setUser(user);
+        post2.setUserId(1L);
+        Post post3 = new Post();
+        post3.setTitle("Example post3 title");
+        post3.setText("Example post3 description is cool.");
+        post3.setPostId(4L);
+        post3.setUser(user);
+        post3.setUserId(1L);
+        List<Post> posts = Arrays.asList(post1, post2, post3);
+        User user1 = new User();
+        user1.setUserId(3L);
+        User user2 = new User();
+        user2.setUserId(4L);
+        User[] users = {user1, user2};
+
+        when(sender.getUserFromUserAPI(anyString())).thenReturn(user);
+        when(postRepository.getPostsByUserId(anyLong())).thenReturn(posts);
+
+        List<Post> actual = postService.getPostsByUser("xyz");
+
+        assertEquals(posts.size(), actual.size());
+
+    }
+
 }

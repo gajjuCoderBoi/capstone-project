@@ -22,6 +22,8 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.Arrays;
+
 public class CommentControllerTest {
 
     private MockMvc mockMvc;
@@ -101,6 +103,32 @@ public class CommentControllerTest {
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isBadRequest());
         verify(commentService, never()).createComment(any(), anyLong(),anyString());
+    }
+
+    @Test
+    public void getCommentsByPostId_Comments_Success() throws Exception {
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/1");
+
+        when(commentService.getCommentsbyPostId(anyLong())).thenReturn(Arrays.asList(new Comment(), new Comment()));
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void getCommentsByUser_Comments_Success() throws Exception {
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/user")
+                .header("Authorization", token)
+                ;
+
+        when(commentService.getCommentsByUserId(anyString())).thenReturn(Arrays.asList(new Comment(), new Comment()));
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk());
+
     }
 
     @Test
