@@ -30,4 +30,6 @@ public interface CommentService {
     List<Comment> listComments();
 
     Long deleteCommentsByPostId(Long postId);
+
+    List<Comment> getCommentsByUserId(String token) throws TokenException;
 }

@@ -16,4 +16,7 @@ import org.springframework.stereotype.Repository;
 public interface PostRepository extends CrudRepository<Post, Long> {
     @Query("FROM Post p where p.userId=?1")
     public Post getPostByUserId(Long userId);
+
+    @Query("FROM Post p where p.userId=?1")
+    public Post getPostsByUserId(Long userId);
 }

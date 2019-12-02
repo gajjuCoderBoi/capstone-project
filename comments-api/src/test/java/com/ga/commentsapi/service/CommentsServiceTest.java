@@ -210,8 +210,23 @@ public class CommentsServiceTest {
         List<Comment> savedComments = (List<Comment>) commentRepository.findCommentsbyPostId(comment.getPostId());
         commentRepository.deleteAll(savedComments);
         assertEquals(comments, savedComments);
-    };
+    }
 
+    /*************************************************************************
+     * This tests the getCommentsByUserId method
+     *
+     **************************************************************************/
+
+    @Test
+    public void getCommentsByUserId_List_Success() throws TokenException {
+        List<Comment> comments = new ArrayList<>();
+        comments.add(comment);
+        when(commentService.getCommentsByUserId(anyString())).thenReturn(comments);
+
+        List<Comment> retrievedComments = commentService.listComments();
+        assertEquals(comments.size(), retrievedComments.size());
+
+    }
 }
 
 
