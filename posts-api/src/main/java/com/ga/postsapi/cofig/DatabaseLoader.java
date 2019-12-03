@@ -27,6 +27,10 @@ public class DatabaseLoader {
     @Autowired
     private PostRepository postRepository;
 
+
+    /**
+     * <p>init() loads three seed values in the postRepository</p>
+     */
     @PostConstruct
     public void init() {
         log.info("Saved {}", postRepository.save(new Post(1L, "Post1", "Post 1 text", 1L)));

@@ -20,18 +20,30 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
+    /**
+     * <p>postToCommentQueue() creates a queue</p>
+     * @return Queue type Queue queue name is PostToComment
+     */
     @Bean("PostToComment")
     public Queue postToCommentQueue() {
         String QUEUE_NAME = "PostToComment";
         return new Queue(QUEUE_NAME, false, false, false);
     }
 
+    /**
+     * <p>commentToPostQueue() creates a queue</p>
+     * @return Queue type Queue queue name is CommentToPost
+     */
     @Bean("CommentToPost")
     public Queue commentToPostQueue() {
         String QUEUE_NAME = "CommentToPost";
         return new Queue(QUEUE_NAME, false, false, false);
     }
 
+    /**
+     *  <p>postToUserQueue() creates a queue</p>
+     * @return  Queue type Queue queue name is postToUserQueue
+     */
     @Bean("PostToUser")
     public Queue postToUserQueue(){
         String QUEUE_NAME = "PostToUser";
