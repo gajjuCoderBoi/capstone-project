@@ -69,7 +69,7 @@ public class Sender {
      *
      *************************************************************************/
     public Long deleteCommentsOfPost(Long postId) {
-        String res = (String) rabbitTemplate.convertSendAndReceive(this.postToComment.getName(), "deleteCommentsByPostId:" + postId);
+        String res = (String) rabbitTemplate.convertSendAndReceive(postToComment.getName(), "deleteCommentsByPostId:" + postId);
         return Long.valueOf(res);
     }
 
@@ -86,7 +86,6 @@ public class Sender {
             message = objectMapper.writeValueAsString(userIdList);
 
             String response = (String) rabbitTemplate.convertSendAndReceive(postToUser.getName(), "usersList:"+message);
-
             rateResponse = objectMapper.readValue(response, User[].class);
 
         } catch (IOException e) {
@@ -103,7 +102,7 @@ public class Sender {
      *
      *************************************************************************/
     public Comment[] findCommentsByPostId(Long postId){
-        String res = (String) rabbitTemplate.convertSendAndReceive(this.postToComment.getName(), "findCommentsByPostId:" + postId);
+        String res = (String) rabbitTemplate.convertSendAndReceive(postToComment.getName(), "findCommentsByPostId:" + postId);
 
         Comment[] comments = new Comment[0];
         try {

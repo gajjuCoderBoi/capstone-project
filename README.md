@@ -27,6 +27,7 @@
 - [Jenkins Instruction](#jenkins-instruction)
 - [JavaDocs](https://gajjucoderboi.github.io/capstone-project/)
 - [API](#api)
+- [Postman Collection](#postman-collection)
 - [What's Included](#whats-included)
 - [Creators](#developers)
 
@@ -364,7 +365,7 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
             <p>Get Comments of a Post by postId. </p>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>CommentController#getCommentsByPostId</p>
+            <p>Comments-API->CommentController#getCommentsByPostId</p>
         </td>
     </tr>
     <tr>
@@ -375,7 +376,7 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
             <p>Creating a comment on a post. (Auth Token Required). </p>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>CommentController#createComment</p>
+            <p>Comments-API->CommentController#createComment</p>
         </td>
     </tr>
     <tr>
@@ -389,11 +390,14 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
             <p>Deleting a Comment. (Auth Token Required).</p>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>Posts-API->PostController#deleteComment</p>
+            <p>Comments-API->CommentController#deleteComment</p>
         </td>
     </tr>
     </tbody>
 </table>
+
+## Postman Collection
+Download [Postman Collection](capstone.postman_collection.json) and Feel free to play with api.
 
 ## What's included
 
@@ -737,6 +741,8 @@ capstone-project/
 ```
     
 </details>
+
+
 ## Developers
 
 **Carlos Kruger**

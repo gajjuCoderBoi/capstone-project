@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistException("User with this username already exist.");
         }
         savedUser = userRepository.save(user);
-        if (savedUser.getEmail() != null) {
+        if (savedUser.getUsername() != null) {
             UserDetails userDetails = loadUserByUsername(user.getUsername());
             logger.info("User SignedUp: {}", user);
             return Arrays.asList(user.getUsername(), jwtUtil.generateToken(userDetails));
@@ -75,10 +75,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<String> login(User user) throws LoginException {
-        User foundUser = userRepository.getUserByUsername(user.getEmail());
+        User foundUser = userRepository.getUserByUsername(user.getUsername());
         if (foundUser != null &&
                 bCryptPasswordEncoder.matches(user.getPassword(), foundUser.getPassword())) {
-            UserDetails userDetails = loadUserByUsername(foundUser.getEmail());
+            UserDetails userDetails = loadUserByUsername(foundUser.getUsername());
             logger.info("User LoggedIn: {}", foundUser);
             return Arrays.asList(user.getUsername(), jwtUtil.generateToken(userDetails));
         } else if (foundUser != null &&
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("Unknown user: " + username);
         }
 
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), bCryptPasswordEncoder.encode(user.getPassword()),
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), bCryptPasswordEncoder.encode(user.getPassword()),
                 true, true, true, true, getGrantedAuthorities(user));
     }
 
