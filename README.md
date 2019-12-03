@@ -217,6 +217,258 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
 
 ## API Reference
 
+<table style="
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: transparent;
+    display: table;
+">
+    <thead>
+    <tr>
+        <th>Path</th>
+        <th>Operation</th>
+        <th>Description</th>
+        <th>Controller#Method</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="2" style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#summary">/user/signup</a>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#post-usersignup">POST</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>Create a User (Sign-up)</p>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>UserController#signup</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="2" style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#summary">/user/login</a>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#post-userlogin">POST</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>Create a login session.</p>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>UserController#login</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="2" style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#summary">/user/reset</a>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#put-userreset">PUT</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>Reset User Password.</p>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>UserController#reset</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="3">
+            <a href="#summary">/profile</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#get-profile">GET</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>Retrieve the profile of the User. (Auth Token Required)</p>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>ProfileController#getProfile</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#post-profile">POST</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>Create the profile of the User. (Auth Token Required)</p>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>ProfileController#createProfile</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#put-profile">PUT</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>Update profile of the User. (Auth Token Required)</p>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>ProfileController#updateProfile</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="2">
+            <a href="#summary">/post</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#get-post">GET</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>Getting the Posts of the User (Auth Token Required).</p>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>PostController#listPostByUser</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#post-post">POST</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>Create a Posts of the User (Auth Token Required).</p>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>PostController#addPost</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="2" style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#summary">/post/list</a>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#get-postlist">GET</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>Retrieve all the posts.</p>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>PostController#listPost</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="2">
+            <a href="#">/post/{postId}</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#put-postid">PUT</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>Updating a Post. (Auth Token Required).</p>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>PostController#updatePost</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#delete-postid">DELETE</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>Deleting a Post. (Auth Token Required).</p>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>PostController#deletePost</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="1">
+            <a href="#">/post/{postId}/comment/</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#get-postpostidcomment">GET</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>Retrieve all the comments of the a Post. </p>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>PostController#listCommentsByPost</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="1">
+            <a href="#summary">/comment</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#get-comment">GET</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>Retrieve all the comments. </p>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>CommentController#listComments</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="1">
+            <a href="#summary">/comment/list</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#get-commentlist">GET</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>Retrieve all the comments of a User. (Auth Token Required). </p>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>CommentController#listCommentsByUser</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="1">
+            <a href="#">/comment/{postId}</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#post-commentpostid">POST</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>Creating a comment on a post. (Auth Token Required). </p>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>CommentController#addComment</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="2">
+            <a href="#summary">/comment/{commentId}</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#put-commentcommentid">PUT</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>Updating a comment. (Auth Token Required).</p>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>PostController#updateComment</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <a href="#delete-commentcommentid">DELETE</a>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>Deleting a Comment. (Auth Token Required).</p>
+        </td>
+        <td style="border: 1px solid #ddd;padding: 5px;">
+            <p>PostController#deleteComment</p>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 ## What's included
 
