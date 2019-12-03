@@ -61,8 +61,8 @@ We used pair programming and collaborated with each other and tried to stick to 
 
 ## Major Hurdles
 
-   - Communication between services.
-   - Integrity of Data. 
+   - Adding the different services to the Jenkins pipeline and getting the coverage to show
+   - Getting the services to communicate through the queues
 
 
 ## Installation Instruction
@@ -86,33 +86,58 @@ Follow these easy step:
 ## Timeline
 
 1. Requirement Analysis
-    * Tuesday(Nov 12, 2019) - user stories
+    * Thursday(Nov 21, 2019) - user stories
         
         We give our user stories points, so that we could prioritize our development steps. 
  
             https://www.pivotaltracker.com/n/projects/2416993
+            
+        For messaging services, we decided we would use RabbitMQ for microservices communication.
+       
+        A new repository was created.
     
-    * Wednesday(Nov 13, 2019) - ERD
+    * Friday(Nov 22, 2019) - Research
         
-            Pair mapped Architecture Diagram to include 5 services and their communications.
+        We research how the actual implementation of the communication services using RabbitMQ should look.
             
          [Architecture](#architecture)
          
-    * Thursday(Nov 14, 2019) - User, comment, and post Service mapped.
+    * Saturday  (Nov 23, 2019) - Replaced RestTemplate communication points with RabbitMQ.
     
-            Added user, comment, and post creation functionality.
+            Added queues for microservices communication
             
-    * Friday(Nov 15, 2019) - Building.
+    * Monday(Nov 26, 2019) - Microservices communication finish and testing. Started Input Validation @ back-end
     
-            Running services on the Docker. And Building on the Docker and pushing the Docker images. 
+            Continued to work on microservices communication. Finished routes and testing,
+            
+            Added input validation at the back-end. 
         
-    * Saturday(Nov 16, 2019) - Tested all route functionality and began testing.
+    * Tuesday(Nov 27, 2019) - Finished back-end validation started Exception Handling.
     
-            - All route functionality is working. Recorded results to ReadMe file.
+            Finished input validation at the back-end
             
-            - Connect front-end with backend. 
+            Started adding Exception Handling
             
-    * Sunday(Oct 25, 2019) - Trying to deployee.
+    * Wednesday (Nov 28, 2019) - Start working on Swagger and JUnit testing
+            Started working on Swagger
+            Started writing the tests
+            
+    * Thanksgiving weekend (Nov 29 - Dec 1) - Continued working with Swagger, JUnit Test and started working on Jenkins
+      pipeline
+           Swagger work continued
+           Testing work continued
+           
+    * Monday (Dec 2, 2019) - Swagger was completed. JUnit Test was completed and Jenkins was set up. Work on logging started,
+                     
+           Testing was completed
+           Swagger was implemented
+           Work on logging started
+     
+    * Tuesday (Dec 3, 2019) - Logging work continued. Integration testing started
+           Logging completed
+           JavaDocs created
+           Integration Test started
+         
     
             *-*-*-*-*-*-*
         
