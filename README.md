@@ -25,6 +25,7 @@
 - [Architecture](#architecture)
 - [Installation Instruction](#installation-instruction)
 - [Jenkins Instruction](#jenkins-instruction)
+- [JavaDocs](https://gajjucoderboi.github.io/capstone-project/)
 - [API](#api)
 - [What's Included](#whats-included)
 - [Creators](#developers)
@@ -398,6 +399,12 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
 
 Within the download you'll find the following directories and files, logically grouping common assets and providing both compiled and minified variations. You'll see something like this:
 
+<details>
+<summary>
+File Tree.
+</summary>
+
+
 ```text
 capstone-project/
 .
@@ -729,6 +736,7 @@ capstone-project/
 
 ```
     
+</details>
 ## Developers
 
 **Carlos Kruger**
