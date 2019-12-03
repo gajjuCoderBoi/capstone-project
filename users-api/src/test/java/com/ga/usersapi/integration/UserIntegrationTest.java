@@ -2,6 +2,7 @@ package com.ga.usersapi.integration;
 
 import com.ga.usersapi.config.JwtRequestFilter;
 import com.ga.usersapi.config.JwtUtil;
+import com.ga.usersapi.exception.UserAlreadyExistException;
 import com.ga.usersapi.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,37 +44,38 @@ public class UserIntegrationTest {
     @Qualifier("encoder")
     PasswordEncoder bCryptPasswordEncoder;
 
-//    private User createUser(){
-//
-//        User user = new User();
-//        UserRole userRole = userRoleRepository.getRoleByName("USER");
-//        user.setEmail("batman@ga");
-//        user.setPassword("bat");
-//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//
-//        return user;
-//    }
-
 
     @Test
     public void signup_User_Success() {
-        User user = userRepository.getUserByUsername("batman");
-        if(user != null) {
-            userRepository.delete(user);
-       }
+        User user =  new User();
+        user.setEmail("spiderman@email.com");
+        user.setUsername("spiderman");
+        user.setPassword("spider");
+        UserRole userRole = userRoleRepository.getRoleByName("USER");
+        if (userRole == null) {
+            userRole = new UserRole();
+            userRole.setName("USER");
+            userRoleRepository.save(userRole);
+        }
+        user.getRoles().add(userRole);
 
+        User savedUser = userRepository.save(user);
 
-
-//        user = createUser();
-//        user = userRepository.save(user);
-//        User foundUser = userRepository.getUserByUsername(user.getEmail());
-
-//        assertNotNull(user);
-//        assertNotNull(foundUser);
-//        assertEquals(user.getUserId(), foundUser.getUserId());
-//
-//        userRepository.delete(user);
     }
+
+    @Test(expected = UserAlreadyExistException.class)
+    public void signup_User_DuplicateException() throws UserAlreadyExistException {
+        User user =  new User();
+        user.setEmail("batman@email.com");
+        user.setUsername("batman");
+        user.setPassword("bat");
+        User savedUser = userRepository.getUserByUsername(user.getUsername());
+        System.out.println(savedUser);
+        if(savedUser!=null) throw new UserAlreadyExistException("username reserved");
+
+
+    }
+
 
 
 }
