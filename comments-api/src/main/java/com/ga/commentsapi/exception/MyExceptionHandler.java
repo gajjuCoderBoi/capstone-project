@@ -54,7 +54,7 @@ public class MyExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(PostNotExistException.class)
-    public ResponseEntity<ErrorResponse> handlePostNotExistException(CommentNotExistException e) {
+    public ResponseEntity<ErrorResponse> handlePostNotExistException(PostNotExistException e) {
         List<String> details = new ArrayList<>();
         details.add("Post Doesn't Exist.");
         String causeMessage = (e.getCause() == null) ? "" : e.getMessage();
