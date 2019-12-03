@@ -317,7 +317,7 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
             <p>Create a Posts of the User (Auth Token Required).</p>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>Posts-API->PostController#addPost</p>
+            <p>Posts-API->PostController#createPost</p>
         </td>
     </tr>
     <tr>
@@ -333,7 +333,7 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
             <p>Retrieve all the posts.</p>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>Posts-API->PostController#listPost</p>
+            <p>Posts-API->PostController#getPosts</p>
         </td>
     </tr>
     <tr>
@@ -365,6 +365,8 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
         <td style="border: 1px solid #ddd;padding: 5px;">
             <p>CommentController#getCommentsByPostId</p>
         </td>
+    </tr>
+    <tr>
         <td style="border: 1px solid #ddd;padding: 5px;">
             <a href="#post-commentpostid">POST</a>
         </td>
@@ -379,17 +381,6 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
         <td style="border: 1px solid #ddd;padding: 5px;" rowspan="2">
             <a href="#summary">/comments/{commentId}</a>
         </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <a href="#put-commentcommentid">PUT</a>
-        </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>Updating a comment. (Auth Token Required).</p>
-        </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>Posts-API->PostController#updateComment</p>
-        </td>
-    </tr>
-    <tr>
         <td style="border: 1px solid #ddd;padding: 5px;">
             <a href="#delete-commentcommentid">DELETE</a>
         </td>
