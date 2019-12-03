@@ -44,7 +44,7 @@ public class User {
     @NotBlank(message = "Password field cannot be blanked.")
     private String password;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username", nullable = false, unique = true)
     @NotBlank(message = "Username field cannot be blanked")
     private String username;
 
