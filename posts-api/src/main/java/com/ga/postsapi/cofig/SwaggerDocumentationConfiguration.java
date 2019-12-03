@@ -25,7 +25,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 @EnableSwagger2WebMvc
 public class SwaggerDocumentationConfiguration {
 
-
+	/**
+	 * <p>apiInfo() builds Swagger postapi</p>
+	 * @return ApiInfo
+	 */
 	ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
 				.title("Posts API")
@@ -36,6 +39,10 @@ public class SwaggerDocumentationConfiguration {
 				.build();
 	}
 
+	/**
+	 * <p>configureControllerPackageAndConvertors() configures the controller, defining the package and the endpoints for this app to work with Swagger</p>
+	 * @return Docket
+	 */
 	@Bean
 	public Docket configureControllerPackageAndConvertors() {
 		return new Docket(DocumentationType.SWAGGER_2)
