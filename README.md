@@ -353,7 +353,7 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
         </td>
     </tr>
     <tr>
-        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="1">
+        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="2">
             <a href="#">/comments/{postId}</a>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
