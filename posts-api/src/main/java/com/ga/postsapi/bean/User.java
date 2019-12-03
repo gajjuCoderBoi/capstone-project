@@ -33,7 +33,7 @@ public class User {
 
     /**
      * <p>setUserId(Long userId) is the setter function for variable userId</p>
-     * @param userId
+     * @param userId type Long
      */
     public void setUserId(Long userId) {
         this.userId = userId;
@@ -65,7 +65,7 @@ public class User {
 
     /**
      * <p>setUsername(String username) is the setter function for the variable username</p>
-     * @param username
+     * @param username type String
      */
     public void setUsername(String username) {
         this.username = username;

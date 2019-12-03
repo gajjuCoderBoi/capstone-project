@@ -21,7 +21,7 @@ public class PostRequestBody {
 
     /**
      * <p>setText(String text) is a setter function for field tet</p>
-     * @param text
+     * @param text type String
      */
     public void setText(String text) {
         this.text = text;
@@ -37,7 +37,7 @@ public class PostRequestBody {
 
     /**
      * <p>setTitle(String title) is the setter function for variable title</p>
-     * @param title
+     * @param title type String
      */
     public void setTitle(String title) {
         this.title = title;

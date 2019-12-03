@@ -27,7 +27,7 @@ public class SwaggerDocumentationConfiguration {
 
 	/**
 	 * <p>apiInfo() builds Swagger postapi</p>
-	 * @return ApiInfo
+	 * @return ApiInfo type object
 	 */
 	ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
@@ -41,7 +41,7 @@ public class SwaggerDocumentationConfiguration {
 
 	/**
 	 * <p>configureControllerPackageAndConvertors() configures the controller, defining the package and the endpoints for this app to work with Swagger</p>
-	 * @return Docket
+	 * @return Docket type object
 	 */
 	@Bean
 	public Docket configureControllerPackageAndConvertors() {

@@ -30,7 +30,12 @@ import java.util.Arrays;
 @ComponentScan("com.ga")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
+    /**
+     * <p>configure(HttoSecurity http) throws Exception. It configures the security and deals with cors
+     * and csrf</p>
+     * @param http Type is HttpSecurity
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -39,6 +44,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic()
         ;
     }
+
+    /**
+     * <p>corsConfigurationSource() sets up the cors configuration</p>
+     * @return source type CorsConfigurationSource
+     */
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
