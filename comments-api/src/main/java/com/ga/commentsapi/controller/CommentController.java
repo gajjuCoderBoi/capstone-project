@@ -54,10 +54,10 @@ public class CommentController {
      *
      *************************************************************************/
     @ApiIgnore
-    /*@ApiOperation(value = "Return the a list of comments by Post Id", produces = "application/json")
+     @ApiOperation(value = "Return the a list of comments by Post Id", produces = "application/json")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully Retrieved comments by PostId", response = Comment.class)
-    })*/
+    })
     @GetMapping("/{postId}")
     public Iterable<Comment> getCommentsByPostId(@PathVariable Long postId){
         return commentService.getCommentsbyPostId(postId);
@@ -90,7 +90,7 @@ public class CommentController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully Deleted comments by PostId", response = Comment.class)
     })*//*
-    @DeleteMapping("/{postId}/comments")//todo test
+    @DeleteMapping("/{postId}/comments")
     public Long deleteCommentsByPostId(@PathVariable Long postId){
         return commentService.deleteCommentsByPostId(postId);
     }*/
@@ -99,7 +99,7 @@ public class CommentController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully Returned Comment List.", response = Comment.class)
     })
-    @GetMapping("/user")//todo test
+    @GetMapping("/user")
     public List<Comment> getCommentsByUser(@RequestHeader("Authorization") @ApiParam(value = "Bearer Token:", required = true) String token) throws TokenException {
         return commentService.getCommentsByUserId(token);
     }

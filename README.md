@@ -232,13 +232,13 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
         <th>Path</th>
         <th>Operation</th>
         <th>Description</th>
-        <th>Controller#Method</th>
+        <th>Microservice->Controller#Method</th>
     </tr>
     </thead>
     <tbody>
     <tr>
         <td style="border: 1px solid #ddd;padding: 5px;" rowspan="2" style="border: 1px solid #ddd;padding: 5px;">
-            <a href="#summary">/user/signup</a>
+            <a href="#summary">/users/signup</a>
         </td>
     </tr>
     <tr>
@@ -249,12 +249,12 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
             <p>Create a User (Sign-up)</p>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>UserController#signup</p>
+            <p>Users-api->UserController#signup</p>
         </td>
     </tr>
     <tr>
         <td style="border: 1px solid #ddd;padding: 5px;" rowspan="2" style="border: 1px solid #ddd;padding: 5px;">
-            <a href="#summary">/user/login</a>
+            <a href="#summary">/users/login</a>
         </td>
     </tr>
     <tr>
@@ -265,28 +265,17 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
             <p>Create a login session.</p>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>UserController#login</p>
+            <p>Users-api->UserController#login</p>
         </td>
     </tr>
     <tr>
         <td style="border: 1px solid #ddd;padding: 5px;" rowspan="2" style="border: 1px solid #ddd;padding: 5px;">
-            <a href="#summary">/user/reset</a>
-        </td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <a href="#put-userreset">PUT</a>
-        </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>Reset User Password.</p>
-        </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>UserController#reset</p>
+            <a href="#summary">/users/reset</a>
         </td>
     </tr>
     <tr>
         <td style="border: 1px solid #ddd;padding: 5px;" rowspan="3">
-            <a href="#summary">/profile</a>
+            <a href="#summary">/profiles/</a>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
             <a href="#get-profile">GET</a>
@@ -295,7 +284,7 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
             <p>Retrieve the profile of the User. (Auth Token Required)</p>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>ProfileController#getProfile</p>
+            <p>Profile-API->ProfileController#getProfile</p>
         </td>
     </tr>
     <tr>
@@ -305,8 +294,8 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
         <td style="border: 1px solid #ddd;padding: 5px;">
             <p>Create the profile of the User. (Auth Token Required)</p>
         </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>ProfileController#createProfile</p>
+        <td style="border: 1px solid #ddd;padding: 5px;"ProfileController#>
+            <p>Profile-API->ProfileController#createProfile</p>
         </td>
     </tr>
     <tr>
@@ -317,21 +306,12 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
             <p>Update profile of the User. (Auth Token Required)</p>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>ProfileController#updateProfile</p>
+            <p>Profile-API->ProfileController#updateProfile</p>
         </td>
     </tr>
     <tr>
         <td style="border: 1px solid #ddd;padding: 5px;" rowspan="2">
-            <a href="#summary">/post</a>
-        </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <a href="#get-post">GET</a>
-        </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>Getting the Posts of the User (Auth Token Required).</p>
-        </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>PostController#listPostByUser</p>
+            <a href="#summary">/posts/</a>
         </td>
     </tr>
     <tr>
@@ -342,12 +322,12 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
             <p>Create a Posts of the User (Auth Token Required).</p>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>PostController#addPost</p>
+            <p>Posts-API->PostController#addPost</p>
         </td>
     </tr>
     <tr>
         <td style="border: 1px solid #ddd;padding: 5px;" rowspan="2" style="border: 1px solid #ddd;padding: 5px;">
-            <a href="#summary">/post/list</a>
+            <a href="#summary">/posts/list</a>
         </td>
     </tr>
     <tr>
@@ -358,21 +338,12 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
             <p>Retrieve all the posts.</p>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>PostController#listPost</p>
+            <p>Posts-API->PostController#listPost</p>
         </td>
     </tr>
     <tr>
         <td style="border: 1px solid #ddd;padding: 5px;" rowspan="2">
-            <a href="#">/post/{postId}</a>
-        </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <a href="#put-postid">PUT</a>
-        </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>Updating a Post. (Auth Token Required).</p>
-        </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>PostController#updatePost</p>
+            <a href="#">/posts/{postId}</a>
         </td>
     </tr>
     <tr>
@@ -383,54 +354,21 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
             <p>Deleting a Post. (Auth Token Required).</p>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>PostController#deletePost</p>
+            <p>Posts-API->PostController#deletePost</p>
         </td>
     </tr>
     <tr>
         <td style="border: 1px solid #ddd;padding: 5px;" rowspan="1">
-            <a href="#">/post/{postId}/comment/</a>
+            <a href="#">/comments/{postId}</a>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <a href="#get-postpostidcomment">GET</a>
+            <a href="#post-commentpostid">GET</a>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>Retrieve all the comments of the a Post. </p>
+            <p>Get Comments of a Post by postId. </p>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>PostController#listCommentsByPost</p>
-        </td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="1">
-            <a href="#summary">/comment</a>
-        </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <a href="#get-comment">GET</a>
-        </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>Retrieve all the comments. </p>
-        </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>CommentController#listComments</p>
-        </td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="1">
-            <a href="#summary">/comment/list</a>
-        </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <a href="#get-commentlist">GET</a>
-        </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>Retrieve all the comments of a User. (Auth Token Required). </p>
-        </td>
-        <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>CommentController#listCommentsByUser</p>
-        </td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="1">
-            <a href="#">/comment/{postId}</a>
+            <p>CommentController#getCommentsByPostId</p>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
             <a href="#post-commentpostid">POST</a>
@@ -439,12 +377,12 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
             <p>Creating a comment on a post. (Auth Token Required). </p>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>CommentController#addComment</p>
+            <p>CommentController#createComment</p>
         </td>
     </tr>
     <tr>
         <td style="border: 1px solid #ddd;padding: 5px;" rowspan="2">
-            <a href="#summary">/comment/{commentId}</a>
+            <a href="#summary">/comments/{commentId}</a>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
             <a href="#put-commentcommentid">PUT</a>
@@ -453,7 +391,7 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
             <p>Updating a comment. (Auth Token Required).</p>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>PostController#updateComment</p>
+            <p>Posts-API->PostController#updateComment</p>
         </td>
     </tr>
     <tr>
@@ -464,7 +402,7 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
             <p>Deleting a Comment. (Auth Token Required).</p>
         </td>
         <td style="border: 1px solid #ddd;padding: 5px;">
-            <p>PostController#deleteComment</p>
+            <p>Posts-API->PostController#deleteComment</p>
         </td>
     </tr>
     </tbody>
