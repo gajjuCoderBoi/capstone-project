@@ -75,13 +75,31 @@ Follow these easy step:
         https://github.com/gajjuCoderBoi/capstone-project.git
         ```
    2. Execute this on command line:
-    
+
         ```
         $cd capstone-project
         $docker-compose up
         ```
+      * if don't have Docker install from [here](https://docs.docker.com/v17.09/engine/installation/)
    3. Enjoy
+
+## Jenkins Instruction
+Follow these easy step:
    
+
+  1. Run Jenkins by using following command:
+       ```
+       https://github.com/gajjuCoderBoi/capstone-project.git
+       ```
+      * if don't have Jenkins install from [here](https://jenkins.io/doc/book/installing/)
+  
+  2. Execute this on command line:
+   
+       ```
+       $cd capstone-project
+       $docker-compose up
+       ```
+  3. Enjoy
 
 ## Timeline
 
@@ -140,16 +158,18 @@ Default response content-types: application/json
 
 Schemes: http 
 ```
-Documentation for the API can be found in the swagger.json files and API Reference. There are a lot of tools available to automatically generate client from Swagger format. For more information about Swagger see official website - http://swagger.io/.
+Documentation for the API can be found in the [swagger](./swagger) files and API Reference. There are a lot of tools available to automatically generate client from Swagger format. For more information about Swagger see official website - http://swagger.io/.
 
 ## What's included
 
 Within the download you'll find the following directories and files, logically grouping common assets and providing both compiled and minified variations. You'll see something like this:
 
 ```text
-cognizant-p2/
+capstone-project/
+.
 ├── API-Gateway
 │   ├── Dockerfile
+│   ├── api-gateway.iml
 │   ├── manifest.yml
 │   ├── mvnw
 │   ├── mvnw.cmd
@@ -172,12 +192,18 @@ cognizant-p2/
 │                   └── example
 │                       └── APIGateway
 │                           └── ZuulGatewayApplicationTests.java
+├── Jenkinsfile
+├── Jenkinsfile_api-gateway
+├── Jenkinsfile_comments-api
+├── Jenkinsfile_eureka-server
+├── Jenkinsfile_posts-api
+├── Jenkinsfile_profile-api
+├── Jenkinsfile_swagger-app
+├── Jenkinsfile_users-api
 ├── README.md
 ├── comments-api
 │   ├── Dockerfile
-│   ├── mvnw
-│   ├── mvnw.cmd
-│   ├── pom.xml
+│   ├── manifest.yml
 │   └── src
 │       ├── main
 │       │   ├── java
@@ -189,9 +215,22 @@ cognizant-p2/
 │       │   │               │   ├── Post.java
 │       │   │               │   └── User.java
 │       │   │               ├── config
+│       │   │               │   ├── DatabaseLoader.java
+│       │   │               │   ├── RabbitMQConfig.java
+│       │   │               │   ├── SwaggerDocumentationConfiguration.java
 │       │   │               │   └── WebSecurityConfig.java
 │       │   │               ├── controller
 │       │   │               │   └── CommentController.java
+│       │   │               ├── exception
+│       │   │               │   ├── CommentNotExistException.java
+│       │   │               │   ├── ErrorResponse.java
+│       │   │               │   ├── MyExceptionHandler.java
+│       │   │               │   ├── PostNotExistException.java
+│       │   │               │   ├── TokenException.java
+│       │   │               │   └── UnauthorizeActionException.java
+│       │   │               ├── messagequeue
+│       │   │               │   ├── Receiver.java
+│       │   │               │   └── Sender.java
 │       │   │               ├── model
 │       │   │               │   └── Comment.java
 │       │   │               ├── repository
@@ -202,17 +241,26 @@ cognizant-p2/
 │       │   └── resources
 │       │       ├── application-dev.properties
 │       │       ├── application-local.properties
+│       │       ├── application-pcf.properties
 │       │       └── application.properties
 │       └── test
 │           └── java
 │               └── com
 │                   └── ga
 │                       └── commentsapi
-│                           └── CommentsApplicationTests.java
+│                           ├── CommentsApplicationTests.java
+│                           ├── controller
+│                           │   └── CommentControllerTest.java
+│                           ├── exception
+│                           │   └── MyExceptionHandlerTest.java
+│                           └── service
+│                               └── CommentsServiceTest.java
 ├── deployment.sh
 ├── docker-compose.yml
 ├── eureka-server
 │   ├── Dockerfile
+│   ├── README.md
+│   ├── eureka-server.iml
 │   ├── manifest.yml
 │   ├── mvnw
 │   ├── mvnw.cmd
@@ -234,63 +282,11 @@ cognizant-p2/
 │                   └── example
 │                       └── eurekaserver
 │                           └── EurekaServerApplicationTests.java
-├── front-end
-│   ├── css
-│   │   ├── bootstrap-grid.css
-│   │   ├── bootstrap-grid.css.map
-│   │   ├── bootstrap-grid.min.css
-│   │   ├── bootstrap-grid.min.css.map
-│   │   ├── bootstrap-reboot.css
-│   │   ├── bootstrap-reboot.css.map
-│   │   ├── bootstrap-reboot.min.css
-│   │   ├── bootstrap-reboot.min.css.map
-│   │   ├── bootstrap.css
-│   │   ├── bootstrap.css.map
-│   │   ├── bootstrap.min.css
-│   │   ├── bootstrap.min.css.map
-│   │   ├── postwidget.css
-│   │   └── style.css
-│   ├── img
-│   │   ├── Scanndit_Wire_Frame.png
-│   │   ├── logo.png
-│   │   ├── logo2.png
-│   │   └── profile-placeholder.png
-│   ├── index.html
-│   ├── js
-│   │   ├── api.js
-│   │   ├── bootstrap.bundle.js
-│   │   ├── bootstrap.bundle.js.map
-│   │   ├── bootstrap.bundle.min.js
-│   │   ├── bootstrap.bundle.min.js.map
-│   │   ├── bootstrap.js
-│   │   ├── bootstrap.js.map
-│   │   ├── bootstrap.min.js
-│   │   ├── bootstrap.min.js.map
-│   │   ├── commentfeed.js
-│   │   ├── index.js
-│   │   ├── jquery-3.3.1.slim.min.js
-│   │   ├── navbar.js
-│   │   ├── popper.min.js
-│   │   ├── post.js
-│   │   ├── postfeed.js
-│   │   └── profile.js
-│   ├── post
-│   │   └── index.html
-│   ├── profile
-│   │   ├── index.html
-│   │   └── style.css
-│   └── src
-│       └── postwidget
-│           └── postwidget.js
-├── img
-│   ├── ERD_2.png
-│   ├── logo.png
-│   └── rough_architecture.jpg
+├── logstash.conf
+├── manifest.yml
 ├── posts-api
 │   ├── Dockerfile
-│   ├── mvnw
-│   ├── mvnw.cmd
-│   ├── pom.xml
+│   ├── manifest.yml
 │   └── src
 │       ├── main
 │       │   ├── java
@@ -300,11 +296,24 @@ cognizant-p2/
 │       │   │               ├── PostsApiApplication.java
 │       │   │               ├── bean
 │       │   │               │   ├── Comment.java
+│       │   │               │   ├── PostRequestBody.java
 │       │   │               │   └── User.java
 │       │   │               ├── cofig
+│       │   │               │   ├── DatabaseLoader.java
+│       │   │               │   ├── RabbitMQConfig.java
+│       │   │               │   ├── SwaggerDocumentationConfiguration.java
 │       │   │               │   └── WebSecurityConfig.java
 │       │   │               ├── controller
 │       │   │               │   └── PostController.java
+│       │   │               ├── exception
+│       │   │               │   ├── ErrorResponse.java
+│       │   │               │   ├── MyExceptionHandler.java
+│       │   │               │   ├── PostNotExistException.java
+│       │   │               │   ├── TokenException.java
+│       │   │               │   └── UnauthorizeActionException.java
+│       │   │               ├── messagequeue
+│       │   │               │   ├── Receiver.java
+│       │   │               │   └── Sender.java
 │       │   │               ├── model
 │       │   │               │   └── Post.java
 │       │   │               ├── repository
@@ -315,17 +324,21 @@ cognizant-p2/
 │       │   └── resources
 │       │       ├── application-dev.properties
 │       │       ├── application-local.properties
+│       │       ├── application-pcf.properties
 │       │       └── application.properties
 │       └── test
 │           └── java
 │               └── com
 │                   └── ga
 │                       └── postsapi
-│                           └── PostsApiApplicationTests.java
+│                           ├── controller
+│                           │   └── PostControllerTest.java
+│                           ├── exception
+│                           │   └── MyExceptionHandlerTest.java
+│                           └── service
+│                               └── PostServiceTest.java
 ├── profile-api
-│   ├── mvnw
-│   ├── mvnw.cmd
-│   ├── pom.xml
+│   ├── Dockerfile
 │   └── src
 │       ├── main
 │       │   ├── java
@@ -333,13 +346,25 @@ cognizant-p2/
 │       │   │       └── ga
 │       │   │           └── profileapi
 │       │   │               ├── ProfileAPIApplication.java
+│       │   │               ├── bean
+│       │   │               │   └── User.java
 │       │   │               ├── config
+│       │   │               │   ├── RabbitMQConfig.java
+│       │   │               │   ├── SwaggerDocumentationConfiguration.java
 │       │   │               │   └── WebSecurityConfig.java
 │       │   │               ├── controller
-│       │   │               │   └── ProfileController.java
+│       │   │               │   └── UserProfileController.java
+│       │   │               ├── exception
+│       │   │               │   ├── EntityNotCreatedException.java
+│       │   │               │   ├── EntityNotFoundException.java
+│       │   │               │   ├── ErrorResponse.java
+│       │   │               │   ├── MyExceptionHandler.java
+│       │   │               │   ├── ProfileNotFoundException.java
+│       │   │               │   └── TokenException.java
+│       │   │               ├── messagequeue
+│       │   │               │   └── Sender.java
 │       │   │               ├── model
-│       │   │               │   ├── Profile.java
-│       │   │               │   └── User.java
+│       │   │               │   └── Profile.java
 │       │   │               ├── repository
 │       │   │               │   └── ProfileRepository.java
 │       │   │               └── service
@@ -348,52 +373,123 @@ cognizant-p2/
 │       │   └── resources
 │       │       ├── application-dev.properties
 │       │       ├── application-local.properties
+│       │       ├── application-pcf.properties
 │       │       └── application.properties
 │       └── test
 │           └── java
 │               └── com
 │                   └── ga
 │                       └── profileapi
-│                           └── ProfileAPIApplicationTests.java
+│                           ├── ProfileAPIApplicationTests.java
+│                           ├── controller
+│                           │   └── UserProfileControllerTest.java
+│                           ├── exception
+│                           │   └── MyExceptionHandlerTest.java
+│                           └── service
+│                               └── ProfileServiceTest.java
+├── swagger
+│   ├── comments-api.json
+│   ├── posts-api.json
+│   ├── profile-api.json
+│   ├── swagger.iml
+│   └── users-api.json
+├── swagger-app
+│   ├── Dockerfile
+│   ├── HELP.md
+│   ├── manifest.yml
+│   ├── mvnw
+│   ├── mvnw.cmd
+│   ├── pom.xml
+│   ├── src
+│   │   ├── main
+│   │   │   ├── java
+│   │   │   │   └── com
+│   │   │   │       └── ga
+│   │   │   │           └── swaggerapp
+│   │   │   │               ├── SwaggerAppApplication.java
+│   │   │   │               ├── config
+│   │   │   │               │   ├── ServiceDefinitionsContext.java
+│   │   │   │               │   ├── ServiceDescriptionUpdater.java
+│   │   │   │               │   └── SwaggerUIConfiguration.java
+│   │   │   │               └── controller
+│   │   │   │                   └── ServiceDefinitionController.java
+│   │   │   └── resources
+│   │   │       ├── application-dev.properties
+│   │   │       ├── application-local.properties
+│   │   │       ├── application-pcf.properties
+│   │   │       └── application.properties
+│   │   └── test
+│   │       └── java
+│   │           └── com
+│   │               └── ga
+│   │                   └── swaggerapp
+│   │                       └── SwaggerAppApplicationTests.java
+│   └── swagger-app.iml
 └── users-api
     ├── Dockerfile
     ├── manifest.yml
     ├── mvnw
     ├── mvnw.cmd
     ├── pom.xml
-    └── src
-        ├── main
-        │   ├── java
-        │   │   └── com
-        │   │       └── ga
-        │   │           └── usersapi
-        │   │               ├── UsersApiApplication.java
-        │   │               ├── config
-        │   │               │   ├── JwtRequestFilter.java
-        │   │               │   ├── JwtUtil.java
-        │   │               │   ├── SecurityConfig.java
-        │   │               │   └── SecurityConfigInitializer.java
-        │   │               ├── controller
-        │   │               │   └── UserController.java
-        │   │               ├── model
-        │   │               │   ├── JwtResponse.java
-        │   │               │   └── User.java
-        │   │               ├── repository
-        │   │               │   └── UserRepository.java
-        │   │               └── service
-        │   │                   ├── UserService.java
-        │   │                   └── UserServiceImpl.java
-        │   └── resources
-        │       ├── application-dev.properties
-        │       ├── application-local.properties
-        │       ├── application-pcf.properties
-        │       └── application.properties
-        └── test
-            └── java
-                └── com
-                    └── ga
-                        └── usersapi
-                            └── UsersApiApplicationTests.java
+    ├── src
+    │   ├── main
+    │   │   ├── java
+    │   │   │   └── com
+    │   │   │       └── ga
+    │   │   │           └── usersapi
+    │   │   │               ├── UsersApiApplication.java
+    │   │   │               ├── config
+    │   │   │               │   ├── DatabaseLoader.java
+    │   │   │               │   ├── JwtRequestFilter.java
+    │   │   │               │   ├── JwtUtil.java
+    │   │   │               │   ├── RabbitMQConfig.java
+    │   │   │               │   ├── SecurityConfig.java
+    │   │   │               │   ├── SecurityConfigInitializer.java
+    │   │   │               │   └── SwaggerConfig.java
+    │   │   │               ├── controller
+    │   │   │               │   └── UserController.java
+    │   │   │               ├── exception
+    │   │   │               │   ├── EntityNotCreatedException.java
+    │   │   │               │   ├── EntityNotFoundException.java
+    │   │   │               │   ├── ErrorResponse.java
+    │   │   │               │   ├── LoginException.java
+    │   │   │               │   ├── MyExceptionHandler.java
+    │   │   │               │   └── UserAlreadyExistException.java
+    │   │   │               ├── messagequeue
+    │   │   │               │   └── Receiver.java
+    │   │   │               ├── model
+    │   │   │               │   ├── JwtResponse.java
+    │   │   │               │   ├── User.java
+    │   │   │               │   └── UserRole.java
+    │   │   │               ├── repository
+    │   │   │               │   ├── UserRepository.java
+    │   │   │               │   └── UserRoleRepository.java
+    │   │   │               └── service
+    │   │   │                   ├── UserRoleService.java
+    │   │   │                   ├── UserRoleServiceImpl.java
+    │   │   │                   ├── UserService.java
+    │   │   │                   └── UserServiceImpl.java
+    │   │   └── resources
+    │   │       ├── application-dev.properties
+    │   │       ├── application-local.properties
+    │   │       ├── application-pcf.properties
+    │   │       ├── application-qa.properties
+    │   │       └── application.properties
+    │   └── test
+    │       └── java
+    │           └── com
+    │               └── ga
+    │                   └── usersapi
+    │                       ├── UsersApiApplicationTests.java
+    │                       ├── controller
+    │                       │   └── UserControllerTest.java
+    │                       ├── exception
+    │                       │   └── MyExceptionHandlerTest.java
+    │                       ├── integration
+    │                       │   └── UserIntegrationTest.java
+    │                       └── service
+    │                           ├── UserRoleServiceTest.java
+    │                           └── UserServiceTest.java
 
 
 
