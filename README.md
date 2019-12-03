@@ -23,9 +23,9 @@
 - [User Stories](#user-stories)
 - [Timeline](#timeline)
 - [Architecture](#architecture)
+- [Installation Instruction](#installation-instruction)
+- [Jenkins Instruction](#jenkins-instruction)
 - [API](#api)
-- [API Responses](#responses)
-- [Objects](#objects)
 - [What's Included](#whats-included)
 - [Creators](#developers)
 
@@ -93,13 +93,38 @@ Follow these easy step:
        ```
       * if don't have Jenkins install from [here](https://jenkins.io/doc/book/installing/)
   
-  2. Execute this on command line:
+  2. Run Jenkins:
    
        ```
-       $cd capstone-project
-       $docker-compose up
+       $jenkins-lts
        ```
-  3. Enjoy
+  3. Login
+    
+     ![login](./img/jenkins-login.png)
+     
+  4. New Item.
+  
+     Click New Item on Left panel.
+   
+  5. Create Pipeline
+ 
+     ![pipeline](./img/create-pipeline.png)
+     
+  6. Open Created Item and Configure. 
+  
+     ![configure](./img/configure-pipeline.png)
+     
+     ![configure](./img/configure2.png)
+     
+  7. Open BlueOcean in Jenkins and Run Project. 
+    
+      ![inital-run](./img/initial-run.png)
+        * if you don't have blueocean plugin install from [here](https://plugins.jenkins.io/blueocean)
+  
+  8. Successful Jenkins Pipeline. 
+  
+        ![successfull](./img/succesful.png) 
+   
 
 ## Timeline
 
@@ -183,7 +208,11 @@ Default response content-types: application/json
 
 Schemes: http 
 ```
-Documentation for the API can be found in the [swagger](./swagger) files and API Reference. There are a lot of tools available to automatically generate client from Swagger format. For more information about Swagger see official website - http://swagger.io/.
+Documentation for the API can be found in the [swagger](./swagger) files and [API Reference](#api-reference). There are a lot of tools available to automatically generate client from Swagger format. For more information about Swagger see official website - http://swagger.io/.
+
+
+## API Reference
+
 
 ## What's included
 
