@@ -36,6 +36,9 @@ public class ErrorResponse {
         this.timestamp = LocalDateTime.now().format(formatter);
     }
 
+    public ErrorResponse() {
+    }
+
     public ErrorResponse(HttpStatus httpStatus, List<String> message) {
         super();
         this.httpStatus = httpStatus;
@@ -59,5 +62,21 @@ public class ErrorResponse {
 
     public String getTimestamp() {
         return timestamp;
+    }
+
+    public void setHttpStatus(HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
+    }
+
+    public void setMessage(List<String> message) {
+        this.message = message;
+    }
+
+    public void setCause(String cause) {
+        this.cause = cause;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 }
