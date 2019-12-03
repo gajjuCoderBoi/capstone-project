@@ -269,11 +269,6 @@ Documentation for the API can be found in the [swagger](./swagger) files and [AP
         </td>
     </tr>
     <tr>
-        <td style="border: 1px solid #ddd;padding: 5px;" rowspan="2" style="border: 1px solid #ddd;padding: 5px;">
-            <a href="#summary">/users/reset</a>
-        </td>
-    </tr>
-    <tr>
         <td style="border: 1px solid #ddd;padding: 5px;" rowspan="3">
             <a href="#summary">/profiles/</a>
         </td>
