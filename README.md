@@ -9,7 +9,7 @@
 <h3 align="center">Scandit (Back-End Micro-services REST API)</h3>
 
 <p align="center">
-  Foodie is an a discussion forum where people post and comment on a food recipe. 
+  Scandit is an a discussion forum where people post and comment on a topic. 
   <br>
     
   <br>
@@ -65,8 +65,10 @@ We used pair programming and collaborated with each other and tried to stick to 
 
 ## Major Hurdles
 
+   - Implementation of RabbitMQ.
+   - Getting the services to communicate through the queues.
+   - Test Coverage.
    - Adding the different services to the Jenkins pipeline and getting the coverage to show
-   - Getting the services to communicate through the queues
 
 
 ## Installation Instruction
@@ -755,3 +757,8 @@ capstone-project/
 **Mohammad Javed**
 
 - <https://github.com/gajjuCoderBoi>
+
+
+## Thanks To
+   
+   Got Swagger Help from : [Github](https://github.com/hellosatish/microservice-patterns/tree/master/centralized-swagger-docs) 
