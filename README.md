@@ -50,6 +50,8 @@ Application Goals from User Stories are:
    - Zuul Gateway for Api-Gateway to forward api requests to Services. 
    - Postgres is Used for the database. 
    - Docker to run the services. 
+   - RabbitMQ for inter-service Communication.
+   - ELK for Logging. 
    - Swagger to Create API Documentation.
    - Jenkins for CI/CD
    - Pivotal Cloud Foundry is used to deploy the application.
@@ -201,7 +203,8 @@ Follow these easy step:
 ##### Soft Representation of Architecture Diagram.
 ![Architecture](./img/archi2.png)
     
-    
+#### CI/CD Architecture
+![CICD](./img/cicd.jpg)
      
 
 ## API
